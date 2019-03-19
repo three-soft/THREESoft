@@ -39,7 +39,6 @@ public class AcademicoDao extends AbstractDao<Long, Academico> {
                 cb.equal(r.get("userName"), userOrEmail)));
     }
 
-
     /**
      * Método que revisa si un mail existe en la base.
      *
@@ -65,8 +64,8 @@ public class AcademicoDao extends AbstractDao<Long, Academico> {
         Root<Academico> r = createRoot(crit);
         return this.count(cb.equal(r.get("nombreCompleto"), user)) > 0;
     }
-    
-        /**
+
+    /**
      * Método que revisa si un Academico existe en la base de datos.
      *
      * @param userName Es el Academico a buscar en la base.
@@ -77,6 +76,21 @@ public class AcademicoDao extends AbstractDao<Long, Academico> {
         CriteriaQuery<Academico> crit = createCriteriaQuery(cb);
         Root<Academico> r = createRoot(crit);
         return this.count(cb.equal(r.get("userName"), userName)) > 0;
+    }
+
+    /**
+     * Método que revisa si un Academico existe en la base de datos.
+     *
+     * @param noTrabajador Es el Academico a buscar en la base.
+     * @return True si es que existe y false en otro caso.
+     */
+    public boolean userNoTrabajador(String noTrabajador) {
+        CriteriaBuilder cb = createCriteriaBuilder();
+        CriteriaQuery<Academico> crit = createCriteriaQuery(cb);
+        Root<Academico> r = createRoot(crit);
+        long a = this.count(cb.equal(r.get("noTrabajador"), noTrabajador));
+        System.out.println("Num Trabajadores: "+ a);
+        return a > 0;
     }
 
     /**

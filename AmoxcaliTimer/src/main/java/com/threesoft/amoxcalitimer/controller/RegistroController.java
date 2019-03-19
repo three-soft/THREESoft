@@ -111,7 +111,7 @@ public class RegistroController implements Serializable {
      * Método que registra al academico con el formulario ya validado.
      *
      */
-    public void registrarAcademico()throws Exception{
+    public void registrarAcademico() throws Exception {
         try {
             System.out.println("Registrando");
             Academico nuevoAcademico = new Academico();
@@ -169,10 +169,31 @@ public class RegistroController implements Serializable {
      */
     public void validateUniqueUserName(FacesContext context, UIComponent component, Object value) {
         AcademicoDao academicoDao = new AcademicoDao();
+        if (academicoDao.userNameExist(value.toString())) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "El academico ya existe, escriba otro.",
+                    "El academico ya existe, escriba otro.");
+            throw new ValidatorException(msg);
+        }
+    }
+
+    public void validateUniqueName(FacesContext context, UIComponent component, Object value) {
+        AcademicoDao academicoDao = new AcademicoDao();
         if (academicoDao.userExist(value.toString())) {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "El academico ya existe, escriba otro.",
                     "El academico ya existe, escriba otro.");
+            throw new ValidatorException(msg);
+        }
+    }    
+    
+    
+    public void validateUniqueNumAca(FacesContext context, UIComponent component, Object value) {
+        AcademicoDao academicoDao = new AcademicoDao();
+        if (academicoDao.userNoTrabajador(value.toString())) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Ya existe un Acádemico con ese número, ingresar otro.",
+                    "Ya existe un Acádemico con ese número, ingresar otro.");
             throw new ValidatorException(msg);
         }
     }
