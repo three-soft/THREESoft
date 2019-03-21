@@ -31,7 +31,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Espacio.findByIdEspacio", query = "SELECT e FROM Espacio e WHERE e.idEspacio = :idEspacio")
     , @NamedQuery(name = "Espacio.findByNombreEspacio", query = "SELECT e FROM Espacio e WHERE e.nombreEspacio = :nombreEspacio")
     , @NamedQuery(name = "Espacio.findByEdificio", query = "SELECT e FROM Espacio e WHERE e.edificio = :edificio")
-    , @NamedQuery(name = "Espacio.findByCapacidad", query = "SELECT e FROM Espacio e WHERE e.capacidad = :capacidad")})
+    , @NamedQuery(name = "Espacio.findByCapacidad", query = "SELECT e FROM Espacio e WHERE e.capacidad = :capacidad")
+    , @NamedQuery(name = "Espacio.findByRecursos", query = "SELECT e FROM Espacio e WHERE e.recursos = :recursos")
+    , @NamedQuery(name = "Espacio.findByPiso", query = "SELECT e FROM Espacio e WHERE e.piso = :piso")})
 public class Espacio implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,6 +56,15 @@ public class Espacio implements Serializable {
     @NotNull
     @Column(name = "capacidad", nullable = false)
     private int capacidad;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "recursos", nullable = false, length = 255)
+    private String recursos;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "piso", nullable = false)
+    private int piso;
 
     public Espacio() {
     }
@@ -62,11 +73,13 @@ public class Espacio implements Serializable {
         this.idEspacio = idEspacio;
     }
 
-    public Espacio(Long idEspacio, String nombreEspacio, String edificio, int capacidad) {
+    public Espacio(Long idEspacio, String nombreEspacio, String edificio, int capacidad, String recursos, int piso) {
         this.idEspacio = idEspacio;
         this.nombreEspacio = nombreEspacio;
         this.edificio = edificio;
         this.capacidad = capacidad;
+        this.recursos = recursos;
+        this.piso = piso;
     }
 
     public Long getIdEspacio() {
@@ -99,6 +112,22 @@ public class Espacio implements Serializable {
 
     public void setCapacidad(int capacidad) {
         this.capacidad = capacidad;
+    }
+
+    public String getRecursos() {
+        return recursos;
+    }
+
+    public void setRecursos(String recursos) {
+        this.recursos = recursos;
+    }
+
+    public int getPiso() {
+        return piso;
+    }
+
+    public void setPiso(int piso) {
+        this.piso = piso;
     }
 
     @Override

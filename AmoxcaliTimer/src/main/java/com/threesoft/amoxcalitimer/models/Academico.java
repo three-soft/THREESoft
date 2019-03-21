@@ -76,7 +76,7 @@ public class Academico implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "no_trabajador", nullable = false)
-    private int noTrabajador;
+    private long noTrabajador;
     @Column(name = "fecha_activacion")
     @Temporal(TemporalType.DATE)
     private Date fechaActivacion;
@@ -93,7 +93,7 @@ public class Academico implements Serializable {
         this.idAcademico = idAcademico;
     }
 
-    public Academico(Long idAcademico, String nombreCompleto, String correoAca, String password, String departamento, String tipo, int noTrabajador, String userName) {
+    public Academico(Long idAcademico, String nombreCompleto, String correoAca, String password, String departamento, String tipo, long noTrabajador, String userName) {
         this.idAcademico = idAcademico;
         this.nombreCompleto = nombreCompleto;
         this.correoAca = correoAca;
@@ -152,11 +152,11 @@ public class Academico implements Serializable {
         this.tipo = tipo;
     }
 
-    public int getNoTrabajador() {
+    public long getNoTrabajador() {
         return noTrabajador;
     }
 
-    public void setNoTrabajador(int noTrabajador) {
+    public void setNoTrabajador(long noTrabajador) {
         this.noTrabajador = noTrabajador;
     }
 

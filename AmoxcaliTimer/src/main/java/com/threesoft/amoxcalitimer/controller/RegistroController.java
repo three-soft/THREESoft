@@ -23,6 +23,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import com.threesoft.amoxcalitimer.dao.AcademicoDao;
 import com.threesoft.amoxcalitimer.models.Academico;
+import com.threesoft.amoxcalitimer.dao.AdministradorDao;
+import com.threesoft.amoxcalitimer.models.Administrador;
+import com.threesoft.amoxcalitimer.dao.EspacioDao;
+import com.threesoft.amoxcalitimer.models.Espacio;
+import java.util.logging.Logger;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
@@ -40,6 +45,10 @@ public class RegistroController implements Serializable {
     private Integer noTrabajador;
     private String departamento;
     private String tipoProfesor;
+    private String edificio;
+    private int capacidad;
+    private String recursos;
+    private int piso;
 
     public Integer getNoTrabajador() {
         return noTrabajador;
@@ -97,6 +106,40 @@ public class RegistroController implements Serializable {
         this.password = password;
     }
 
+    public String getEdificio(){
+        return this.edificio;
+    }
+
+    public void setEdificio(String edificio) {
+        this.edificio = edificio;
+    }
+
+    public int getCapacidad() {
+        return capacidad;
+    }
+
+    public String getRecursos() {
+        return recursos;
+    }
+
+    public int getPiso() {
+        return piso;
+    }
+
+    public void setCapacidad(int capacidad) {
+        this.capacidad = capacidad;
+    }
+
+    public void setRecursos(String recursos) {
+        this.recursos = recursos;
+    }
+
+    public void setPiso(int piso) {
+        this.piso = piso;
+    }
+    
+    
+    
     public RegistroController() {
         this.nombreCompleto = null;
         this.correo = null;
@@ -105,6 +148,10 @@ public class RegistroController implements Serializable {
         this.departamento = null;
         this.noTrabajador = null;
         this.tipoProfesor = null;
+        this.capacidad = 0;
+        this.edificio = null;
+        this.piso = 0;
+        this.recursos = null;
     }
 
     /**
@@ -145,6 +192,75 @@ public class RegistroController implements Serializable {
         }
     }
 
+    /**
+     * Método que registra al administrador con el formulario ya validado.
+     *
+     */
+    public void registrarAdministrador() throws Exception {
+        try {
+            System.out.println("Registrando");
+            Administrador nuevoAdministrador = new Administrador();
+            nuevoAdministrador.setNombreCompleto(nombreCompleto);
+            nuevoAdministrador.setCorreoAdmin(correo);
+            nuevoAdministrador.setPassword(password);
+            nuevoAdministrador.setNoTrabajador(noTrabajador);
+
+            AdministradorDao administradorDao = new AdministradorDao();
+            administradorDao.getEntityManager().getTransaction().begin();
+            administradorDao.save(nuevoAdministrador);
+            administradorDao.getEntityManager().getTransaction().commit();
+            //Mail.mandarLinkDeRegistro(nuevoAcademico.getCorreoCiencias(), nuevoAcademico.getNombreCompleto(), confirm.getToken());
+            FacesContext.getCurrentInstance().addMessage("messages",
+                    new FacesMessage(FacesMessage.SEVERITY_INFO,
+                            "Tu registro se generó correctamente, nuevo administrador.",
+                            "Tu registro se generó correctamente, nuevo administrador."));
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.getExternalContext().getFlash().setKeepMessages(true);
+            ExternalContext eContext = context.getExternalContext();
+            eContext.redirect(eContext.getRequestContextPath() + "/views/administrador/registro_administrador.xhtml");
+        } catch (IllegalArgumentException ex) {
+            FacesContext.getCurrentInstance().addMessage("messages",
+                    new FacesMessage(FacesMessage.SEVERITY_FATAL,
+                            "Por el momento no podemos agregar su registro al sistema, inténtelo más tarde.",
+                            "Por el momento no podemos agregar su registro al sistema, inténtelo más tarde."));
+        }
+    }
+
+       /**
+     * Método que registra al espacio con el formulario ya validado.
+     *
+     */
+    public void registrarEspacio() throws Exception {
+        try {
+            System.out.println("Registrando");
+            Espacio nuevoEspacio = new Espacio();
+            nuevoEspacio.setNombreEspacio(nombreCompleto);
+            nuevoEspacio.setEdificio(edificio);
+            nuevoEspacio.setCapacidad(capacidad);
+            nuevoEspacio.setPiso(piso);
+            nuevoEspacio.setRecursos(recursos);
+
+            EspacioDao espacioDao = new EspacioDao();
+            espacioDao.getEntityManager().getTransaction().begin();
+            espacioDao.save(nuevoEspacio);
+            espacioDao.getEntityManager().getTransaction().commit();
+            //Mail.mandarLinkDeRegistro(nuevoAcademico.getCorreoCiencias(), nuevoAcademico.getNombreCompleto(), confirm.getToken());
+            FacesContext.getCurrentInstance().addMessage("messages",
+                    new FacesMessage(FacesMessage.SEVERITY_INFO,
+                            "Tu registro se generó correctamente, nuevo administrador.",
+                            "Tu registro se generó correctamente, nuevo administrador."));
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.getExternalContext().getFlash().setKeepMessages(true);
+            ExternalContext eContext = context.getExternalContext();
+            eContext.redirect(eContext.getRequestContextPath() + "/views/administrador/registro_administrador.xhtml");
+        } catch (IllegalArgumentException ex) {
+            FacesContext.getCurrentInstance().addMessage("messages",
+                    new FacesMessage(FacesMessage.SEVERITY_FATAL,
+                            "Por el momento no podemos agregar su registro al sistema, inténtelo más tarde.",
+                            "Por el momento no podemos agregar su registro al sistema, inténtelo más tarde."));
+        }
+    }
+    
     //Ejemplo para algunos casos que se necesitaran para validar.
     public void validatePassword(FacesContext context, UIComponent component, Object value) {
         // Retrieve the value passed to this method
@@ -177,6 +293,27 @@ public class RegistroController implements Serializable {
         }
     }
 
+    public void validateUniqueNameAdmin(FacesContext context, UIComponent component, Object value) {
+        AdministradorDao administradorDao = new AdministradorDao();
+        if (administradorDao.userExist(value.toString())) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "El administrador ya existe, escriba otro.",
+                    "El administrador ya existe, escriba otro.");
+            throw new ValidatorException(msg);
+        }
+    }
+
+        public void validateUniqueNameEspacio(FacesContext context, UIComponent component, Object value) {
+        EspacioDao espacioDao = new EspacioDao();
+        if (espacioDao.userExist(value.toString())) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "El espacio ya existe, escriba otro.",
+                    "El espacio ya existe, escriba otro.");
+            throw new ValidatorException(msg);
+        }
+    }
+
+    
     public void validateUniqueName(FacesContext context, UIComponent component, Object value) {
         AcademicoDao academicoDao = new AcademicoDao();
         if (academicoDao.userExist(value.toString())) {
@@ -185,12 +322,11 @@ public class RegistroController implements Serializable {
                     "El academico ya existe, escriba otro.");
             throw new ValidatorException(msg);
         }
-    }    
-    
-    
-    public void validateUniqueNumAca(FacesContext context, UIComponent component, Object value) {
-        AcademicoDao academicoDao = new AcademicoDao();
-        if (academicoDao.userNoTrabajador(value.toString())) {
+    }
+
+    public void validateUniqueNumAdmin(FacesContext context, UIComponent component, Object value) {
+        AdministradorDao administradorDao = new AdministradorDao();
+        if (administradorDao.userNoTrabajador(value.toString())) {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "Ya existe un Acádemico con ese número, ingresar otro.",
                     "Ya existe un Acádemico con ese número, ingresar otro.");
@@ -208,6 +344,16 @@ public class RegistroController implements Serializable {
     public void validateUniqueEmail(FacesContext context, UIComponent component, Object value) {
         AcademicoDao academicoDao = new AcademicoDao();
         if (academicoDao.mailExist((String) value)) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "El correo que intenta dar ya está registrado, escriba otro.",
+                    "El correo que intenta dar ya está registrado, escriba otro.");
+            throw new ValidatorException(msg);
+        }
+    }
+
+    public void validateUniqueEmailAdmin(FacesContext context, UIComponent component, Object value) {
+        AdministradorDao administradorDao = new AdministradorDao();
+        if (administradorDao.mailExist((String) value)) {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "El correo que intenta dar ya está registrado, escriba otro.",
                     "El correo que intenta dar ya está registrado, escriba otro.");
@@ -238,6 +384,10 @@ public class RegistroController implements Serializable {
         this.departamento = null;
         this.noTrabajador = null;
         this.tipoProfesor = null;
+        this.capacidad = 0;
+        this.edificio = null;
+        this.piso = 0;
+        this.recursos = null;
     }
 
 }
