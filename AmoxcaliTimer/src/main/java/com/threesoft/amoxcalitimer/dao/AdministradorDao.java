@@ -13,30 +13,30 @@ import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.threesoft.amoxcalitimer.models.Academico;
+import com.threesoft.amoxcalitimer.models.Administrador;
 //import mx.unam.is20191.utils.Rol;
 
 /**
  * Clase que implementa las operaciones con la base de datos en lo que respecta
- * a la entidad de Academico.
+ * a la entidad de Administrador.
  *
  * @author Josué Cárdenas
  */
-public class AcademicoDao extends AbstractDao<Long, Academico> {
+public class AdministradorDao extends AbstractDao<Long, Administrador> {
 
     /**
-     * Método que busca a un Academico en la base por correo o por email.
+     * Método que busca a un Administrador en la base por correo o por email.
      *
-     * @param userOrEmail Es el correo o el email del Academico.
-     * @return El Academico que se encontró en la base de datos o, en caso de no
+     * @param userOrEmail Es el correo o el email del Administrador.
+     * @return El Administrador que se encontró en la base de datos o, en caso de no
      * encontrarse, regresa un null.
      */
-    public Academico searchByUserNameOrEmail(String userOrEmail) {
+    public Administrador searchByUserNameOrEmail(String userOrEmail) {
         CriteriaBuilder cb = createCriteriaBuilder();
-        CriteriaQuery<Academico> crit = createCriteriaQuery(cb);
-        Root<Academico> r = createRoot(crit);
-        return searchByExpressionUnique(crit, r, cb.or(cb.equal(r.get("correoAca"), userOrEmail),
-                cb.equal(r.get("userName"), userOrEmail)));
+        CriteriaQuery<Administrador> crit = createCriteriaQuery(cb);
+        Root<Administrador> r = createRoot(crit);
+        return searchByExpressionUnique(crit, r, cb.or(cb.equal(r.get("correoAdmin"), userOrEmail),
+                cb.equal(r.get("noTrabajador"), userOrEmail)));
     }
 
     /**
@@ -47,61 +47,61 @@ public class AcademicoDao extends AbstractDao<Long, Academico> {
      */
     public boolean mailExist(String email) {
         CriteriaBuilder cb = createCriteriaBuilder();
-        CriteriaQuery<Academico> crit = createCriteriaQuery(cb);
-        Root<Academico> r = createRoot(crit);
-        return this.count(cb.equal(r.get("correoAca"), email)) > 0;
+        CriteriaQuery<Administrador> crit = createCriteriaQuery(cb);
+        Root<Administrador> r = createRoot(crit);
+        return this.count(cb.equal(r.get("correoAdmin"), email)) > 0;
     }
 
     /**
-     * Método que revisa si un Academico existe en la base de datos.
+     * Método que revisa si un Administrador existe en la base de datos.
      *
-     * @param user Es el Academico a buscar en la base.
+     * @param user Es el Administrador a buscar en la base.
      * @return True si es que existe y false en otro caso.
      */
     public boolean userExist(String user) {
         CriteriaBuilder cb = createCriteriaBuilder();
-        CriteriaQuery<Academico> crit = createCriteriaQuery(cb);
-        Root<Academico> r = createRoot(crit);
+        CriteriaQuery<Administrador> crit = createCriteriaQuery(cb);
+        Root<Administrador> r = createRoot(crit);
         return this.count(cb.equal(r.get("nombreCompleto"), user)) > 0;
     }
 
     /**
-     * Método que revisa si un Academico existe en la base de datos.
+     * Método que revisa si un Administrador existe en la base de datos.
      *
-     * @param userName Es el Academico a buscar en la base.
+     * @param userName Es el Administrador a buscar en la base.
      * @return True si es que existe y false en otro caso.
      */
     public boolean userNameExist(String userName) {
         CriteriaBuilder cb = createCriteriaBuilder();
-        CriteriaQuery<Academico> crit = createCriteriaQuery(cb);
-        Root<Academico> r = createRoot(crit);
+        CriteriaQuery<Administrador> crit = createCriteriaQuery(cb);
+        Root<Administrador> r = createRoot(crit);
         return this.count(cb.equal(r.get("userName"), userName)) > 0;
     }
 
     /**
-     * Método que revisa si un Academico existe en la base de datos.
+     * Método que revisa si un Administrador existe en la base de datos.
      *
-     * @param noTrabajador Es el Academico a buscar en la base.
+     * @param noTrabajador Es el Administrador a buscar en la base.
      * @return True si es que existe y false en otro caso.
      */
     public boolean userNoTrabajador(String noTrabajador) {
         CriteriaBuilder cb = createCriteriaBuilder();
-        CriteriaQuery<Academico> crit = createCriteriaQuery(cb);
-        Root<Academico> r = createRoot(crit);
+        CriteriaQuery<Administrador> crit = createCriteriaQuery(cb);
+        Root<Administrador> r = createRoot(crit);
         long a = this.count(cb.equal(r.get("noTrabajador"), noTrabajador));
         System.out.println("Num Trabajadores: "+ a);
         return a > 0;
     }
 
     /**
-     * Método que regresa todos los Academicos en el sistema.
+     * Método que regresa todos los Administradors en el sistema.
      *
-     * @return La lista que contiene a todos los Academicos encontrados.
+     * @return La lista que contiene a todos los Administradors encontrados.
      */
-    public List<Academico> getAll() {
+    public List<Administrador> getAll() {
         CriteriaBuilder cb = createCriteriaBuilder();
-        CriteriaQuery<Academico> crit = createCriteriaQuery(cb);
-        Root<Academico> r = createRoot(crit);
+        CriteriaQuery<Administrador> crit = createCriteriaQuery(cb);
+        Root<Administrador> r = createRoot(crit);
 
         return this.findAll(crit, r, cb.asc(r.get("nombreCompleto")));
     }

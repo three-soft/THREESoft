@@ -19,7 +19,7 @@
         <ui:define name="body">
             <h:body>
                 <div style="width: 40%; align-content: center; margin-right: 30%; margin-left: 30%; margin-top: 50px;">
-                    <h3>Registro</h3>
+                    <h3>Registro Administrador</h3>
                     <h:form>
                         <f:metadata>
                             <f:viewAction action="#{registroController.clear}" />
@@ -32,7 +32,7 @@
                                 <div class="col">
                                     <label>Nombre Completo</label>
                                     <p:inputText class="form-control" id="nombreCompletoAca" value="${registroController.nombreCompleto}" 
-                                                 validator="${registroController.validateUniqueName}"
+                                                 validator="${registroController.validateUniqueNameAdmin}"
                                                  placeholder="Nombre Completo" required="true" requiredMessage="El nombre es necesario">
                                         <p:ajax event="blur" update="nombreRequerido"/>
                                     </p:inputText>
@@ -42,47 +42,16 @@
                             <div class="form-row">
                                 <label>Número de trabajador</label>
                                 <p:inputText type="number" class="form-control" id="numTraAca" value="${registroController.noTrabajador}" 
-                                             validator="${registroController.validateUniqueNumAca}"
+                                             validator="${registroController.validateUniqueNumAdmin}"
                                              placeholder="Número de trabajador" required="true" requiredMessage="El No. de Trabajador es necesario">
                                     <p:ajax event="blur" update="numero"/>
                                 </p:inputText>
                                 <p:message for="numTraAca" id="numero"/>
                             </div>
-                            <div class="form-row">
-                                <div class="col">
-                                    <label>Departamento</label>
-                                    <p:inputText type="text" class="form-control" id="deptoAca" 
-                                                 value="${registroController.departamento}" 
-                                                 requiredMessage="Es necesario un departamento."
-                                                 placeholder="Departamento" required="true">
-                                        <p:ajax event="blur" update="depto"/>
-                                    </p:inputText>
-
-                                    <p:message for="deptoAca" id="depto"/>
-                                </div>                              
-                                <div class="col">
-                                    <label>Tipo de Profesor</label>
-                                    <p:inputText type="text" class="form-control" id="tipoAca" 
-                                                 value="${registroController.tipoProfesor}" 
-                                                 requiredMessage="Es necesaro un tipo de profesor."
-                                                 placeholder="Tipo de profesor" required="true">
-                                        <p:ajax event="blur" update="tipo"/>
-                                    </p:inputText>
-                                    <p:message for="tipoAca" id="tipo"/>
-                                </div>
-                            </div>                                                        
                             <div class="form-group">
-                                <label>Username</label>
-                                <p:inputText type="text" class="form-control" id="userName" value="${registroController.userName}"
-                                             validator="${registroController.validateUniqueUserName}" requiredMessage="Ingresar un Alias propio."
-                                             placeholder="Un alias" required="true">
-                                    <p:ajax event="blur" update="username"/>
-                                </p:inputText>
-                                <p:message for="userName" id="username"/>
-
                                 <label>Correo</label>
                                 <p:inputText type="email" class="form-control" id="correoAca" value="${registroController.correo}" 
-                                             validator="${registroController.validateUniqueEmail}" requiredMessage="Igresa un correo con extensión @ciencias.unam.mx"
+                                             validator="${registroController.validateUniqueEmailAdmin}" requiredMessage="Igresa un correo con extensión @ciencias.unam.mx"
                                              placeholder="correo@ciencias.unam.mx" required="true">
                                     <p:ajax event="blur" update="correo"/>
                                 </p:inputText>
@@ -97,11 +66,9 @@
                                 <p:message for="password" id="contrasenia"/>
 
                             </div>
-                            <p:commandButton action="#{registroController.registrarAcademico()}" ajax="false"
-                                             class="btn btn-outline-warning btn-block" value="Registrarse" update="form"/>
+                            <p:commandButton action="#{registroController.registrarAdministrador()}" ajax="false"
+                                             class="btn btn-outline-warning btn-block" value="Registrar" update="form"/>
                         </div>
-                        <div id="iniciarSesion" style="padding-top: 20px;"/>
-                        Iniciar Sesión  <a href="/AmoxcaliTimer/"> Ingresar </a>
                     </h:form>                    
                 </div>
             </h:body>

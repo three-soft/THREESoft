@@ -31,7 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Administrador.findByIdAdministrador", query = "SELECT a FROM Administrador a WHERE a.idAdministrador = :idAdministrador")
     , @NamedQuery(name = "Administrador.findByNombreCompleto", query = "SELECT a FROM Administrador a WHERE a.nombreCompleto = :nombreCompleto")
     , @NamedQuery(name = "Administrador.findByCorreoAdmin", query = "SELECT a FROM Administrador a WHERE a.correoAdmin = :correoAdmin")
-    , @NamedQuery(name = "Administrador.findByPassword", query = "SELECT a FROM Administrador a WHERE a.password = :password")})
+    , @NamedQuery(name = "Administrador.findByPassword", query = "SELECT a FROM Administrador a WHERE a.password = :password")
+    , @NamedQuery(name = "Administrador.findByNoTrabajador", query = "SELECT a FROM Administrador a WHERE a.noTrabajador = :noTrabajador")})
 public class Administrador implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,6 +56,10 @@ public class Administrador implements Serializable {
     @Size(min = 1, max = 210)
     @Column(name = "password", nullable = false, length = 210)
     private String password;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "no_trabajador", nullable = false)
+    private long noTrabajador;
 
     public Administrador() {
     }
@@ -63,11 +68,12 @@ public class Administrador implements Serializable {
         this.idAdministrador = idAdministrador;
     }
 
-    public Administrador(Long idAdministrador, String nombreCompleto, String correoAdmin, String password) {
+    public Administrador(Long idAdministrador, String nombreCompleto, String correoAdmin, String password, long noTrabajador) {
         this.idAdministrador = idAdministrador;
         this.nombreCompleto = nombreCompleto;
         this.correoAdmin = correoAdmin;
         this.password = password;
+        this.noTrabajador = noTrabajador;
     }
 
     public Long getIdAdministrador() {
@@ -100,6 +106,14 @@ public class Administrador implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public long getNoTrabajador() {
+        return noTrabajador;
+    }
+
+    public void setNoTrabajador(long noTrabajador) {
+        this.noTrabajador = noTrabajador;
     }
 
     @Override
