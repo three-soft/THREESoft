@@ -83,16 +83,18 @@
                                 <label>Correo</label>
                                 <p:inputText type="email" class="form-control" id="correoAca" value="${registroController.correo}" 
                                              validator="${registroController.validateUniqueEmail}" requiredMessage="Igresa un correo con extensión @ciencias.unam.mx"
-                                             placeholder="correo@ciencias.unam.mx" required="true">
+                                             placeholder="correo@ciencias.unam.mx" required="true" validatorMessage="Igresa un correo con extensión @ciencias.unam.mx">
+                                    <f:validateRegex pattern="[a-z0-9._%+-]+@ciencias.unam.mx"/>
                                     <p:ajax event="blur" update="correo"/>
                                 </p:inputText>
                                 <p:message for="correoAca" id="correo"/>
 
                                 <label>Contraseña</label>
                                 <p:inputText type="password" class="form-control" id="password" value="${registroController.password}" 
-                                             requiredMessage="Ingresa un contraseña"
+                                             requiredMessage="Ingresa un contraseña" validatorMessage="Mínimo 8 caracteres"
                                              placeholder="contraseña" required="true">
                                     <p:ajax event="blur" update="contrasenia"/>
+                                    <f:validateLength minimum="8"/>
                                 </p:inputText>
                                 <p:message for="password" id="contrasenia"/>
 

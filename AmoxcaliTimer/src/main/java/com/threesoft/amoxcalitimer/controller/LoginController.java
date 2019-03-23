@@ -18,7 +18,9 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import com.threesoft.amoxcalitimer.dao.AcademicoDao;
+import com.threesoft.amoxcalitimer.dao.AdministradorDao;
 import com.threesoft.amoxcalitimer.models.Academico;
+import com.threesoft.amoxcalitimer.models.Administrador;
 
 /**
  * Controlador que implmenta las acciones relacionadas con el inicio de sesión
@@ -66,22 +68,34 @@ public class LoginController implements Serializable {
      *
      */
     public void loginUser() {
-        AcademicoDao usuarioDao = new AcademicoDao();
-        Academico u = usuarioDao.searchByUserNameOrEmail(userName);
         try {
-            if (u == null || !u.getPassword().equals(password)) {
+            AcademicoDao academicoDao = new AcademicoDao();
+            Academico aca = academicoDao.searchByUserNameOrEmail(userName);
+            if (aca == null || !aca.getPassword().equals(password)) {
                 FacesContext.getCurrentInstance().addMessage("messages",
-                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario y/o Contraseña incorrectos.", ""));
-            } else {
-                if (u.getFechaActivacion() == null) {//cambiar línea de comparación por "!="
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario y/o contraseña incorrectos.", ""));
+            } else if (aca != null || aca.getPassword().equals(password)) {
+                if (aca.getFechaActivacion() == null) {//cambiar línea de comparación por "!="
                     FacesContext context = FacesContext.getCurrentInstance();
-                    context.getExternalContext().getSessionMap().put("user", u);
+                    context.getExternalContext().getSessionMap().put("Academico", aca);
                     ExternalContext eContext = context.getExternalContext();
                     eContext.redirect(eContext.getRequestContextPath() + "/views/academico/solicitar_espacio.xhtml");
                 }
                 FacesContext.getCurrentInstance().addMessage("messages",
                         new FacesMessage(FacesMessage.SEVERITY_ERROR,
                                 "Tu cuenta aun no ha sido verificada, intenta en otro momento", ""));
+            }
+            AdministradorDao administradorDao = new AdministradorDao();
+            Administrador admin = administradorDao.searchByUserNameOrEmail(userName);
+            if (admin == null || !admin.getPassword().equals(password)) {
+                FacesContext.getCurrentInstance().addMessage("messages",
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario y/o contraseña incorrectos.", ""));
+
+            } else if (admin != null || admin.getPassword().equals(password)) {
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.getExternalContext().getSessionMap().put("Administrador", admin);
+                ExternalContext eContext = context.getExternalContext();
+                eContext.redirect(eContext.getRequestContextPath() + "/views/administrador/ver_historial_espacios.xhtml");
             }
         } catch (IOException ex) {
             FacesContext.getCurrentInstance().addMessage("messages",
@@ -92,7 +106,7 @@ public class LoginController implements Serializable {
     /**
      * Método que cierra la sesión de un Academico.
      */
-    public void logoutUser(){
+    public void logoutUser() {
         try {
             System.out.println("Cerrando Sesión");
             FacesContext context = FacesContext.getCurrentInstance();
@@ -112,9 +126,9 @@ public class LoginController implements Serializable {
         }
     }
 
-    public void clear(){
+    public void clear() {
         this.password = null;
         this.userName = null;
     }
-    
+
 }

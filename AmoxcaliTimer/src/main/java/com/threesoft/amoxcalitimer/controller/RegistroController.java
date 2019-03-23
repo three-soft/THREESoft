@@ -106,7 +106,7 @@ public class RegistroController implements Serializable {
         this.password = password;
     }
 
-    public String getEdificio(){
+    public String getEdificio() {
         return this.edificio;
     }
 
@@ -137,9 +137,7 @@ public class RegistroController implements Serializable {
     public void setPiso(int piso) {
         this.piso = piso;
     }
-    
-    
-    
+
     public RegistroController() {
         this.nombreCompleto = null;
         this.correo = null;
@@ -226,7 +224,7 @@ public class RegistroController implements Serializable {
         }
     }
 
-       /**
+    /**
      * Método que registra al espacio con el formulario ya validado.
      *
      */
@@ -260,7 +258,7 @@ public class RegistroController implements Serializable {
                             "Por el momento no podemos agregar su registro al sistema, inténtelo más tarde."));
         }
     }
-    
+
     //Ejemplo para algunos casos que se necesitaran para validar.
     public void validatePassword(FacesContext context, UIComponent component, Object value) {
         // Retrieve the value passed to this method
@@ -303,7 +301,7 @@ public class RegistroController implements Serializable {
         }
     }
 
-        public void validateUniqueNameEspacio(FacesContext context, UIComponent component, Object value) {
+    public void validateUniqueNameEspacio(FacesContext context, UIComponent component, Object value) {
         EspacioDao espacioDao = new EspacioDao();
         if (espacioDao.userExist(value.toString())) {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -313,7 +311,6 @@ public class RegistroController implements Serializable {
         }
     }
 
-    
     public void validateUniqueName(FacesContext context, UIComponent component, Object value) {
         AcademicoDao academicoDao = new AcademicoDao();
         if (academicoDao.userExist(value.toString())) {
@@ -327,6 +324,16 @@ public class RegistroController implements Serializable {
     public void validateUniqueNumAdmin(FacesContext context, UIComponent component, Object value) {
         AdministradorDao administradorDao = new AdministradorDao();
         if (administradorDao.userNoTrabajador(value.toString())) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Ya existe un Administrador con ese número, ingresar otro.",
+                    "Ya existe un Administrador con ese número, ingresar otro.");
+            throw new ValidatorException(msg);
+        }
+    }
+
+    public void validateUniqueNumAca(FacesContext context, UIComponent component, Object value) {
+        AcademicoDao academicoDao = new AcademicoDao();
+        if (academicoDao.userNoTrabajador(value.toString())) {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "Ya existe un Acádemico con ese número, ingresar otro.",
                     "Ya existe un Acádemico con ese número, ingresar otro.");
@@ -344,6 +351,7 @@ public class RegistroController implements Serializable {
     public void validateUniqueEmail(FacesContext context, UIComponent component, Object value) {
         AcademicoDao academicoDao = new AcademicoDao();
         if (academicoDao.mailExist((String) value)) {
+            validateUniqueEmailAdmin(context, component, value);
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "El correo que intenta dar ya está registrado, escriba otro.",
                     "El correo que intenta dar ya está registrado, escriba otro.");

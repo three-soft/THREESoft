@@ -34,9 +34,9 @@
             </div>
         </header>
 
-        <p:outputPanel  rendered="${not empty user}" >
+        <p:outputPanel rendered="${not empty Administrador}">
             <div id="mySidenav" class="sidenav">
-                <a href="../administrador/registro_administrador.xhtml" >Registrar Administrador</a>
+                <a href="../administrador/registro_administrador.xhtml">Registrar Administrador</a>
                 <a href="../administrador/registro_espacio.xhtml" >Registrar Espacio</a>
             </div>
         </p:outputPanel>
@@ -44,8 +44,8 @@
         <nav class="navbar navbar-light bg-light justify-content-between" >
             <a class="navbar-brand"></a>
             <form class="form-inline">
-                <h:button  id="menu" class="btn btn-info" onclick="openNav()" value="Menú" rendered="${not empty user}"/>
-                <h:button class="btn btn-danger" id="cerrar-sesion" value="Cerrar sesión"  outcome="/views/general/cerrar_sesion.xhtml" rendered="${not empty user}"/>
+                <h:button  id="menu" class="btn btn-info" onclick="openNav()" value="Menú" rendered="${(not empty Academico) or (not empty Administrador)}"/>
+                <h:button class="btn btn-danger" id="cerrar-sesion" value="Cerrar sesión"  outcome="/views/general/cerrar_sesion.xhtml" rendered="${(not empty Academico) or (not empty Administrador)}"/>
             </form>
         </nav>
         <ui:insert name="body"/>
