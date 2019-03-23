@@ -9,6 +9,7 @@ package com.threesoft.amoxcalitimer.controller;
  *
  * @author damianri
  */
+import com.threesoft.amoxcalitimer.Correo;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -173,7 +174,7 @@ public class RegistroController implements Serializable {
             academicoDao.getEntityManager().getTransaction().begin();
             academicoDao.save(nuevoAcademico);
             academicoDao.getEntityManager().getTransaction().commit();
-            //Mail.mandarLinkDeRegistro(nuevoAcademico.getCorreoCiencias(), nuevoAcademico.getNombreCompleto(), confirm.getToken());
+            Correo.correoDeRegistro(nuevoAcademico.getCorreoAca(), nuevoAcademico.getNombreCompleto());
             FacesContext.getCurrentInstance().addMessage("messages",
                     new FacesMessage(FacesMessage.SEVERITY_INFO,
                             "Tu registro se generó correctamente, espera correo de confirmación de alta.",
@@ -207,11 +208,11 @@ public class RegistroController implements Serializable {
             administradorDao.getEntityManager().getTransaction().begin();
             administradorDao.save(nuevoAdministrador);
             administradorDao.getEntityManager().getTransaction().commit();
-            //Mail.mandarLinkDeRegistro(nuevoAcademico.getCorreoCiencias(), nuevoAcademico.getNombreCompleto(), confirm.getToken());
+            Correo.correoDeActivacionAdmin(nuevoAdministrador.getCorreoAdmin(), nuevoAdministrador.getNombreCompleto(), nuevoAdministrador.getPassword());
             FacesContext.getCurrentInstance().addMessage("messages",
                     new FacesMessage(FacesMessage.SEVERITY_INFO,
-                            "Tu registro se generó correctamente, nuevo administrador.",
-                            "Tu registro se generó correctamente, nuevo administrador."));
+                            "El registro se lleneró correctamente, le llegará un correo al nuevo administrador.",
+                            "El registro se lleneró correctamente, le llegará un correo al nuevo administrador."));
             FacesContext context = FacesContext.getCurrentInstance();
             context.getExternalContext().getFlash().setKeepMessages(true);
             ExternalContext eContext = context.getExternalContext();
@@ -242,7 +243,6 @@ public class RegistroController implements Serializable {
             espacioDao.getEntityManager().getTransaction().begin();
             espacioDao.save(nuevoEspacio);
             espacioDao.getEntityManager().getTransaction().commit();
-            //Mail.mandarLinkDeRegistro(nuevoAcademico.getCorreoCiencias(), nuevoAcademico.getNombreCompleto(), confirm.getToken());
             FacesContext.getCurrentInstance().addMessage("messages",
                     new FacesMessage(FacesMessage.SEVERITY_INFO,
                             "Tu registro se generó correctamente, nuevo administrador.",

@@ -83,7 +83,7 @@
                                 <label>Correo</label>
                                 <p:inputText type="email" class="form-control" id="correoAca" value="${registroController.correo}" 
                                              validator="${registroController.validateUniqueEmail}" requiredMessage="Igresa un correo con extensión @ciencias.unam.mx"
-                                             placeholder="correo@ciencias.unam.mx" required="true" validatorMessage="Igresa un correo con extensión @ciencias.unam.mx">
+                                             placeholder="correo@ciencias.unam.mx" required="true" validatorMessage="Ingresa otro correo o uno con extensión @ciencias.unam.mx">
                                     <f:validateRegex pattern="[a-z0-9._%+-]+@ciencias.unam.mx"/>
                                     <p:ajax event="blur" update="correo"/>
                                 </p:inputText>
