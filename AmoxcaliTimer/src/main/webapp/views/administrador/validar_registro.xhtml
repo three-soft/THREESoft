@@ -6,37 +6,107 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <ui:composition template="/views/plantilla.xhtml">
+    <ui:composition template="../plantilla.xhtml">
         <ui:define name="head">
-            <title>Registro</title>
+            <title>Validar Registros</title>
             <meta charset="utf-8"/>
-            <link rel="stylesheet" type="text/css" href="css/plantilla.css"></link>
-            <link rel="icon" href="imagenes/clock-regular.svg"/>
+            <link rel="stylesheet" type="text/css" href="/css/plantilla.css"></link>
+            <link rel="icon" href="/imagenes/clock-regular.svg"/>
+            <link rel="stylesheet" type="text/css" href="../css/validar_registro.css"></link>
             <link rel="stylesheet" type="text/css" href="css/inicioSesion.css"></link>
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
+            <style>
 
+                #container{
+                    width: 50%;
+                    margin: auto;
+                    padding: 5px;
+                    padding-top: 10px;
+                    min-width: 700px;
+                }
+                h3{
+                    background-color: #0e253d;
+                    color: white;
+                    padding: 15px;
+                    border-radius: 5px;
+                }
+                .panelGrid{
+                    background-color: background;
+                    width: 100%;
+                    border-radius: 10px;
+                    margin: auto;
+                    min-width: 700px;
+                }
+                .ui-button{
+                    background-color: white;
+                }
+                
+                .ui-datalist-item{
+                    padding: 15px 5px 20px;
+                    border-width: medium;
+                }
+
+                #listaAcademicos_content{
+                    border: 0px;
+                }
+                tbody tr td{
+                    padding: 7px;
+                }
+                .info-tag{
+                    color: white;
+                    padding: 2px 10px;
+                    border-radius: 3px;
+                    background-color: #4f6071;
+                }
+                .info{
+                    color: black;
+                    border-radius: 5px;
+                    padding: 5px;
+                }
+                td td + td{
+                    color: white;
+                    border-bottom: 2px solid #f4a0a8;
+                }
+                ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-danger btn-block{
+                    background-color: #eb5160;
+                }
+
+            </style>
         </ui:define>
         <ui:define name="body">
             <h:body>
-                <p:dataList id="listaAcademicos" class="academicos" value="#{validarRegistroController.academicos}" var="academico" type="definition" 
-                            emptyMessage="No se encontraron materiales con esa búsqueda.">
-                    <h:panelGrid class="panelGrid" columns="1" cellpadding = "15">
-                        <p:outputPanel>
-                            <h:panelGrid columns="2" cellpadding="2px" class="prestar">
-                                <h:outputText value="Nombre Completo" class="info-tag"/>
-                                <h:outputText value="#{academico.nombreCompleto}" class="info"/>
-                                <h:outputText value="Correo:" class="info-tag"/>
-                                <h:outputText value="#{academico.correoAca}" class="info"/>
-                                <h:outputText value="Número Trabajador" class="info-tag"/>
-                                <h:outputText value="#{academico.noTrabajador}" class="info"/>
-                                <h:outputText value="Departamento" class="info-tag"/>
-                                <h:outputText value="#{academico.departamento}" class="info"/>
-                                <h:outputText value="Tipo de Profesor" class="info-tag"/>
-                                <h:outputText value="#{academico.tipo}" class="info"/>
-                            </h:panelGrid>
-                        </p:outputPanel>
-                    </h:panelGrid>
-                </p:dataList>
+                <div id="container">
+                    <h3>Validar Registros</h3>
+                    <p:dataList id="listaAcademicos" class="academicos" value="#{validarRegistroController.academicos}" var="academico" type="definition" 
+                                emptyMessage="No se encontraron materiales con esa búsqueda.">
+                        <h:panelGrid class="panelGrid" columns="2">
+                            <p:outputPanel>
+                                <h:panelGrid columns="3" class="registro">
+                                    <h:outputText value="Nombre Completo:" class="info-tag"/>
+                                    <h:outputText value="#{academico.nombreCompleto}" class="info"/>
+                                    <input type="checkbox" name="nombrecompleto" value="ON" />
+                                    <h:outputText value="Correo:" class="info-tag"/>
+                                    <h:outputText value="#{academico.correoAca}" class="info"/>
+                                    <input type="checkbox" name="correo" value="ON" />
+                                    <h:outputText value="Número Trabajador:" class="info-tag"/>
+                                    <h:outputText value="#{academico.noTrabajador}" class="info"/>
+                                    <input type="checkbox" name="numtrabajador" value="ON" />
+                                    <h:outputText value="Departamento:" class="info-tag"/>
+                                    <h:outputText value="#{academico.departamento}" class="info"/>
+                                    <input type="checkbox" name="depa" value="ON" />
+                                    <h:outputText value="Tipo de Profesor:" class="info-tag"/>
+                                    <h:outputText value="#{academico.tipo}" class="info"/>
+                                    <input type="checkbox" name="tipo" value="ON" />
+                                </h:panelGrid>
+                            </p:outputPanel>
+                            <p:commandButton  class="btn btn-sm  btn-outline-primary" value="Validar"
+                                              actionListener="#{validarRegistroController.validarRegistro()}"
+                                              icon="fa fa-plus">
+                                <f:attribute name="academico" value="#{academico}"></f:attribute>
+                            </p:commandButton>
+                        </h:panelGrid>
+                    </p:dataList>
+                </div>
 
             </h:body>
         </ui:define>

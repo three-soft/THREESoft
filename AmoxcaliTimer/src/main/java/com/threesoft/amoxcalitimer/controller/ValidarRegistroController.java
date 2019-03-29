@@ -12,26 +12,30 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 
 /**
  *
  * @author damianri
  */
-
 @ManagedBean
 @ViewScoped
 public class ValidarRegistroController implements Serializable {
+
     private List<Academico> academicos;
 
     public List<Academico> getAcademicos() {
         AcademicoDao academicos = new AcademicoDao();
         return academicos.getAll();
-        
+
     }
 
     public void setAcademicos(List<Academico> academicos) {
         this.academicos = academicos;
     }
-    
+
+    public void validarRegistro(ActionEvent event) throws Exception {
+        System.out.println("Validando registro");
+    }
     
 }

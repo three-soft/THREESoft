@@ -14,11 +14,64 @@
             <link rel="icon" href="imagenes/clock-regular.svg"/>
             <link rel="stylesheet" type="text/css" href="css/inicioSesion.css"></link>
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
+            <style>
+                #container{
+                    width: 50%;
+                    margin: auto;
+                    min-width: 500px;
+                    padding: 20px;
+                    background-color: #e9edde;
+                    border-radius: 10px;
+                    margin-top: 20px;
+                }
 
+                h3{
+                    background-color: #0e253d;
+                    padding: 10px;
+                    border-radius: 5px;
+                    color: white;
+                }
+
+                .ui-button{
+                    padding: 10px;
+                    background-color: #aaaaaa;
+                    border: #aaaaaa;
+                    color: #0e253d;
+                }
+
+                #enlace-inicio{
+                    padding: 10px;
+                }
+
+                .form-group{
+                    padding: 10px 10px;
+                }
+                label{
+                    padding-top: 5px;
+                }
+
+                .ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield{
+                    box-shadow: none;
+                }
+
+                #a-ingresar{
+                    background-color: #eb5160;
+                    border-radius: 3px;
+                    padding: 0px 10px;
+                    color: white;
+                    opacity: 0.7;
+                    transition: 0.2s;
+                }
+
+                #a-ingresar:hover{
+                    opacity: 1;
+                    text-decoration: none;
+                }                
+            </style>
         </ui:define>
         <ui:define name="body">
             <h:body>
-                <div style="width: 40%; align-content: center; margin-right: 30%; margin-left: 30%; margin-top: 50px;">
+                <div id="container">
                     <h3>Registro Espacio</h3>
                     <h:form>
                         <f:metadata>
@@ -65,20 +118,17 @@
                                     <p:message for="piso" id="pisoRquerido"/>
                                 </div>
                             </div>
-                            <div class="form-row" style=" margin-bottom: 20px;">
-                                <label>Recursos</label>
-                                <p:inputText class="form-control" id="recursos" value="${registroController.recursos}" 
-                                             requiredMessage="La descripción de recursos es necesaria"
-                                             placeholder="Recursos" required="true">
-                                    <p:ajax event="blur" update="recursosRequeridos"/>
-                                </p:inputText>
-                                <p:message for="recursos" id="recursosRequeridos"/>
-                                <small class="nota form-text text-muted">Recursos con los que cuenta el espacio cultural</small>
-                            </div>
-
-                            <p:commandButton action="#{registroController.registrarEspacio()}" ajax="false"
-                                             class="btn btn-outline-warning btn-block" value="Registrar" update="form"/>
+                            <label>Recursos</label>
+                            <p:inputText class="form-control" id="recursos" value="${registroController.recursos}" 
+                                         requiredMessage="La descripción de recursos es necesaria"
+                                         placeholder="Recursos" required="true">
+                                <p:ajax event="blur" update="recursosRequeridos"/>
+                            </p:inputText>
+                            <p:message for="recursos" id="recursosRequeridos"/>
+                            <small class="nota form-text text-muted">Recursos con los que cuenta el espacio cultural</small>
                         </div>
+                        <p:commandButton action="#{registroController.registrarEspacio()}" ajax="false"
+                                         class="btn btn-outline-warning btn-block" value="Registrar" update="form"/>
 
                     </h:form>                    
                 </div>

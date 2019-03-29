@@ -1,0 +1,50 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 28/03/2019, 12:31:08 AM
+    Author     : damianri
+*/
+
+#container{
+    width: 50%;
+    margin: auto;
+    padding: 5px;
+    padding-top: 10px;
+    min-width: 700px;
+}
+.panelGrid{
+    background-color: background;
+    width: 100%;
+    border-radius: 10px;
+    margin: auto;
+    min-width: 700px;
+}
+.ui-datalist-item{
+    padding: 15px 5px 20px;
+    border-width: medium;
+}
+
+#listaAcademicos_content{
+    border: 0px;
+}
+tbody tr td{
+    padding: 7px;
+}
+.info-tag{
+    color: white;
+    padding: 5px;
+    border-radius: 3px;
+    background-color: slategrey;
+}
+.info{
+    color: black;
+    border-radius: 5px;
+    padding: 5px;
+}
+td td + td{
+    color: white;
+    border-bottom: 2px solid #576066;
+}

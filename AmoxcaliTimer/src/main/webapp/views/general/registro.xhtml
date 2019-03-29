@@ -12,13 +12,64 @@
             <meta charset="utf-8"/>
             <link rel="stylesheet" type="text/css" href="css/plantilla.css"></link>
             <link rel="icon" href="imagenes/clock-regular.svg"/>
-            <link rel="stylesheet" type="text/css" href="css/inicioSesion.css"></link>
+            <link rel="stylesheet" type="text/css" href="/css/inicioSesion.css"></link>
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
+            <style>
+                #container{
+                    width: 50%;
+                    margin: auto;
+                    min-width: 500px;
+                    padding: 20px;
+                    background-color: #e9edde;
+                    border-radius: 10px;
+                    margin-top: 20px;
+                }
+
+                h3{
+                    background-color: #0e253d;
+                    padding: 10px;
+                    border-radius: 5px;
+                    color: white;
+                }
+
+                .ui-button{
+                    padding: 10px;
+                }
+
+                #enlace-inicio{
+                    padding: 10px;
+                }
+
+                .form-group{
+                    padding: 10px 10px;
+                }
+                label{
+                    padding-top: 5px;
+                }
+
+                .ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield{
+                    box-shadow: none;
+                }
+
+                #a-ingresar{
+                    background-color: #eb5160;
+                    border-radius: 3px;
+                    padding: 0px 10px;
+                    color: white;
+                    opacity: 0.7;
+                    transition: 0.2s;
+                }
+
+                #a-ingresar:hover{
+                    opacity: 1;
+                    text-decoration: none;
+                }
+            </style>
 
         </ui:define>
         <ui:define name="body">
             <h:body>
-                <div style="width: 40%; align-content: center; margin-right: 30%; margin-left: 30%; margin-top: 50px;">
+                <div id="container">
                     <h3>Registro</h3>
                     <h:form>
                         <f:metadata>
@@ -100,10 +151,11 @@
 
                             </div>
                             <p:commandButton action="#{registroController.registrarAcademico()}" ajax="false"
-                                             class="btn btn-outline-warning btn-block" value="Registrarse" update="form"/>
+                                             class="btn btn-outline-danger btn-block" value="Registrarse" update="form"/>
                         </div>
-                        <div id="iniciarSesion" style="padding-top: 20px;"/>
-                        Iniciar Sesión  <a href="/AmoxcaliTimer/"> Ingresar </a>
+                        <div id="enlace-inicio">
+                            Iniciar Sesión  <a id="a-ingresar" href="/AmoxcaliTimer/index.xhtml"> Ingresar </a>
+                        </div>
                     </h:form>                    
                 </div>
             </h:body>

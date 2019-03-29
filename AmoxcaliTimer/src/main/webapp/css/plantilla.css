@@ -35,3 +35,23 @@ footer{
 footer ul{
     list-style-type: none;
 }
+
+/*
+Estilos genericos para los input de primefaces
+*/
+.ui-button{
+    padding: 10px;
+    font-family: sans-serif;
+}
+
+.form-group{
+    padding: 10px 10px;
+}
+label{
+    padding-top: 5px;
+}
+
+
+.ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield{
+    box-shadow: none;
+}
