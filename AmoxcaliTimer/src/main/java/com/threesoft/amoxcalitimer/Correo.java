@@ -14,33 +14,38 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-
 /**
  *
  * @author damianri
  */
 public class Correo {
 
-    private final static String EMAIL = "gestordeespaciosculturalesfacu@gmail.com"; 
-    private final static String PASSWORD = "gestordec123";   
+    private final static String EMAIL = "gestordeespaciosculturalesfacu@gmail.com";
+    private final static String PASSWORD = "gestordec123";
     private final static String CORREO_DE_ACTIVACION = "Buen día, %s<br>"
             + "Tu registro ha sido verificado, ahora cuenta con acceso al sistema<br>"
             + "<a href=\"%s\"><b>Gestor de Espacios Culturades</b></a>"
             + ", ahora puede iniciar sesión. <br><br>"
+            + "Administración de Espacios Culturales<br> Facultad de Ciencias";
+    private final static String CORREO_DE_RECHAZO = "Buen día, %s<br>"
+            + "Tu registro ha sido verificado y NO CUMPLIÓ con los estándares para tener acceso al sistema<br>"
+            + "<a href=\"%s\"><b>Gestor de Espacios Culturades</b></a>"
+            + ", puedes intertar de nuevo registrandote: <br>"
+            + "<a href=\"%s\"><b>Registro a Gestor de Espacios Culturades</b></a>. <br><br>"
             + "Administración de Espacios Culturales<br> Facultad de Ciencias";
     private final static String CORREO_DE_REGISTRO = "Buen día, %s<br>"
             + "Tu registro al sistema <br>"
             + "<a href=\"%s\"><b>Gestor de Espacios Culturades</b></a>"
             + " está siendo revisado, por favor espera el correo de aceptación. <br><br>"
             + "Administración de Espacios Culturales<br> Facultad de Ciencias";
-        private final static String CORREO_DE_ADMIN = "Buen día, %s<br>"
+    private final static String CORREO_DE_ADMIN = "Buen día, %s<br>"
             + "Se te ha dado de alta como <b>administrador</b> en el sistema<br>"
             + "<a href=\"%s\"><b>Gestor de Espacios Culturades</b></a>"
             + ", ahora puede iniciar sesión con los siguientes datos: <br>"
             + "Correo: %s<br> Contraseña: %s<br>"
             + "Se recomienda ingresar al sistema y hacer el cambio de contraseña por una personal.<br><br>"
             + "Administración de Espacios Culturales<br> Facultad de Ciencias";
-    
+
     private final static Properties MAIL_SERVER_PROPERTIES;
     private static Session getMailSession;
     private static MimeMessage generateMailMessage;
@@ -56,7 +61,7 @@ public class Correo {
         System.out.println("Mail Server Properties have been setup successfully..");
     }
 
-     public static void correoDeRegistro(String mailDestinatario, String nombreCompletoUsuario) throws AddressException, MessagingException {
+    public static void correoDeRegistro(String mailDestinatario, String nombreCompletoUsuario) throws AddressException, MessagingException {
         // Step2
         System.out.println("\n\n 2nd ===> get Mail Session..");
         getMailSession = Session.getDefaultInstance(MAIL_SERVER_PROPERTIES, null);
@@ -73,15 +78,15 @@ public class Correo {
             transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
         }
     }
-     
-     public static void correoDeActivacion(String mailDestinatario, String nombreCompletoUsuario) throws AddressException, MessagingException {
+
+    public static void correoDeActivacion(String mailDestinatario, String nombreCompletoUsuario) throws AddressException, MessagingException {
         // Step2
         System.out.println("\n\n 2nd ===> get Mail Session..");
         getMailSession = Session.getDefaultInstance(MAIL_SERVER_PROPERTIES, null);
         generateMailMessage = new MimeMessage(getMailSession);
         generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(mailDestinatario));
         //generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress(""));
-        generateMailMessage.setSubject("Gestor de Espacios Culturales. Activación.");
+        generateMailMessage.setSubject("Gestor de Espacios Culturales. Acceso Activado.");
         generateMailMessage.setContent(String.format(CORREO_DE_ACTIVACION, nombreCompletoUsuario, "http://localhost:8084/AmoxcaliTimer/"), "text/html");
         System.out.println("Mail Session has been created successfully..");
         // Step3
@@ -91,16 +96,34 @@ public class Correo {
             transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
         }
     }
-     
-     public static void correoDeActivacionAdmin(String mailDestinatario, String nombreCompletoUsuario,String passwordTemporal) throws AddressException, MessagingException {
+
+    public static void correoDeActivacionAdmin(String mailDestinatario, String nombreCompletoUsuario, String passwordTemporal) throws AddressException, MessagingException {
         // Step2
         System.out.println("\n\n 2nd ===> get Mail Session..");
         getMailSession = Session.getDefaultInstance(MAIL_SERVER_PROPERTIES, null);
         generateMailMessage = new MimeMessage(getMailSession);
         generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(mailDestinatario));
         //generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress(""));
-        generateMailMessage.setSubject("Gestor de Espacios Culturales. Activación.");
+        generateMailMessage.setSubject("Gestor de Espacios Culturales. Acceso Activado.");
         generateMailMessage.setContent(String.format(CORREO_DE_ADMIN, nombreCompletoUsuario, "http://localhost:8084/AmoxcaliTimer/", mailDestinatario, passwordTemporal), "text/html");
+        System.out.println("Mail Session has been created successfully..");
+        // Step3
+        System.out.println("\n\n 3rd ===> Get Session and Send mail");
+        try (Transport transport = getMailSession.getTransport("smtp")) {
+            transport.connect("smtp.gmail.com", EMAIL, PASSWORD);
+            transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
+        }
+    }
+    
+    public static void correoDeRechazo(String mailDestinatario, String nombreCompletoUsuario) throws AddressException, MessagingException {
+        // Step2
+        System.out.println("\n\n 2nd ===> get Mail Session..");
+        getMailSession = Session.getDefaultInstance(MAIL_SERVER_PROPERTIES, null);
+        generateMailMessage = new MimeMessage(getMailSession);
+        generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(mailDestinatario));
+        //generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress(""));
+        generateMailMessage.setSubject("Gestor de Espacios Culturales. Acceso Denegado.");
+        generateMailMessage.setContent(String.format(CORREO_DE_RECHAZO, nombreCompletoUsuario, "http://localhost:8084/AmoxcaliTimer/", "http://localhost:8084/AmoxcaliTimer/views/general/registro.xhtml"), "text/html");
         System.out.println("Mail Session has been created successfully..");
         // Step3
         System.out.println("\n\n 3rd ===> Get Session and Send mail");

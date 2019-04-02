@@ -71,31 +71,34 @@ public class LoginController implements Serializable {
         try {
             AcademicoDao academicoDao = new AcademicoDao();
             Academico aca = academicoDao.searchByUserNameOrEmail(userName);
-            if (aca == null || !aca.getPassword().equals(password)) {
-                FacesContext.getCurrentInstance().addMessage("messages",
-                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario y/o contraseña incorrectos.", ""));
-            } else if (aca != null || aca.getPassword().equals(password)) {
-                if (aca.getFechaActivacion() == null) {//cambiar línea de comparación por "!="
-                    FacesContext context = FacesContext.getCurrentInstance();
-                    context.getExternalContext().getSessionMap().put("Academico", aca);
-                    ExternalContext eContext = context.getExternalContext();
-                    eContext.redirect(eContext.getRequestContextPath() + "/views/academico/solicitar_espacio.xhtml");
+            if (aca != null) {
+                if (!aca.getPassword().equals(password)) {
+                    FacesContext.getCurrentInstance().addMessage("messages",
+                            new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario y/o contraseña incorrectos.", ""));
+                } else {
+                    if (aca.getFechaActivacion() != null) {//cambiar línea de comparación por "!="
+                        FacesContext context = FacesContext.getCurrentInstance();
+                        context.getExternalContext().getSessionMap().put("Academico", aca);
+                        ExternalContext eContext = context.getExternalContext();
+                        eContext.redirect(eContext.getRequestContextPath() + "/views/academico/solicitar_espacio.xhtml");
+                    }
+                    FacesContext.getCurrentInstance().addMessage("messages",
+                            new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                                    "Tu cuenta aun no ha sido verificada, intenta en otro momento", ""));
                 }
-                FacesContext.getCurrentInstance().addMessage("messages",
-                        new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                                "Tu cuenta aun no ha sido verificada, intenta en otro momento", ""));
-            }
-            AdministradorDao administradorDao = new AdministradorDao();
-            Administrador admin = administradorDao.searchByUserNameOrEmail(userName);
-            if (admin == null || !admin.getPassword().equals(password)) {
-                FacesContext.getCurrentInstance().addMessage("messages",
-                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario y/o contraseña incorrectos.", ""));
+            } else {
+                AdministradorDao administradorDao = new AdministradorDao();
+                Administrador admin = administradorDao.searchByUserNameOrEmail(userName);
+                if (admin == null || !admin.getPassword().equals(password)) {
+                    FacesContext.getCurrentInstance().addMessage("messages",
+                            new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario y/o contraseña incorrectos.", ""));
 
-            } else if (admin != null || admin.getPassword().equals(password)) {
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.getExternalContext().getSessionMap().put("Administrador", admin);
-                ExternalContext eContext = context.getExternalContext();
-                eContext.redirect(eContext.getRequestContextPath() + "/views/administrador/ver_historial_espacios.xhtml");
+                } else if (admin != null || admin.getPassword().equals(password)) {
+                    FacesContext context = FacesContext.getCurrentInstance();
+                    context.getExternalContext().getSessionMap().put("Administrador", admin);
+                    ExternalContext eContext = context.getExternalContext();
+                    eContext.redirect(eContext.getRequestContextPath() + "/views/administrador/ver_historial_espacios.xhtml");
+                }
             }
         } catch (IOException ex) {
             FacesContext.getCurrentInstance().addMessage("messages",
