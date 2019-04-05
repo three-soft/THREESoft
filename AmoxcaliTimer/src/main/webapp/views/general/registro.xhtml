@@ -45,6 +45,11 @@
                 .form-group{
                     padding: 10px 10px;
                 }
+                
+                .form-group .form-group{
+                    padding: 10px 0px;
+                }
+                
                 label{
                     padding-top: 5px;
                 }
@@ -66,6 +71,67 @@
                     opacity: 1;
                     text-decoration: none;
                 }
+                
+                .ui-password-panel{
+                    background-color: transparent;
+                    background-image: none;
+                    font-size: inherit;
+                    border: 2px solid #eb5160;
+                    border-radius: 5px;
+                    box-shadow: none;
+                    color: #000;
+                    text-shadow: none;
+                    height: 100px;
+                    text-align: center;
+                    padding-top: 15px;
+                }
+                .ui-password-panel .ui-password-meter{
+                    background-color: #fff;
+                    border: 2px solid #000;
+                    border-radius: 5px;
+                }
+                
+                .ui-selectonemenu-panel{
+                    background-color: #c7d5df;
+                    box-shadow: none;
+                    border: 1px solid;
+                    border-radius: 5px;
+                }
+                
+                .ui-widget .ui-widget{
+                    
+                }
+
+                .ui-widget-content .ui-inputfield.ui-state-focus{
+                    box-shadow: none;
+                    background-image: none;                    
+                    border-radius: 10px;
+                }
+                .ui-selectonemenu{
+                    border: 1px solid #e9edde;
+                    width: 100%;
+                    background-image: none;
+                }
+                .ui-state-hover{
+                    box-shadow: none;
+                    background-image: none;
+                    border: 0px;
+                }
+                
+                .ui-selectonemenu-list-item.ui-state-highlight{
+                    background-color: #8d9ba3;
+                    background-image: none;
+                    color: #000;
+                    text-shadow:none;
+                }
+                .ui-selectonemenu-list-item.ui-state-hover{
+                    background-color: #2f4858;
+                    background-image: none;
+                    color: #fff;
+                    text-shadow:none;
+                }
+                
+                
             </style>
 
         </ui:define>
@@ -84,46 +150,51 @@
                             <label>Nombre Completo</label>
                             <p:inputText class="form-control" id="nombreCompletoAca" value="${registroController.nombreCompleto}" 
                                          validator="${registroController.validateUniqueName}"
-                                         placeholder="Nombre Completo" required="true" requiredMessage="El nombre es necesario">
+                                         placeholder="Nombre Completo" required="true"
+                                         requiredMessage="El nombre es necesario" validatorMessage="Ingresa un nombre diferente o únicamente con letras">
+                                <f:validateRegex pattern="([A-Z][a-záéíóú ]+)+"/>
                                 <p:ajax event="blur" update="nombreRequerido"/>
                             </p:inputText>
                             <p:message for="nombreCompletoAca" id="nombreRequerido"/>
                             <div class="form-row">
                                 <div class="col">
                                     <label>Número de trabajador</label>
-                                    <p:inputText type="number" class="form-control" id="numTraAca" value="${registroController.noTrabajador}" 
-                                                 validator="${registroController.validateUniqueNumAca}"
-                                                 placeholder="Número de trabajador" required="true" requiredMessage="El No. de Trabajador es necesario">
+                                    <p:inputText class="form-control" id="numTraAca" value="${registroController.noTrabajador}" 
+                                                 validator="${registroController.validarNumTrabajador}"
+                                                 placeholder="No. de trabajador" 
+                                                 required="true" requiredMessage="El No. de Trabajador es necesario"
+                                                 validatorMessage="No. en Uso o Longitud inválida">
                                         <p:ajax event="blur" update="numero"/>
+                                        <f:validateRegex pattern="[a-z0-9._%+-]{10,}"/>
                                     </p:inputText>
                                     <p:message for="numTraAca" id="numero"/>
                                 </div>
-                                <div class="col">
+                                <div class="col-5">
                                     <label>Departamento</label>
-                                    <p:inputText type="text" class="form-control" id="deptoAca" 
-                                                 value="${registroController.departamento}" 
-                                                 requiredMessage="Es necesario un departamento."
-                                                 placeholder="Departamento" required="true">
-                                        <p:ajax event="blur" update="depto"/>
-                                    </p:inputText>
+                                    <p:selectOneMenu id="departamento" value="#{registroController.departamento}" filter="true">
+                                        <f:selectItem itemLabel="Ciencias de la Computacion" itemValue="Ciencias de la Computación" />
+                                        <f:selectItem itemLabel="Matematicas" itemValue="Matemáticas" />
+                                        <f:selectItem itemLabel="Fisica" itemValue="Física" />
+                                        <f:selectItem itemLabel="Biologia" itemValue="Biología"/>
+                                        <f:selectItem itemLabel="Actuaria" itemValue="Actuaría"/>
+                                        <f:selectItem itemLabel="Ciencias de la tierra" itemValue="Ciencias de la tierra"/>    
+                                    </p:selectOneMenu>
 
-                                    <p:message for="deptoAca" id="depto"/>
                                 </div>                              
                                 <div class="col">
-                                    <label>Tipo de Profesor</label>
-                                    <p:inputText type="text" class="form-control" id="tipoAca" 
-                                                 value="${registroController.tipoProfesor}" 
-                                                 requiredMessage="Es necesaro un tipo de profesor."
-                                                 placeholder="Tipo de profesor" required="true">
-                                        <p:ajax event="blur" update="tipo"/>
-                                    </p:inputText>
-                                    <p:message for="tipoAca" id="tipo"/>
+                                    <label>Tipo de Académico</label><br/>
+                                    <p:selectOneMenu id="tipoProfesor" value="#{registroController.tipoProfesor}" filter="true">
+                                        <f:selectItem itemLabel="A" itemValue="A" />
+                                        <f:selectItem itemLabel="B" itemValue="B" />
+                                        <f:selectItem itemLabel="C" itemValue="C" />
+                                        <f:selectItem itemLabel="D" itemValue="D"/>
+                                    </p:selectOneMenu>
                                 </div>
                             </div>                                                        
                             <label>Username</label>
                             <p:inputText type="text" class="form-control" id="userName" value="${registroController.userName}"
-                                         validator="${registroController.validateUniqueUserName}" requiredMessage="Ingresar un Alias propio."
-                                         placeholder="Un alias" required="true">
+                                         validator="${registroController.validateUniqueUserName}"
+                                         placeholder="Un alias">
                                 <p:ajax event="blur" update="username"/>
                             </p:inputText>
                             <p:message for="userName" id="username"/>
@@ -137,14 +208,35 @@
                             </p:inputText>
                             <p:message for="correoAca" id="correo"/>
 
-                            <label>Contraseña</label>
-                            <p:inputText type="password" class="form-control" id="password" value="${registroController.password}" 
-                                         requiredMessage="Ingresa un contraseña" validatorMessage="Mínimo 8 caracteres"
-                                         placeholder="contraseña" required="true">
-                                <p:ajax event="blur" update="contrasenia"/>
-                                <f:validateLength minimum="8"/>
-                            </p:inputText>
-                            <p:message for="password" id="contrasenia"/>
+
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon2"><i class="fa fa-key" aria-hidden="true"></i></span>
+                                    </div>
+                                    <p:password class="form-control"  placeholder="Contraseña" required="true" 
+                                                value="${registroController.password}"
+                                                requiredMessage="La contraseña no puede ser vacía" id="password" feedback="true" 
+                                                promptLabel="Favor de ingresar una contraseña"  validatorMessage="Las Contraseñas NO Coinciden"
+                                                weakLabel="Debíl" goodLabel="Buena" strongLabel="¡ Muy Buena !" match="password2">
+                                    </p:password>
+                                </div>
+                                <p:message for="password" id="mPassword"/>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon2"><i class="fa fa-key" aria-hidden="true"></i></span>
+                                    </div>
+                                    <p:password class="form-control"  placeholder="Confirmación de la contraseña" required="true" 
+                                                requiredMessage="Debe ingresar la confirmación de su contraseña" id="password2">
+                                        <p:ajax event="blur" update="mPassword,mPassword2" process="password, password2" />
+                                    </p:password>
+                                </div>
+                                <p:message for="password2" id="mPassword2"/>
+                            </div>
+
                         </div>
                         <p:commandButton action="#{registroController.registrarAcademico()}" ajax="false"
                                          class="btn btn-outline-danger btn-block" value="Registrarse" update="form"/>

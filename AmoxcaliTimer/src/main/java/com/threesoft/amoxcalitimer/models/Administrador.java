@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author damianri
  */
 @Entity
-@Table(name = "administrador", catalog = "postgres", schema = "public")
+@Table(name = "administrador")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Administrador.findAll", query = "SELECT a FROM Administrador a")
@@ -39,27 +39,28 @@ public class Administrador implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_administrador", nullable = false)
+    @Column(name = "id_administrador")
     private Long idAdministrador;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 210)
-    @Column(name = "nombre_completo", nullable = false, length = 210)
+    @Column(name = "nombre_completo")
     private String nombreCompleto;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 210)
-    @Column(name = "correo_admin", nullable = false, length = 210)
+    @Column(name = "correo_admin")
     private String correoAdmin;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 210)
-    @Column(name = "password", nullable = false, length = 210)
+    @Column(name = "password")
     private String password;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "no_trabajador", nullable = false)
-    private long noTrabajador;
+    @Size(min = 1, max = 20)
+    @Column(name = "no_trabajador")
+    private String noTrabajador;
 
     public Administrador() {
     }
@@ -68,7 +69,7 @@ public class Administrador implements Serializable {
         this.idAdministrador = idAdministrador;
     }
 
-    public Administrador(Long idAdministrador, String nombreCompleto, String correoAdmin, String password, long noTrabajador) {
+    public Administrador(Long idAdministrador, String nombreCompleto, String correoAdmin, String password, String noTrabajador) {
         this.idAdministrador = idAdministrador;
         this.nombreCompleto = nombreCompleto;
         this.correoAdmin = correoAdmin;
@@ -108,11 +109,11 @@ public class Administrador implements Serializable {
         this.password = password;
     }
 
-    public long getNoTrabajador() {
+    public String getNoTrabajador() {
         return noTrabajador;
     }
 
-    public void setNoTrabajador(long noTrabajador) {
+    public void setNoTrabajador(String noTrabajador) {
         this.noTrabajador = noTrabajador;
     }
 

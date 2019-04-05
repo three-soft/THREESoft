@@ -80,8 +80,9 @@
                 .ui-outputpanel{
                     padding: 10px;
                 }
-                .panelGrid td td{
-                    padding: 3px
+                td span.info-tag:parent{
+                    background-color: black;
+                    width: 50px;
                 }
 
                 .ui-datalist-content{
@@ -127,26 +128,13 @@
                     font-weight: bold;
                     padding: 5px 5px 15px;
                 }
-                
                 #btones-confirmacion .btn-validador{
                     margin: 40px 20px 10px;
                     width: 20%;
-                    border: 2px;
                 }
-
+                
                 .resgistro{
                     width: 100%;
-                }
-                .ui-dialog{
-                    background-color: #e5e7e6;
-                    border: 2px;
-                    border-radius: 15px;
-                    text-align: center;
-                }
-                .ui-draggable .ui-dialog-titlebar{
-                    background-image: none;
-                    background-color: #f6ae2d;
-                    color: #000;
                 }
 
 
@@ -155,12 +143,12 @@
         <ui:define name="body">
             <h:body>
                 <div id="container">                    
-                    <h3>Validar Registros</h3>
+                    <h3>Académicos Registrados</h3>
                     <h:form class="formulario" id="form">
                         <p:growl for="mensaje-aviso" sticky="true" showDetail="true"/>
-                        <p:dataList id="listaAcademicos" class="academicos" value="#{validarRegistroController.academicos}" var="academico" type="definition"
+                        <p:dataList id="listaAcademicos" class="academicos" value="#{validarRegistroController.validados}" var="academico" type="definition"
                                     emptyMessage="No se encontraron académicos con espera de aceptación.">
-                            <h:panelGrid class="panelGrid" columns="2">
+                            <h:panelGrid class="panelGrid" columns="1">
                                 <p:outputPanel>
                                     <h:panelGrid columns="2" class="resgistro">
                                         <h:outputText value="Nombre Completo:" class="info-tag"/>
@@ -175,25 +163,10 @@
                                         <h:outputText  value="#{academico.tipo}" class="info"/>
                                     </h:panelGrid>
                                 </p:outputPanel>
-                                <p:outputPanel class="btones">
-                                    <p:commandButton  class="btn btn-sm btn-outline-primary btn-validador" value="Aceptar"
-                                                      actionListener="#{validarRegistroController.validarRegistro}"
-                                                      icon="fa fa-check"
-                                                      update="@form" >
-                                        <f:attribute name="academico" value="#{academico}"></f:attribute>
-                                    </p:commandButton>
-
-                                    <p:commandButton value="Denegar" class="btn btn-sm btn-danger btn-validador" 
-                                                     onclick="PF('dlg2').show();" 
-                                                     icon="fa fa-times">
-                                        <f:setPropertyActionListener value="#{academico}" target="#{validarRegistroController.academico}"/>
-                                    </p:commandButton>
-
-                                </p:outputPanel>
                             </h:panelGrid>
                         </p:dataList>
-
-                        <p:dialog header="Denegar" widgetVar="dlg2" modal="true" width="500" closable="true" resizable="false">
+                        
+                        <p:dialog header="Denegar" widgetVar="dlg2" modal="true" width="500" closable="true">
                             <p:ajax event="close" update="growl" listener="#{validarRegistroController.mensajeAviso}" />
                             <div id="msj-confirmacion">
                                 Al <b>Denegar</b> se eliminará la solicitud del académico y este ya no será visible ¿Estás seguro de denegar?                                            
@@ -201,20 +174,20 @@
                             <div id="btones-confirmacion">
                                 <p:commandButton  class="btn btn-sm btn-danger btn-validador" value="Sí"
                                                   action="#{validarRegistroController.setAceptar(true)}"
-                                                  onclick="PF('dlg2').hide();" process="@this" update="@form">
+                                                  onclick="PF('dlg2').hide();" process="@this">
                                     <p:ajax event="click" listener="#{validarRegistroController.denegarRegistro}" update="growl"/>
                                 </p:commandButton>
                                 <p:commandButton value="No" class="btn btn-sm btn-secondary btn-validador" 
                                                  onclick="PF('dlg2').hide();">
                                     <p:ajax event="click" listener="#{validarRegistroController.setAceptar(false)}"/>
                                 </p:commandButton>
-
-
+                                                             
+                                
                             </div>
                         </p:dialog> 
                     </h:form>
                     <p:growl id="growl" sticky="true" showDetail="true" />
-
+                        
                 </div>
 
             </h:body>

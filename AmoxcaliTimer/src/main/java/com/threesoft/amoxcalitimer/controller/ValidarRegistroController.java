@@ -58,6 +58,19 @@ public class ValidarRegistroController implements Serializable {
         return academicosPorValidar;
     }
 
+    public List<Academico> getValidados() {
+        AcademicoDao listaAcademicos;
+        listaAcademicos = new AcademicoDao();
+        List<Academico> todos = listaAcademicos.getAll();
+        List<Academico> academicosValidados = new ArrayList<>();
+        for (Academico aca : todos) {
+            if (aca.getFechaActivacion() != null) {
+                academicosValidados.add(aca);
+            }
+        }
+        return academicosValidados;
+    }
+
     public void setAcademicos(List<Academico> academicos) {
         this.academicos = academicos;
     }
@@ -77,7 +90,7 @@ public class ValidarRegistroController implements Serializable {
     public void setAceptar(boolean aceptar) {
         this.aceptar = aceptar;
     }
-    
+
     public void validarRegistro(ActionEvent event) throws Exception {
         System.out.println("Revisando registro");
         Academico academico = (Academico) event.getComponent().getAttributes().get("academico");

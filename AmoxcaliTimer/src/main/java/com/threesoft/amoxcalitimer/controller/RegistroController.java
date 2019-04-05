@@ -42,8 +42,9 @@ public class RegistroController implements Serializable {
     private String nombreCompleto;
     private String userName;
     private String password;
+    private String confirmPassword;
     private String correo;
-    private Integer noTrabajador;
+    private String noTrabajador;
     private String departamento;
     private String tipoProfesor;
     private String edificio;
@@ -51,11 +52,19 @@ public class RegistroController implements Serializable {
     private String recursos;
     private int piso;
 
-    public Integer getNoTrabajador() {
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+    
+    public String getNoTrabajador() {
         return noTrabajador;
     }
 
-    public void setNoTrabajador(Integer noTrabajador) {
+    public void setNoTrabajador(String noTrabajador) {
         this.noTrabajador = noTrabajador;
     }
 
@@ -166,8 +175,12 @@ public class RegistroController implements Serializable {
             nuevoAcademico.setUserName(userName);
             nuevoAcademico.setPassword(password);
             nuevoAcademico.setNoTrabajador(noTrabajador);
-            nuevoAcademico.setDepartamento(departamento);
-            nuevoAcademico.setTipo(tipoProfesor);
+            if (departamento != null || departamento != "") {
+                nuevoAcademico.setDepartamento(departamento);
+            }
+            if (tipoProfesor != null || tipoProfesor != "") {
+                nuevoAcademico.setTipo(tipoProfesor);
+            }
             nuevoAcademico.setIdAcademico(Long.MIN_VALUE);
 
             AcademicoDao academicoDao = new AcademicoDao();
@@ -341,6 +354,11 @@ public class RegistroController implements Serializable {
         }
     }
 
+    public void validarNumTrabajador(FacesContext context, UIComponent component, Object value){
+        this.validateUniqueNumAca(context, component, value);
+        this.validateUniqueNumAdmin(context, component, value);
+    }
+    
     /**
      * Método que verifica si un email es único.
      *

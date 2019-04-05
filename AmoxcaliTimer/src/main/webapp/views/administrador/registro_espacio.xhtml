@@ -18,7 +18,7 @@
                 #container{
                     width: 50%;
                     margin: auto;
-                    min-width: 500px;
+                    min-width: 600px;
                     padding: 20px;
                     background-color: #e9edde;
                     border-radius: 10px;
@@ -43,6 +43,10 @@
                     padding: 10px;
                 }
 
+                .recursos{
+                    height: 100px;
+                }
+                    
                 .form-group{
                     padding: 10px 10px;
                 }
@@ -66,7 +70,47 @@
                 #a-ingresar:hover{
                     opacity: 1;
                     text-decoration: none;
-                }                
+                }       
+                                .ui-selectonemenu-panel{
+                    background-color: #c7d5df;
+                    box-shadow: none;
+                    border: 1px solid;
+                    border-radius: 5px;
+                }
+                
+                .ui-widget .ui-widget{
+                    
+                }
+
+                .ui-widget-content .ui-inputfield.ui-state-focus{
+                    box-shadow: none;
+                    background-image: none;                    
+                    border-radius: 10px;
+                }
+                .ui-selectonemenu{
+                    border: 1px solid #e9edde;
+                    width: 100%;
+                    background-image: none;
+                }
+                .ui-state-hover{
+                    box-shadow: none;
+                    background-image: none;
+                    border: 0px;
+                }
+                
+                .ui-selectonemenu-list-item.ui-state-highlight{
+                    background-color: #8d9ba3;
+                    background-image: none;
+                    color: #000;
+                    text-shadow:none;
+                }
+                .ui-selectonemenu-list-item.ui-state-hover{
+                    background-color: #2f4858;
+                    background-image: none;
+                    color: #fff;
+                    text-shadow:none;
+                }
+
             </style>
         </ui:define>
         <ui:define name="body">
@@ -89,25 +133,24 @@
                                 <p:ajax event="blur" update="nombreRequerido"/>
                             </p:inputText>
                             <p:message for="nombreCompletoEspacio" id="nombreRequerido"/>
-
-                            <label>Edificio</label>
-                            <p:inputText class="form-control" id="edificio" value="${registroController.edificio}" 
-                                         requiredMessage="Edifico donde se encuentra el espacio"
-                                         placeholder="Edificio" required="true">
-                                <p:ajax event="blur" update="edificioRequerido"/>
-                            </p:inputText>
-                            <p:message for="edificio" id="edificioRequerido"/>
-
                             <div class="form-row">
                                 <div class="col">
-                                    <label>Capacidad </label>
-                                    <p:inputText type="number" class="form-control" id="capacidadEspacio" value="${registroController.capacidad}" 
-                                                 required="true" requiredMessage="La capacidad es necesaria">
-                                        <p:ajax event="blur" update="capacidadRquerida"/>
-                                    </p:inputText>
-                                    <small class="nota form-text text-muted">Personas que pueden estar dentro del espacio cultural</small>
-                                    <p:message for="capacidadEspacio" id="capacidadRquerida"/>
+                                    <label>Edificio</label><br/>
+                                    <p:selectOneMenu id="edificio" value="#{registroController.edificio}" filter="true">
+                                        <f:selectItem itemLabel="Edificio P" itemValue="Edificio P" />
+                                        <f:selectItem itemLabel="Edificio O" itemValue="Edificio O" />
+                                        <f:selectItem itemLabel="Biología A" itemValue="Biología A"/>
+                                        <f:selectItem itemLabel="Biología B" itemValue="Biología B"/>
+                                        <f:selectItem itemLabel="Física" itemValue="Física"/>    
+                                        <f:selectItem itemLabel="Matemáticas" itemValue="Matemáticas"/>
+                                        <f:selectItem itemLabel="Auditorio ABC" itemValue="Auditorio ABC" />
+                                        <f:selectItem itemLabel="Tlahuizcalpan" itemValue="Tlahuizcalpan"/> 
+                                        <f:selectItem itemLabel="Amoxcalli" itemValue="Amoxcalli" />
+                                        <f:selectItem itemLabel="Nuevo Edificio" itemValue="Nuevo Edificio" />
+                                    </p:selectOneMenu>
+                                    <p:message for="edificio" id="edificioRequerido"/>
                                 </div>
+                                
                                 <div class="col">
                                     <label>Piso</label>
                                     <p:inputText type="number" class="form-control" id="piso" value="${registroController.piso}" 
@@ -117,9 +160,18 @@
                                     <small class="nota form-text text-muted">Piso en el que se encuentra del edificio</small>
                                     <p:message for="piso" id="pisoRquerido"/>
                                 </div>
+                                <div class="col">
+                                    <label>Capacidad </label>
+                                    <p:inputText type="number" class="form-control" id="capacidadEspacio" value="${registroController.capacidad}" 
+                                                 required="true" requiredMessage="La capacidad es necesaria">
+                                        <p:ajax event="blur" update="capacidadRquerida"/>
+                                    </p:inputText>
+                                    <small class="nota form-text text-muted">Personas que pueden estar dentro del espacio cultural</small>
+                                    <p:message for="capacidadEspacio" id="capacidadRquerida"/>
+                                </div>
                             </div>
                             <label>Recursos</label>
-                            <p:inputText class="form-control" id="recursos" value="${registroController.recursos}" 
+                            <p:inputText class="form-control recursos" id="recursos" value="${registroController.recursos}" 
                                          requiredMessage="La descripción de recursos es necesaria"
                                          placeholder="Recursos" required="true">
                                 <p:ajax event="blur" update="recursosRequeridos"/>

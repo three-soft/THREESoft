@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author damianri
  */
 @Entity
-@Table(name = "academico", catalog = "postgres", schema = "public")
+@Table(name = "academico")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Academico.findAll", query = "SELECT a FROM Academico a")
@@ -37,54 +37,53 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Academico.findByPassword", query = "SELECT a FROM Academico a WHERE a.password = :password")
     , @NamedQuery(name = "Academico.findByDepartamento", query = "SELECT a FROM Academico a WHERE a.departamento = :departamento")
     , @NamedQuery(name = "Academico.findByTipo", query = "SELECT a FROM Academico a WHERE a.tipo = :tipo")
-    , @NamedQuery(name = "Academico.findByNoTrabajador", query = "SELECT a FROM Academico a WHERE a.noTrabajador = :noTrabajador")
     , @NamedQuery(name = "Academico.findByFechaActivacion", query = "SELECT a FROM Academico a WHERE a.fechaActivacion = :fechaActivacion")
-    , @NamedQuery(name = "Academico.findByUserName", query = "SELECT a FROM Academico a WHERE a.userName = :userName")})
+    , @NamedQuery(name = "Academico.findByUserName", query = "SELECT a FROM Academico a WHERE a.userName = :userName")
+    , @NamedQuery(name = "Academico.findByNoTrabajador", query = "SELECT a FROM Academico a WHERE a.noTrabajador = :noTrabajador")})
 public class Academico implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_academico", nullable = false)
+    @Column(name = "id_academico")
     private Long idAcademico;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 210)
-    @Column(name = "nombre_completo", nullable = false, length = 210)
+    @Column(name = "nombre_completo")
     private String nombreCompleto;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 210)
-    @Column(name = "correo_aca", nullable = false, length = 210)
+    @Column(name = "correo_aca")
     private String correoAca;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 210)
-    @Column(name = "password", nullable = false, length = 210)
+    @Column(name = "password")
     private String password;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(name = "departamento", nullable = false, length = 100)
+    @Column(name = "departamento")
     private String departamento;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(name = "tipo", nullable = false, length = 100)
+    @Column(name = "tipo")
     private String tipo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "no_trabajador", nullable = false)
-    private long noTrabajador;
     @Column(name = "fecha_activacion")
     @Temporal(TemporalType.DATE)
     private Date fechaActivacion;
+    @Size(max = 100)
+    @Column(name = "user_name")
+    private String userName;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "user_name", nullable = false, length = 100)
-    private String userName;
+    @Size(min = 1, max = 20)
+    @Column(name = "no_trabajador")
+    private String noTrabajador;
 
     public Academico() {
     }
@@ -93,7 +92,7 @@ public class Academico implements Serializable {
         this.idAcademico = idAcademico;
     }
 
-    public Academico(Long idAcademico, String nombreCompleto, String correoAca, String password, String departamento, String tipo, long noTrabajador, String userName) {
+    public Academico(Long idAcademico, String nombreCompleto, String correoAca, String password, String departamento, String tipo, String noTrabajador) {
         this.idAcademico = idAcademico;
         this.nombreCompleto = nombreCompleto;
         this.correoAca = correoAca;
@@ -101,7 +100,6 @@ public class Academico implements Serializable {
         this.departamento = departamento;
         this.tipo = tipo;
         this.noTrabajador = noTrabajador;
-        this.userName = userName;
     }
 
     public Long getIdAcademico() {
@@ -152,14 +150,6 @@ public class Academico implements Serializable {
         this.tipo = tipo;
     }
 
-    public long getNoTrabajador() {
-        return noTrabajador;
-    }
-
-    public void setNoTrabajador(long noTrabajador) {
-        this.noTrabajador = noTrabajador;
-    }
-
     public Date getFechaActivacion() {
         return fechaActivacion;
     }
@@ -174,6 +164,14 @@ public class Academico implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getNoTrabajador() {
+        return noTrabajador;
+    }
+
+    public void setNoTrabajador(String noTrabajador) {
+        this.noTrabajador = noTrabajador;
     }
 
     @Override

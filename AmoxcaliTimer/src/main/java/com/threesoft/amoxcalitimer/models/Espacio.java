@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author damianri
  */
 @Entity
-@Table(name = "espacio", catalog = "postgres", schema = "public")
+@Table(name = "espacio")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Espacio.findAll", query = "SELECT e FROM Espacio e")
@@ -40,30 +40,30 @@ public class Espacio implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_espacio", nullable = false)
+    @Column(name = "id_espacio")
     private Long idEspacio;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 210)
-    @Column(name = "nombre_espacio", nullable = false, length = 210)
+    @Column(name = "nombre_espacio")
     private String nombreEspacio;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 210)
-    @Column(name = "edificio", nullable = false, length = 210)
+    @Column(name = "edificio")
     private String edificio;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "capacidad", nullable = false)
+    @Column(name = "capacidad")
     private int capacidad;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
-    @Column(name = "recursos", nullable = false, length = 255)
+    @Column(name = "recursos")
     private String recursos;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "piso", nullable = false)
+    @Column(name = "piso")
     private int piso;
 
     public Espacio() {
