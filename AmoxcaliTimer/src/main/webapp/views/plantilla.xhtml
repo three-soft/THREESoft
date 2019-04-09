@@ -42,6 +42,13 @@
                 <a href="../administrador/registros_validados.xhtml" >Académicos Registrados</a>
             </div>
         </p:outputPanel>
+        <p:outputPanel rendered="${not empty Academico}">
+            <div class="sidenav">
+                <a href="../academico/solicitar_espacio.xhtml">Solicitar Espacio</a>
+                <a href="#cancelar_espacio" >Cancelar Espacio</a>
+                <a href="../academico/ver_disponibilidad.xhtml" >Calendario de Espacios</a>
+            </div>
+        </p:outputPanel>
 
         <nav class="navbar navbar-light bg-light justify-content-between" >
             <a class="navbar-brand"></a>
@@ -50,9 +57,9 @@
                 <h:button class="btn btn-danger" id="cerrar-sesion" value="Cerrar sesión"  outcome="/views/general/cerrar_sesion.xhtml" rendered="${(not empty Academico) or (not empty Administrador)}"/>
             </form>
         </nav>
-        <ui:insert name="body"/>
+        <ui:insert name="body">
+        </ui:insert>
 
-        <div style="height: 100px;"></div>
         <footer>
             <ul>
                 <li>Contacto: gestordeespaciosculturalesfacu@gmail.com</li>

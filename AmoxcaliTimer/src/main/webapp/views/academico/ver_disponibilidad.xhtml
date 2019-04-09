@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="../plantilla.xhtml">
+        <ui:define name="head">
+            <title>Calendario de Espacios</title>
+            <style>
+                .fc-toolbar{
+                    padding: 10px 20px;
+                    border-radius: 999px;
+                    color: #FFF;
+                    background-color: #576066;
+                }
+                .Calendario{
+                    width: 80%;
+                    margin: auto;
+                }
+                .fc .fc-button-group > *{
+                    background-image: none;
+                    background-color: #0e253d;
+                    border: 1px solid #FFF;
+                    border-radius: 999px;
+                    color: #FFF;
+                }
+                </style>
+        </ui:define>
+        
+        <ui:define name="body">
+            <div class="Calendario">
+            <h:form>
+                <p:schedule value="#{calendarioEspacios.lazyEventModel}">
+                    
+                </p:schedule>
+            </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
