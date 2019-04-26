@@ -6,7 +6,9 @@
 package com.threesoft.amoxcalitimer.models;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,10 +16,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,6 +39,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Espacio.findByRecursos", query = "SELECT e FROM Espacio e WHERE e.recursos = :recursos")
     , @NamedQuery(name = "Espacio.findByPiso", query = "SELECT e FROM Espacio e WHERE e.piso = :piso")})
 public class Espacio implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "espacio")
+    private Collection<Solicitud> solicitudCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -153,6 +160,15 @@ public class Espacio implements Serializable {
     @Override
     public String toString() {
         return "com.threesoft.amoxcalitimer.models.Espacio[ idEspacio=" + idEspacio + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Solicitud> getSolicitudCollection() {
+        return solicitudCollection;
+    }
+
+    public void setSolicitudCollection(Collection<Solicitud> solicitudCollection) {
+        this.solicitudCollection = solicitudCollection;
     }
     
 }

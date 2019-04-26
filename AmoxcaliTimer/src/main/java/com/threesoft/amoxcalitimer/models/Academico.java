@@ -6,8 +6,10 @@
 package com.threesoft.amoxcalitimer.models;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,12 +17,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -41,6 +45,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Academico.findByUserName", query = "SELECT a FROM Academico a WHERE a.userName = :userName")
     , @NamedQuery(name = "Academico.findByNoTrabajador", query = "SELECT a FROM Academico a WHERE a.noTrabajador = :noTrabajador")})
 public class Academico implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "academico")
+    private Collection<Solicitud> solicitudCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -197,6 +204,15 @@ public class Academico implements Serializable {
     @Override
     public String toString() {
         return "com.threesoft.amoxcalitimer.models.Academico[ idAcademico=" + idAcademico + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Solicitud> getSolicitudCollection() {
+        return solicitudCollection;
+    }
+
+    public void setSolicitudCollection(Collection<Solicitud> solicitudCollection) {
+        this.solicitudCollection = solicitudCollection;
     }
     
 }

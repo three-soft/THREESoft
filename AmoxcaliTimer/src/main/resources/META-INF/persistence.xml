@@ -5,6 +5,7 @@
     <class>com.threesoft.amoxcalitimer.models.Administrador</class>
     <class>com.threesoft.amoxcalitimer.models.Academico</class>
     <class>com.threesoft.amoxcalitimer.models.Espacio</class>
+    <class>com.threesoft.amoxcalitimer.models.Solicitud</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres"/>

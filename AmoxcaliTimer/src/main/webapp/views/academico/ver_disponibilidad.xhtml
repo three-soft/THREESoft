@@ -22,20 +22,66 @@
                 .fc .fc-button-group > *{
                     background-image: none;
                     background-color: #0e253d;
-                    border: 1px solid #FFF;
+                    border: 0.5px solid #FFF;
                     border-radius: 999px;
                     color: #FFF;
                 }
-                </style>
+                .fc-today-button .ui-button .ui-state-default{
+                    background-image: none;
+                    background-color: #FFF;
+                }
+                .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{
+                    background-image: none;
+                    background-color: #bdd5ea;
+                    color: #000000;
+                }
+                .fc-day-grid-event .fc-content{
+                    text-align: center;
+                    padding: 2px 5px;
+                    background-color: #0d324d;
+                    border-radius: 5px;
+                    color: #FFF;
+                }
+                .fc-event[href], .fc-event.fc-draggable{
+                    background-color: transparent;
+                    border: 0px;
+                }
+                .fc-head{
+                    background-image: none;
+                    background-color: #eb5160;
+                }
+            </style>
         </ui:define>
-        
+
         <ui:define name="body">
             <div class="Calendario">
-            <h:form>
-                <p:schedule value="#{calendarioEspacios.lazyEventModel}">
-                    
-                </p:schedule>
-            </h:form>
+                <h:form>
+                    <p:growl id="messages" showDetail="true" />
+
+                    <h:panelGrid columnClasses="value">
+                        <h3 style="margin-top: 0">Disponibilidad Espacios</h3>
+                        <p:schedule id="schedule" value="#{calendarioEspacios.lazyEventModel}" widgetVar="myschedule" timeZone="GMT+2">
+
+                            <p:ajax event="dateSelect" listener="#{calendarioEspacios.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                            <p:ajax event="eventSelect" listener="#{calendarioEspacios.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                            <p:ajax event="eventMove" listener="#{calendarioEspacios.onEventMove}" update="messages" />
+                            <p:ajax event="eventResize" listener="#{calendarioEspacios.onEventResize}" update="messages" />
+
+                        </p:schedule>
+                    </h:panelGrid>
+                    <p:dialog widgetVar="eventDialog" header="Detalles del Evento" showEffect="clip" hideEffect="clip">
+                        <h:panelGrid id="eventDetails" columns="2">
+                            <p:outputLabel for="title" value="Evento" />
+                            <p:outputLabel id="title" value="#{calendarioEspacios.event.title}"/>
+
+                            <p:outputLabel for="from" value="Hora Inicial:" />
+                            <p:calendar id="from" value="#{calendarioEspacios.event.startDate}" timeZone="GMT+2" pattern="HH:mm" disabled="true"/>
+
+                            <p:outputLabel for="to" value="Hora Final:" />
+                            <p:calendar id="to" value="#{calendarioEspacios.event.endDate}" timeZone="GMT+2" pattern="HH:mm" disabled="true"/>
+                        </h:panelGrid>
+                    </p:dialog>
+                </h:form>
             </div>
         </ui:define>
     </ui:composition>
