@@ -18,67 +18,59 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author damianri
+ * @author river
  */
 @Entity
-@Table(name = "solicitud")
+@Table(name = "solicitud", catalog = "postgres", schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Solicitud.findAll", query = "SELECT s FROM Solicitud s")
     , @NamedQuery(name = "Solicitud.findByIdSolicitud", query = "SELECT s FROM Solicitud s WHERE s.solicitudPK.idSolicitud = :idSolicitud")
     , @NamedQuery(name = "Solicitud.findByIdAcademico", query = "SELECT s FROM Solicitud s WHERE s.solicitudPK.idAcademico = :idAcademico")
     , @NamedQuery(name = "Solicitud.findByIdEspacio", query = "SELECT s FROM Solicitud s WHERE s.solicitudPK.idEspacio = :idEspacio")
-    , @NamedQuery(name = "Solicitud.findByFechaSolicitud", query = "SELECT s FROM Solicitud s WHERE s.fechaSolicitud = :fechaSolicitud")
     , @NamedQuery(name = "Solicitud.findByHoraInicio", query = "SELECT s FROM Solicitud s WHERE s.horaInicio = :horaInicio")
     , @NamedQuery(name = "Solicitud.findByHoraFin", query = "SELECT s FROM Solicitud s WHERE s.horaFin = :horaFin")
-    , @NamedQuery(name = "Solicitud.findByFechaAprobacion", query = "SELECT s FROM Solicitud s WHERE s.fechaAprobacion = :fechaAprobacion")
-    , @NamedQuery(name = "Solicitud.findByNombre", query = "SELECT s FROM Solicitud s WHERE s.nombre = :nombre")
-    , @NamedQuery(name = "Solicitud.findByDescripcion", query = "SELECT s FROM Solicitud s WHERE s.descripcion = :descripcion")})
+    , @NamedQuery(name = "Solicitud.findByFechaSolicitud", query = "SELECT s FROM Solicitud s WHERE s.fechaSolicitud = :fechaSolicitud")
+    , @NamedQuery(name = "Solicitud.findByFechaResolucion", query = "SELECT s FROM Solicitud s WHERE s.fechaResolucion = :fechaResolucion")
+    , @NamedQuery(name = "Solicitud.findByNombreEvento", query = "SELECT s FROM Solicitud s WHERE s.nombreEvento = :nombreEvento")
+    , @NamedQuery(name = "Solicitud.findByDescripcionEvento", query = "SELECT s FROM Solicitud s WHERE s.descripcionEvento = :descripcionEvento")
+    , @NamedQuery(name = "Solicitud.findByEstatus", query = "SELECT s FROM Solicitud s WHERE s.estatus = :estatus")})
 public class Solicitud implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected SolicitudPK solicitudPK;
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_solicitud")
-    @Temporal(TemporalType.DATE)
-    private Date fechaSolicitud;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "hora_inicio")
-    @Temporal(TemporalType.DATE)
+    @Column(name = "hora_inicio", nullable = false)
+    @Temporal(TemporalType.TIME)
     private Date horaInicio;
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "hora_fin")
-    @Temporal(TemporalType.DATE)
+    @Column(name = "hora_fin", nullable = false)
+    @Temporal(TemporalType.TIME)
     private Date horaFin;
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_aprobacion")
+    @Column(name = "fecha_solicitud", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date fechaAprobacion;
+    private Date fechaSolicitud;
+    @Column(name = "fecha_resolucion")
+    @Temporal(TemporalType.DATE)
+    private Date fechaResolucion;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 200)
-    @Column(name = "nombre")
-    private String nombre;
+    @Column(name = "nombre_evento", nullable = false, length = 250)
+    private String nombreEvento;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 200)
-    @Column(name = "descripcion")
-    private String descripcion;
-    @JoinColumn(name = "id_academico", referencedColumnName = "id_academico", insertable = false, updatable = false)
+    @Column(name = "descripcion_evento", nullable = false, length = 500)
+    private String descripcionEvento;
+    @Column(name = "estatus")
+    private Boolean estatus;
+    @JoinColumn(name = "id_academico", referencedColumnName = "id_academico", nullable = false, insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Academico academico;
-    @JoinColumn(name = "id_espacio", referencedColumnName = "id_espacio", insertable = false, updatable = false)
+    @JoinColumn(name = "id_espacio", referencedColumnName = "id_espacio", nullable = false, insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Espacio espacio;
 
@@ -89,14 +81,13 @@ public class Solicitud implements Serializable {
         this.solicitudPK = solicitudPK;
     }
 
-    public Solicitud(SolicitudPK solicitudPK, Date fechaSolicitud, Date horaInicio, Date horaFin, Date fechaAprobacion, String nombre, String descripcion) {
+    public Solicitud(SolicitudPK solicitudPK, Date horaInicio, Date horaFin, Date fechaSolicitud, String nombreEvento, String descripcionEvento) {
         this.solicitudPK = solicitudPK;
-        this.fechaSolicitud = fechaSolicitud;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
-        this.fechaAprobacion = fechaAprobacion;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
+        this.fechaSolicitud = fechaSolicitud;
+        this.nombreEvento = nombreEvento;
+        this.descripcionEvento = descripcionEvento;
     }
 
     public Solicitud(long idSolicitud, long idAcademico, long idEspacio) {
@@ -109,14 +100,6 @@ public class Solicitud implements Serializable {
 
     public void setSolicitudPK(SolicitudPK solicitudPK) {
         this.solicitudPK = solicitudPK;
-    }
-
-    public Date getFechaSolicitud() {
-        return fechaSolicitud;
-    }
-
-    public void setFechaSolicitud(Date fechaSolicitud) {
-        this.fechaSolicitud = fechaSolicitud;
     }
 
     public Date getHoraInicio() {
@@ -135,28 +118,44 @@ public class Solicitud implements Serializable {
         this.horaFin = horaFin;
     }
 
-    public Date getFechaAprobacion() {
-        return fechaAprobacion;
+    public Date getFechaSolicitud() {
+        return fechaSolicitud;
     }
 
-    public void setFechaAprobacion(Date fechaAprobacion) {
-        this.fechaAprobacion = fechaAprobacion;
+    public void setFechaSolicitud(Date fechaSolicitud) {
+        this.fechaSolicitud = fechaSolicitud;
     }
 
-    public String getNombre() {
-        return nombre;
+    public Date getFechaResolucion() {
+        return fechaResolucion;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setFechaResolucion(Date fechaResolucion) {
+        this.fechaResolucion = fechaResolucion;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getNombreEvento() {
+        return nombreEvento;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setNombreEvento(String nombreEvento) {
+        this.nombreEvento = nombreEvento;
+    }
+
+    public String getDescripcionEvento() {
+        return descripcionEvento;
+    }
+
+    public void setDescripcionEvento(String descripcionEvento) {
+        this.descripcionEvento = descripcionEvento;
+    }
+
+    public Boolean getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(Boolean estatus) {
+        this.estatus = estatus;
     }
 
     public Academico getAcademico() {

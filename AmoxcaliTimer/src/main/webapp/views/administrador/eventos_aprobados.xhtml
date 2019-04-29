@@ -41,10 +41,10 @@
                 }
 
                 .info-tag{
-                    color: white;
+                    color: #3e5c76;
                     padding: 2px 10px;
                     border-radius: 3px;
-                    background-color: #3e5c76;
+                    font-weight: bolder;
                 }
                 .info{
                     color: black;
@@ -168,15 +168,25 @@
                                         <h:outputText value="Espacio" class="info-tag"/>
                                         <h:outputText  value="#{solicitud.espacio.nombreEspacio}" class="info"/>                                        
                                         <h:outputText value="Nombre Evento:" class="info-tag"/>
-                                        <h:outputText value="#{solicitud.nombre}" class="info"/>
+                                        <h:outputText value="#{solicitud.nombreEvento}" class="info"/>
                                         <h:outputText value="Descripción:" class="info-tag"/>
-                                        <h:outputText value="#{solicitud.descripcion}" class="info"/>
+                                        <h:outputText value="#{solicitud.descripcionEvento}" class="info"/>
                                         <h:outputText value="Fecha de solicitud:" class="info-tag"/>
-                                        <h:outputText value="#{solicitud.fechaSolicitud}" class="info"/>
+                                        <h:outputText value="#{solicitud.fechaSolicitud}" class="info">
+                                            <f:convertDateTime pattern="dd-MMMM-yyyy" />
+                                        </h:outputText>
                                         <h:outputText value="Hora Inicial:" class="info-tag"/>
-                                        <h:outputText value="#{solicitud.horaInicio}" class="info"/>
+                                        <h:outputText value="#{solicitud.horaInicio}" class="info">
+                                            <f:convertDateTime pattern="HH:mm"/>
+                                        </h:outputText>
                                         <h:outputText value="Hora Final:" class="info-tag"/>
-                                        <h:outputText  value="#{solicitud.horaFin}" class="info"/>
+                                        <h:outputText  value="#{solicitud.horaFin}" class="info">
+                                            <f:convertDateTime pattern="HH:mm" />
+                                        </h:outputText>
+                                        <h:outputText value="Fecha de Resolucion:" class="info-tag"/>
+                                        <h:outputText  value="#{solicitud.fechaResolucion}" class="info">
+                                            <f:convertDateTime pattern="dd-MMMM-yyyy" />
+                                        </h:outputText>
                                     </h:panelGrid>
                                 </p:outputPanel>
                                 <p:outputPanel class="btones">

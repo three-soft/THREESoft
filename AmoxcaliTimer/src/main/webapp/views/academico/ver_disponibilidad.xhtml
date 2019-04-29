@@ -60,11 +60,9 @@
 
                     <h:panelGrid columnClasses="value">
                         <h3 style="margin-top: 0">Disponibilidad Espacios</h3>
-                        <p:schedule id="schedule" value="#{calendarioEspacios.lazyEventModel}" widgetVar="myschedule" timeZone="GMT+2">
+                        <p:schedule id="schedule" value="#{calendarioEspacios.lazyEventModel}" widgetVar="myschedule" timeZone="GMT+2" draggable="false">
 
-                            <p:ajax event="dateSelect" listener="#{calendarioEspacios.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                             <p:ajax event="eventSelect" listener="#{calendarioEspacios.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
-                            <p:ajax event="eventMove" listener="#{calendarioEspacios.onEventMove}" update="messages" />
                             <p:ajax event="eventResize" listener="#{calendarioEspacios.onEventResize}" update="messages" />
 
                         </p:schedule>

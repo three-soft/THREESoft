@@ -15,16 +15,14 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author damianri
+ * @author river
  */
 @Entity
-@Table(name = "administrador")
+@Table(name = "administrador", catalog = "postgres", schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Administrador.findAll", query = "SELECT a FROM Administrador a")
@@ -39,27 +37,19 @@ public class Administrador implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_administrador")
+    @Column(name = "id_administrador", nullable = false)
     private Long idAdministrador;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 210)
-    @Column(name = "nombre_completo")
+    @Column(name = "nombre_completo", nullable = false, length = 210)
     private String nombreCompleto;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 210)
-    @Column(name = "correo_admin")
+    @Column(name = "correo_admin", nullable = false, length = 210)
     private String correoAdmin;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 210)
-    @Column(name = "password")
+    @Column(name = "password", nullable = false, length = 210)
     private String password;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "no_trabajador")
+    @Column(name = "no_trabajador", nullable = false, length = 20)
     private String noTrabajador;
 
     public Administrador() {

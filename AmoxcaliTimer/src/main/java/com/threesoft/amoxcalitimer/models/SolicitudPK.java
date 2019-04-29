@@ -9,26 +9,22 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author damianri
+ * @author river
  */
 @Embeddable
 public class SolicitudPK implements Serializable {
 
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_solicitud")
+    @Column(name = "id_solicitud", nullable = false)
     private long idSolicitud;
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_academico")
+    @Column(name = "id_academico", nullable = false)
     private long idAcademico;
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_espacio")
+    @Column(name = "id_espacio", nullable = false)
     private long idEspacio;
 
     public SolicitudPK() {

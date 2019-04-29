@@ -5,6 +5,7 @@
  */
 package com.threesoft.amoxcalitimer;
 
+import com.threesoft.amoxcalitimer.models.Academico;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -45,7 +46,14 @@ public class Correo {
             + "Correo: %s<br> Contraseña: %s<br>"
             + "Se recomienda ingresar al sistema y hacer el cambio de contraseña por una personal.<br><br>"
             + "Administración de Espacios Culturales<br> Facultad de Ciencias";
+    private final static String EVENTO_ACEPTADO = "Buen día, %s<br>"
+            + "Se te informa que la solicitud para reservar un espacio para tu evento en el sistema"
+            + "<a href=\"%s\"><b>Gestor de Espacios Culturades</b></a>"
+            + ", ha sido ACEPTADO. Puedes iniciar sesión para verificar que sea correcto."
+            + "<br><br>"
+            + "Administración de Espacios Culturales<br> Facultad de Ciencias";
 
+    
     private final static Properties MAIL_SERVER_PROPERTIES;
     private static Session getMailSession;
     private static MimeMessage generateMailMessage;
@@ -124,6 +132,24 @@ public class Correo {
         //generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress(""));
         generateMailMessage.setSubject("Gestor de Espacios Culturales. Acceso Denegado.");
         generateMailMessage.setContent(String.format(CORREO_DE_RECHAZO, nombreCompletoUsuario, "http://localhost:8084/AmoxcaliTimer/", "http://localhost:8084/AmoxcaliTimer/views/general/registro.xhtml"), "text/html");
+        System.out.println("Mail Session has been created successfully..");
+        // Step3
+        System.out.println("\n\n 3rd ===> Get Session and Send mail");
+        try (Transport transport = getMailSession.getTransport("smtp")) {
+            transport.connect("smtp.gmail.com", EMAIL, PASSWORD);
+            transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
+        }
+    }
+    
+        public static void correoEventoAceptado(Academico academico) throws AddressException, MessagingException {
+        // Step2
+        System.out.println("\n\n 2nd ===> get Mail Session..");
+        getMailSession = Session.getDefaultInstance(MAIL_SERVER_PROPERTIES, null);
+        generateMailMessage = new MimeMessage(getMailSession);
+        generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(academico.getCorreoAca()));
+        //generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress(""));
+        generateMailMessage.setSubject("Gestor de Espacios Culturales. Evento Aceptado.");
+        generateMailMessage.setContent(String.format(EVENTO_ACEPTADO, academico.getNombreCompleto(), "http://localhost:8084/AmoxcaliTimer/"), "text/html");
         System.out.println("Mail Session has been created successfully..");
         // Step3
         System.out.println("\n\n 3rd ===> Get Session and Send mail");

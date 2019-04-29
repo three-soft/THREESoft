@@ -50,9 +50,10 @@ public class CalendarioEspacios extends AceptarSolicitudController implements Se
                 for(Solicitud s : solicitudesAprobadas){
                     Calendar date = Calendar.getInstance();
                     date.setTime(s.getFechaSolicitud());
-                    date.add(0, s.getHoraInicio().getHours());
+                    date.add(Calendar.DATE, s.getHoraInicio().getHours());
                     System.out.println("Agregando Evento");
-                    addEvent(new DefaultScheduleEvent(s.getNombre()+": "+s.getDescripcion()+",en "+s.getEspacio().getNombreEspacio(), date.getTime() , s.getHoraFin() ));
+                    addEvent(new DefaultScheduleEvent(s.getNombreEvento()+": "+s.getDescripcionEvento()+",en "+s.getEspacio().getNombreEspacio(), 
+                            date.getTime() , s.getHoraFin() ));
                 }
                 
                 addEvent(new DefaultScheduleEvent("Lazy Event 1", random, random));

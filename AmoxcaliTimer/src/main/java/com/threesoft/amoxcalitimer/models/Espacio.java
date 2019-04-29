@@ -18,17 +18,15 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author damianri
+ * @author river
  */
 @Entity
-@Table(name = "espacio")
+@Table(name = "espacio", catalog = "postgres", schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Espacio.findAll", query = "SELECT e FROM Espacio e")
@@ -40,38 +38,29 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Espacio.findByPiso", query = "SELECT e FROM Espacio e WHERE e.piso = :piso")})
 public class Espacio implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "espacio")
-    private Collection<Solicitud> solicitudCollection;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_espacio")
+    @Column(name = "id_espacio", nullable = false)
     private Long idEspacio;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 210)
-    @Column(name = "nombre_espacio")
+    @Column(name = "nombre_espacio", nullable = false, length = 210)
     private String nombreEspacio;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 210)
-    @Column(name = "edificio")
+    @Column(name = "edificio", nullable = false, length = 210)
     private String edificio;
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "capacidad")
+    @Column(name = "capacidad", nullable = false)
     private int capacidad;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "recursos")
+    @Column(name = "recursos", nullable = false, length = 255)
     private String recursos;
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "piso")
+    @Column(name = "piso", nullable = false)
     private int piso;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "espacio")
+    private Collection<Solicitud> solicitudCollection;
 
     public Espacio() {
     }
@@ -137,6 +126,15 @@ public class Espacio implements Serializable {
         this.piso = piso;
     }
 
+    @XmlTransient
+    public Collection<Solicitud> getSolicitudCollection() {
+        return solicitudCollection;
+    }
+
+    public void setSolicitudCollection(Collection<Solicitud> solicitudCollection) {
+        this.solicitudCollection = solicitudCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -160,15 +158,6 @@ public class Espacio implements Serializable {
     @Override
     public String toString() {
         return "com.threesoft.amoxcalitimer.models.Espacio[ idEspacio=" + idEspacio + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Solicitud> getSolicitudCollection() {
-        return solicitudCollection;
-    }
-
-    public void setSolicitudCollection(Collection<Solicitud> solicitudCollection) {
-        this.solicitudCollection = solicitudCollection;
     }
     
 }
