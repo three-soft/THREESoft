@@ -160,44 +160,50 @@
                         <p:growl for="mensaje-aviso" sticky="true" showDetail="true"/>
                         <p:dataList id="listaSolicitudes" class="solicitudes" value="#{aceptarSolicitudController.solicitudesAprobadas}" var="solicitud" type="definition"
                                     emptyMessage="No se encontraron eventos aprobados.">
-                            <h:panelGrid class="panelGrid" columns="2">
-                                <p:outputPanel>
-                                    <h:panelGrid columns="2" class="resgistro">
-                                        <h:outputText value="Académico:" class="info-tag"/>
-                                        <h:outputText  value="#{solicitud.academico.nombreCompleto}" class="info"/>
-                                        <h:outputText value="Espacio" class="info-tag"/>
-                                        <h:outputText  value="#{solicitud.espacio.nombreEspacio}" class="info"/>                                        
-                                        <h:outputText value="Nombre Evento:" class="info-tag"/>
-                                        <h:outputText value="#{solicitud.nombreEvento}" class="info"/>
-                                        <h:outputText value="Descripción:" class="info-tag"/>
-                                        <h:outputText value="#{solicitud.descripcionEvento}" class="info"/>
-                                        <h:outputText value="Fecha de solicitud:" class="info-tag"/>
-                                        <h:outputText value="#{solicitud.fechaSolicitud}" class="info">
-                                            <f:convertDateTime pattern="dd-MMMM-yyyy" />
-                                        </h:outputText>
-                                        <h:outputText value="Hora Inicial:" class="info-tag"/>
-                                        <h:outputText value="#{solicitud.horaInicio}" class="info">
-                                            <f:convertDateTime pattern="HH:mm"/>
-                                        </h:outputText>
-                                        <h:outputText value="Hora Final:" class="info-tag"/>
-                                        <h:outputText  value="#{solicitud.horaFin}" class="info">
-                                            <f:convertDateTime pattern="HH:mm" />
-                                        </h:outputText>
-                                        <h:outputText value="Fecha de Resolucion:" class="info-tag"/>
-                                        <h:outputText  value="#{solicitud.fechaResolucion}" class="info">
-                                            <f:convertDateTime pattern="dd-MMMM-yyyy" />
-                                        </h:outputText>
-                                    </h:panelGrid>
-                                </p:outputPanel>
-                                <p:outputPanel class="btones">
-                                    <p:commandButton value="Cancelar" class="btn btn-sm btn-danger btn-validador" 
-                                                     onclick="PF('dlg2').show();" 
-                                                     icon="fa fa-times">
-                                        <f:setPropertyActionListener value="#{solicitud}" target="#{aceptarSolicitudController}"/>
-                                    </p:commandButton>
+                            <p:accordionPanel multiple="true" activeIndex="0">
+                                <p:tab title="#{solicitud.nombreEvento} - #{solicitud.academico.nombreCompleto}">
 
-                                </p:outputPanel>
-                            </h:panelGrid>
+                                    <h:panelGrid class="panelGrid" columns="2">
+                                        <p:outputPanel>
+                                            <h:panelGrid columns="2" class="resgistro">
+                                                <h:outputText value="Académico:" class="info-tag"/>
+                                                <h:outputText  value="#{solicitud.academico.nombreCompleto}" class="info"/>
+                                                <h:outputText value="Espacio" class="info-tag"/>
+                                                <h:outputText  value="#{solicitud.espacio.nombreEspacio}" class="info"/>                                        
+                                                <h:outputText value="Nombre Evento:" class="info-tag"/>
+                                                <h:outputText value="#{solicitud.nombreEvento}" class="info"/>
+                                                <h:outputText value="Descripción:" class="info-tag"/>
+                                                <h:outputText value="#{solicitud.descripcionEvento}" class="info"/>
+                                                <h:outputText value="Fecha de solicitud:" class="info-tag"/>
+                                                <h:outputText value="#{solicitud.fechaSolicitud}" class="info">
+                                                    <f:convertDateTime pattern="dd-MMMM-yyyy" />
+                                                </h:outputText>
+                                                <h:outputText value="Hora Inicial:" class="info-tag"/>
+                                                <h:outputText value="#{solicitud.horaInicio}" class="info">
+                                                    <f:convertDateTime pattern="HH:mm"/>
+                                                </h:outputText>
+                                                <h:outputText value="Hora Final:" class="info-tag"/>
+                                                <h:outputText  value="#{solicitud.horaFin}" class="info">
+                                                    <f:convertDateTime pattern="HH:mm" />
+                                                </h:outputText>
+                                                <h:outputText value="Fecha de Resolucion:" class="info-tag"/>
+                                                <h:outputText  value="#{solicitud.fechaResolucion}" class="info">
+                                                    <f:convertDateTime pattern="dd-MMMM-yyyy" />
+                                                </h:outputText>
+                                            </h:panelGrid>
+                                        </p:outputPanel>
+                                        <p:outputPanel class="btones">
+                                            <p:commandButton value="Cancelar" class="btn btn-sm btn-danger btn-validador" 
+                                                             onclick="PF('dlg2').show();" 
+                                                             icon="fa fa-times">
+                                                <f:setPropertyActionListener value="#{solicitud}" target="#{aceptarSolicitudController}"/>
+                                            </p:commandButton>
+
+                                        </p:outputPanel>
+                                    </h:panelGrid>
+                                </p:tab>
+                            </p:accordionPanel>
+
                         </p:dataList>
 
                         <p:dialog header="Cancelar" widgetVar="dlg2" modal="true" width="500" closable="true" resizable="false">

@@ -8,7 +8,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="../plantilla.xhtml">
         <ui:define name="head">
-            <title>Validar Registros</title>
+            <title>Validar Solicitudes</title>
             <meta charset="utf-8"/>
             <link rel="stylesheet" type="text/css" href="/css/plantilla.css"></link>
             <link rel="icon" href="/imagenes/clock-regular.svg"/>
@@ -80,9 +80,8 @@
                 .ui-outputpanel{
                     padding: 10px;
                 }
-                td span.info-tag:parent{
-                    background-color: black;
-                    width: 50px;
+                .panelGrid td td{
+                    padding: 3px
                 }
 
                 .ui-datalist-content{
@@ -128,13 +127,26 @@
                     font-weight: bold;
                     padding: 5px 5px 15px;
                 }
+
                 #btones-confirmacion .btn-validador{
                     margin: 40px 20px 10px;
                     width: 20%;
+                    border: 2px;
                 }
 
                 .resgistro{
                     width: 100%;
+                }
+                .ui-dialog{
+                    background-color: #e5e7e6;
+                    border: 2px;
+                    border-radius: 15px;
+                    text-align: center;
+                }
+                .ui-draggable .ui-dialog-titlebar{
+                    background-image: none;
+                    background-color: #f6ae2d;
+                    color: #000;
                 }
 
 
@@ -143,51 +155,45 @@
         <ui:define name="body">
             <h:body>
                 <div id="container">                    
-                    <h3>Académicos Registrados</h3>
+                    <h3>Historial de Eventos</h3>
                     <h:form class="formulario" id="form">
                         <p:growl for="mensaje-aviso" sticky="true" showDetail="true"/>
-                        <p:dataList id="listaAcademicos" class="academicos" value="#{validarRegistroController.validados}" var="academico" type="definition"
-                                    emptyMessage="No se encontraron académicos con espera de aceptación.">
+                        <p:dataList id="listaSolicitudes" class="solicitudes" value="#{aceptarSolicitudController.historial}" var="solicitud" type="definition"
+                                    emptyMessage="No hay registros de historial de eventos.">
                             <p:accordionPanel multiple="true" activeIndex="0">
-                                <p:tab title="#{academico.noTrabajador} - #{academico.nombreCompleto}">
-                                    <p:outputPanel>
-                                        <h:panelGrid columns="2" class="resgistro">
-                                            <h:outputText value="Nombre Completo:" class="info-tag"/>
-                                            <h:outputText value="#{academico.nombreCompleto}" class="info"/>
-                                            <h:outputText value="Correo ciencias:" class="info-tag"/>
-                                            <h:outputText value="#{academico.correoAca}" class="info"/>
-                                            <h:outputText value="Número de Trabajador:" class="info-tag"/>
-                                            <h:outputText value="#{academico.noTrabajador}" class="info"/>
-                                            <h:outputText value="Departamento:" class="info-tag"/>
-                                            <h:outputText  value="#{academico.departamento}" class="info"/>
-                                            <h:outputText value="Tipo Académico:" class="info-tag"/>
-                                            <h:outputText  value="#{academico.tipo}" class="info"/>
-                                        </h:panelGrid>
-                                    </p:outputPanel>
+                                <p:tab title="#{solicitud.nombreEvento}">
+                                    <h:panelGrid columns="2" class="resgistro">
+                                        <h:outputText value="Académico:" class="info-tag"/>
+                                        <h:outputText  value="#{solicitud.academico.nombreCompleto}" class="info"/>
+                                        <h:outputText value="Espacio:" class="info-tag"/>
+                                        <h:outputText  value="#{solicitud.espacio.nombreEspacio}" class="info"/>                                        
+                                        <h:outputText value="Nombre Evento:" class="info-tag"/>
+                                        <h:outputText value="#{solicitud.nombreEvento}" class="info"/>
+                                        <h:outputText value="Descripción:" class="info-tag"/>
+                                        <h:outputText value="#{solicitud.descripcionEvento}" class="info"/>
+                                        <h:outputText value="Fecha de solicitud:" class="info-tag"/>
+                                        <h:outputText value="#{solicitud.fechaSolicitud}" class="info">
+                                            <f:convertDateTime pattern="dd-MMMM-yyyy" />
+                                        </h:outputText>
+                                        <h:outputText value="Hora Inicial:" class="info-tag"/>
+                                        <h:outputText value="#{solicitud.horaInicio}" class="info">
+                                            <f:convertDateTime pattern="hh:mm" />
+                                        </h:outputText>
+                                        <h:outputText value="Hora Final:" class="info-tag"/>
+                                        <h:outputText  value="#{solicitud.horaFin}" class="info">
+                                            <f:convertDateTime pattern="HH:mm" />
+                                        </h:outputText>
+                                        <h:outputText value="Fecha de Resolución:" class="info-tag"/>
+                                        <h:outputText value="#{solicitud.fechaResolucion}" class="info">
+                                            <f:convertDateTime pattern="dd-MMMM-yyyy" />
+                                        </h:outputText>
+                                        <h:outputText value="Aprobado ?:" class="info-tag"/>
+                                        <h:outputText value="#{solicitud.estatus}" class="info"/>                                                
+
+                                    </h:panelGrid>
                                 </p:tab>
                             </p:accordionPanel>
-
                         </p:dataList>
-
-                        <p:dialog header="Denegar" widgetVar="dlg2" modal="true" width="500" closable="true">
-                            <p:ajax event="close" update="growl" listener="#{validarRegistroController.mensajeAviso}" />
-                            <div id="msj-confirmacion">
-                                Al <b>Denegar</b> se eliminará la solicitud del académico y este ya no será visible ¿Estás seguro de denegar?                                            
-                            </div>
-                            <div id="btones-confirmacion">
-                                <p:commandButton  class="btn btn-sm btn-danger btn-validador" value="Sí"
-                                                  action="#{validarRegistroController.setAceptar(true)}"
-                                                  onclick="PF('dlg2').hide();" process="@this">
-                                    <p:ajax event="click" listener="#{validarRegistroController.denegarRegistro}" update="growl"/>
-                                </p:commandButton>
-                                <p:commandButton value="No" class="btn btn-sm btn-secondary btn-validador" 
-                                                 onclick="PF('dlg2').hide();">
-                                    <p:ajax event="click" listener="#{validarRegistroController.setAceptar(false)}"/>
-                                </p:commandButton>
-
-
-                            </div>
-                        </p:dialog> 
                     </h:form>
                     <p:growl id="growl" sticky="true" showDetail="true" />
 

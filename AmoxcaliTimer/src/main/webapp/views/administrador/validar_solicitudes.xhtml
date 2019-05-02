@@ -160,40 +160,46 @@
                         <p:growl for="mensaje-aviso" sticky="true" showDetail="true"/>
                         <p:dataList id="listaSolicitudes" class="solicitudes" value="#{aceptarSolicitudController.solicitudes}" var="solicitud" type="definition"
                                     emptyMessage="No se encontraron solicitudes con espera de aceptación.">
-                            <h:panelGrid class="panelGrid" columns="2">
-                                <p:outputPanel>
-                                    <h:panelGrid columns="2" class="resgistro">
-                                        <h:outputText value="Académico:" class="info-tag"/>
-                                        <h:outputText  value="#{solicitud.academico.nombreCompleto}" class="info"/>
-                                        <h:outputText value="Espacio" class="info-tag"/>
-                                        <h:outputText  value="#{solicitud.espacio.nombreEspacio}" class="info"/>                                        
-                                        <h:outputText value="Nombre Evento:" class="info-tag"/>
-                                        <h:outputText value="#{solicitud.nombreEvento}" class="info"/>
-                                        <h:outputText value="Descripción:" class="info-tag"/>
-                                        <h:outputText value="#{solicitud.descripcionEvento}" class="info"/>
-                                        <h:outputText value="Fecha de solicitud:" class="info-tag"/>
-                                        <h:outputText value="#{solicitud.fechaSolicitud}" class="info">
-                                            <f:convertDateTime pattern="dd-MMMM-yyyy" />
-                                        </h:outputText>
-                                        <h:outputText value="Hora Inicial:" class="info-tag"/>
-                                        <h:outputText value="#{solicitud.horaInicio}" class="info">
-                                            <f:convertDateTime pattern="hh:mm" />
-                                        </h:outputText>
-                                        <h:outputText value="Hora Final:" class="info-tag"/>
-                                        <h:outputText  value="#{solicitud.horaFin}" class="info">
-                                            <f:convertDateTime pattern="HH:mm" />
-                                        </h:outputText>
+                            <p:accordionPanel multiple="true" >
+                                <p:tab title="#{solicitud.nombreEvento}">
+
+                                    <h:panelGrid class="panelGrid" columns="2">
+                                        <p:outputPanel>
+                                            <h:panelGrid columns="2" class="resgistro">
+                                                <h:outputText value="Académico:" class="info-tag"/>
+                                                <h:outputText  value="#{solicitud.academico.nombreCompleto}" class="info"/>
+                                                <h:outputText value="Espacio" class="info-tag"/>
+                                                <h:outputText  value="#{solicitud.espacio.nombreEspacio}" class="info"/>                                        
+                                                <h:outputText value="Nombre Evento:" class="info-tag"/>
+                                                <h:outputText value="#{solicitud.nombreEvento}" class="info"/>
+                                                <h:outputText value="Descripción:" class="info-tag"/>
+                                                <h:outputText value="#{solicitud.descripcionEvento}" class="info"/>
+                                                <h:outputText value="Fecha de solicitud:" class="info-tag"/>
+                                                <h:outputText value="#{solicitud.fechaSolicitud}" class="info">
+                                                    <f:convertDateTime pattern="dd-MMMM-yyyy" />
+                                                </h:outputText>
+                                                <h:outputText value="Hora Inicial:" class="info-tag"/>
+                                                <h:outputText value="#{solicitud.horaInicio}" class="info">
+                                                    <f:convertDateTime pattern="hh:mm" />
+                                                </h:outputText>
+                                                <h:outputText value="Hora Final:" class="info-tag"/>
+                                                <h:outputText  value="#{solicitud.horaFin}" class="info">
+                                                    <f:convertDateTime pattern="HH:mm" />
+                                                </h:outputText>
+                                            </h:panelGrid>
+                                        </p:outputPanel>
+                                        <p:outputPanel class="btones">
+                                            <p:commandButton  class="btn btn-sm btn-outline-primary btn-validador" value="Aceptar"
+                                                              actionListener="#{aceptarSolicitudController.validarSolicitud}"
+                                                              icon="fa fa-check"
+                                                              update="@form" >
+                                                <f:attribute name="solicitud" value="#{solicitud}"></f:attribute>
+                                            </p:commandButton>
+                                        </p:outputPanel>
                                     </h:panelGrid>
-                                </p:outputPanel>
-                                <p:outputPanel class="btones">
-                                    <p:commandButton  class="btn btn-sm btn-outline-primary btn-validador" value="Aceptar"
-                                                      actionListener="#{aceptarSolicitudController.validarSolicitud}"
-                                                      icon="fa fa-check"
-                                                      update="@form" >
-                                        <f:attribute name="solicitud" value="#{solicitud}"></f:attribute>
-                                    </p:commandButton>
-                                </p:outputPanel>
-                            </h:panelGrid>
+                                </p:tab>
+                            </p:accordionPanel>
+
                         </p:dataList>
                     </h:form>
                     <p:growl id="growl" sticky="true" showDetail="true" />

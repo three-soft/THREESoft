@@ -32,6 +32,7 @@ public class AceptarSolicitudController implements Serializable {
 
     private List<Solicitud> solicitudes;
     private List<Solicitud> solicitudesAprobadas;
+    private List<Solicitud> historial;
 
     public AceptarSolicitudController() {
         this.solicitudes = new ArrayList<>();
@@ -65,6 +66,16 @@ public class AceptarSolicitudController implements Serializable {
         return solictudesAprobadas;
     }
 
+    public List<Solicitud> getHistorial() {
+        SolicitudDao solicitudDao = new SolicitudDao();
+        List<Solicitud> historial = solicitudDao.getSolicitudes();
+        return historial;
+    }
+
+    public void setHistorial(List<Solicitud> historial) {
+        this.historial = historial;
+    }
+    
     public void setSolicitudesAprobadas(List<Solicitud> solicitudesAprobadas) {
         this.solicitudesAprobadas = solicitudesAprobadas;
     }

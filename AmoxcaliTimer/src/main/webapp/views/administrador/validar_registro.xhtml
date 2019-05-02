@@ -127,7 +127,7 @@
                     font-weight: bold;
                     padding: 5px 5px 15px;
                 }
-                
+
                 #btones-confirmacion .btn-validador{
                     margin: 40px 20px 10px;
                     width: 20%;
@@ -160,37 +160,43 @@
                         <p:growl for="mensaje-aviso" sticky="true" showDetail="true"/>
                         <p:dataList id="listaAcademicos" class="academicos" value="#{validarRegistroController.academicos}" var="academico" type="definition"
                                     emptyMessage="No se encontraron académicos con espera de aceptación.">
-                            <h:panelGrid class="panelGrid" columns="2">
-                                <p:outputPanel>
-                                    <h:panelGrid columns="2" class="resgistro">
-                                        <h:outputText value="Nombre Completo:" class="info-tag"/>
-                                        <h:outputText value="#{academico.nombreCompleto}" class="info"/>
-                                        <h:outputText value="Correo ciencias:" class="info-tag"/>
-                                        <h:outputText value="#{academico.correoAca}" class="info"/>
-                                        <h:outputText value="Número de Trabajador:" class="info-tag"/>
-                                        <h:outputText value="#{academico.noTrabajador}" class="info"/>
-                                        <h:outputText value="Departamento:" class="info-tag"/>
-                                        <h:outputText  value="#{academico.departamento}" class="info"/>
-                                        <h:outputText value="Tipo Académico:" class="info-tag"/>
-                                        <h:outputText  value="#{academico.tipo}" class="info"/>
+                            <p:accordionPanel multiple="true" activeIndex="0">
+                                <p:tab title="#{academico.noTrabajador} - #{academico.nombreCompleto}">
+
+                                    <h:panelGrid class="panelGrid" columns="2">
+                                        <p:outputPanel>
+                                            <h:panelGrid columns="2" class="resgistro">
+                                                <h:outputText value="Nombre Completo:" class="info-tag"/>
+                                                <h:outputText value="#{academico.nombreCompleto}" class="info"/>
+                                                <h:outputText value="Correo ciencias:" class="info-tag"/>
+                                                <h:outputText value="#{academico.correoAca}" class="info"/>
+                                                <h:outputText value="Número de Trabajador:" class="info-tag"/>
+                                                <h:outputText value="#{academico.noTrabajador}" class="info"/>
+                                                <h:outputText value="Departamento:" class="info-tag"/>
+                                                <h:outputText  value="#{academico.departamento}" class="info"/>
+                                                <h:outputText value="Tipo Académico:" class="info-tag"/>
+                                                <h:outputText  value="#{academico.tipo}" class="info"/>
+                                            </h:panelGrid>
+                                        </p:outputPanel>
+                                        <p:outputPanel class="btones">
+                                            <p:commandButton  class="btn btn-sm btn-outline-primary btn-validador" value="Aceptar"
+                                                              actionListener="#{validarRegistroController.validarRegistro}"
+                                                              icon="fa fa-check"
+                                                              update="@form" >
+                                                <f:attribute name="academico" value="#{academico}"></f:attribute>
+                                            </p:commandButton>
+
+                                            <p:commandButton value="Denegar" class="btn btn-sm btn-danger btn-validador" 
+                                                             onclick="PF('dlg2').show();" 
+                                                             icon="fa fa-times">
+                                                <f:setPropertyActionListener value="#{academico}" target="#{validarRegistroController.academico}"/>
+                                            </p:commandButton>
+
+                                        </p:outputPanel>
                                     </h:panelGrid>
-                                </p:outputPanel>
-                                <p:outputPanel class="btones">
-                                    <p:commandButton  class="btn btn-sm btn-outline-primary btn-validador" value="Aceptar"
-                                                      actionListener="#{validarRegistroController.validarRegistro}"
-                                                      icon="fa fa-check"
-                                                      update="@form" >
-                                        <f:attribute name="academico" value="#{academico}"></f:attribute>
-                                    </p:commandButton>
+                                </p:tab>
+                            </p:accordionPanel>
 
-                                    <p:commandButton value="Denegar" class="btn btn-sm btn-danger btn-validador" 
-                                                     onclick="PF('dlg2').show();" 
-                                                     icon="fa fa-times">
-                                        <f:setPropertyActionListener value="#{academico}" target="#{validarRegistroController.academico}"/>
-                                    </p:commandButton>
-
-                                </p:outputPanel>
-                            </h:panelGrid>
                         </p:dataList>
 
                         <p:dialog header="Denegar" widgetVar="dlg2" modal="true" width="500" closable="true" resizable="false">
