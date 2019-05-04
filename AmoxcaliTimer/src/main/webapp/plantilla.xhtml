@@ -12,11 +12,12 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <h:outputStylesheet library="webjars" name="bootstrap/4.1.3/css/bootstrap.min-jsf.css"/>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous"></link>
         <link rel="stylesheet" type="text/css" href="css/plantilla.css"></link>
+        <link rel="stylesheet" type="text/css" href="css/general.css"></link>
         <link rel="icon" href="imagenes/clock-regular.svg"/>
-        <link href="https://fonts.googleapis.com/css?family=Prosto+One|Syncopate:700" rel="stylesheet"/>
         <link href="https://fonts.googleapis.com/css?family=Heebo|Julius+Sans+One|Questrial" rel="stylesheet"/>   
+        <link href="https://fonts.googleapis.com/css?family=Nobile" rel="stylesheet"/>
+        
         <ui:insert name="head"/>
     </h:head>
 
@@ -27,50 +28,46 @@
             </ui:insert>
         </div>
 
-        <div id="contenido">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark" rendered="${not empty Administrador}">
+        <div id="contenido" style="font-family: 'Nobile', sans-serif;">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark" 
+                 rendered="${not empty Administrador}">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <p:outputPanel rendered="${not empty Administrador}">
-                    
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a class="nav-item nav-link" href="../administrador/registro_administrador.xhtml">Registrar Administrador</a>
-                        <a class="nav-item nav-link" href="../administrador/registro_espacio.xhtml" >Registrar Espacio</a>
-                        <a class="nav-item nav-link" href="../administrador/validar_registro.xhtml" >Validar Academicos</a>
-                        <a class="nav-item nav-link" href="../administrador/registros_validados.xhtml" >Académicos Registrados</a>
-                        <a class="nav-item nav-link" href="../administrador/validar_solicitudes.xhtml" >Ver Solicitudes</a>
-                        <a class="nav-item nav-link" href="../administrador/eventos_aprobados.xhtml" >Eventos</a>
-                        <a class="nav-item nav-link" href="../administrador/historial.xhtml" >Historial Eventos</a>
-                        <a class="nav-item nav-link" href="../academico/ver_disponibilidad.xhtml" >Calendario de Espacios</a>
+
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                            <a class="nav-item nav-link" href="mi_perfil_admin.xhtml" >Mi Perfil</a>
+                            <a class="nav-item nav-link" href="registro_administrador.xhtml">Registrar Administrador</a>
+                            <a class="nav-item nav-link" href="registro_espacio.xhtml" >Registrar Espacio</a>
+                            <a class="nav-item nav-link" href="validar_registro.xhtml" >Validar Academicos</a>
+                            <a class="nav-item nav-link" href="registros_validados.xhtml" >Académicos Registrados</a>
+                            <a class="nav-item nav-link" href="validar_solicitudes.xhtml" >Ver Solicitudes</a>
+                            <a class="nav-item nav-link" href="eventos_aprobados.xhtml" >Eventos</a>
+                            <a class="nav-item nav-link" href="historial.xhtml" >Historial Eventos</a>
+                            <a class="nav-item nav-link" href="ver_disponibilidad.xhtml" >Calendario de Espacios</a>
+                        </div>
                     </div>
-                </div>
                 </p:outputPanel>
                 <p:outputPanel rendered="${not empty Academico}">
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a class="nav-item nav-link" href="../academico/solicitar_espacio.xhtml">Solicitar Espacio</a>
-                        <a class="nav-item nav-link" href="#cancelar_espacio" >Cancelar Espacio</a>
-                        <a class="nav-item nav-link" href="../academico/ver_disponibilidad.xhtml" >Calendario de Espacios</a>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                            <a class="nav-item nav-link" href="solicitar_espacio.xhtml">Solicitar Espacio</a>
+                            <a class="nav-item nav-link" href="#cancelar_espacio" >Cancelar Espacio</a>
+                            <a class="nav-item nav-link" href="mi_perfil.xhtml" >Mi Perfil</a>
+                            <a class="nav-item nav-link" href="ver_disponibilidad.xhtml" >Calendario de Espacios</a>
+                        </div>
                     </div>
-                </div>
                 </p:outputPanel>
                 <h:button class="btn btn-danger" id="cerrar-sesion" value="Cerrar sesión"  
-                          outcome="/views/general/cerrar_sesion.xhtml" 
+                          outcome="cerrar_sesion.xhtml" 
                           rendered="${(not empty Academico) or (not empty Administrador)}"
                           style="position: relative; float: right"/>
             </nav>
-
-
-
-
-
-            <ui:insert name="body" >
-            </ui:insert>
+            <ui:insert name="body"/>
         </div>
-
-        <div id="footer">
+        <div id="footer" style="font-family: 'Nobile', sans-serif; font-weight: bold; ">
             <ui:insert name="footer" >
                 <ui:include src="footer.xhtml" />
             </ui:insert>

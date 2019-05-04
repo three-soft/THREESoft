@@ -1,0 +1,130 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 3/05/2019, 08:23:56 PM
+    Author     : damri
+*/
+
+
+#container{
+    margin: auto;
+    min-width: 800px;
+    max-width: 900px;
+    background-color: #e5edeb;
+    padding: 2em;
+    border-radius: 10px;
+}
+
+.ui-selectonemenu{
+    background-color: transparent;
+    background-image: none;
+    box-shadow: none;
+}
+
+.ui-selectonemenu-panel .ui-selectonemenu-list-item .ui-corner-all .ui-state-highlight{
+    background-color: #0e253d;
+}
+
+.ui-selectonemenu .ui-selectonemenu-trigger{
+    background-image: none;
+    box-shadow: none;
+    background-color: #c0c0c0;
+}
+.btn-block{
+    border-radius: 999px;
+}
+
+.btn{
+    border-radius: 999px;
+}
+
+.ui-accordion .ui-accordion-header{
+    background-color: #386fa4;
+    background-image: none;
+    border-radius: 5px;
+    font-family: 'Nobile', sans-serif;
+    box-shadow: none;
+    font-weight: lighter;
+    color: white;
+}
+
+.ui-widget-content{
+    background-color: transparent;
+    border: 0px;
+    font-family: 'Nobile', sans-serif;
+}
+
+.ui-accordion .ui-accordion-content{
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.ui-accordion .ui-accordion-header .ui-icon{
+    color: #fff;
+    background-color: #fff;
+    border-radius: 999px;
+}
+
+.info-tag{
+    color: #386fa4;
+    font-weight: bold;
+}
+
+.info{
+    font-weight: lighter;
+}
+
+.ui-password-panel-overlay{
+    padding: 15px;
+    background-color: #fff;
+    background-image: none;
+    font-family: 'Nobile', sans-serif;
+    color: #000;
+    text-shadow: none;
+    text-align: center;
+}
+
+.ui-password-panel .ui-password-meter{
+    border-radius: 999px;
+    padding: 5px;
+}
+
+.btn:not(:disabled):not(.disabled){
+    background-image: none;
+    font-family: 'Nobile', sans-serif;
+    font-weight: lighter;
+    border-radius: 999px;
+    box-shadow: none;
+}
+
+.ui-dialog .ui-dialog-content{
+    text-align: center;
+    font-family: 'Nobile', sans-serif;
+    background-color: #fff;
+}
+
+.ui-draggable .ui-dialog-titlebar{
+    background-color: #f2cd60;
+    background-image: none;
+}
+
+.fc-day-grid-event .fc-content{
+    color: #fff;
+}
+
+.ui-widget-header .ui-state-highlight{
+    background-color: #386fa4;
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{
+    background-color: #f2cd60;
+    background-image: none;
+    color: #000;
+}
+
+.ui-growl-item{
+    text-shadow: none;
+}

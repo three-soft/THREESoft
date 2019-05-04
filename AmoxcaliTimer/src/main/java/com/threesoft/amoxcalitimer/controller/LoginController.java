@@ -80,7 +80,7 @@ public class LoginController implements Serializable {
                         FacesContext context = FacesContext.getCurrentInstance();
                         context.getExternalContext().getSessionMap().put("Academico", aca);
                         ExternalContext eContext = context.getExternalContext();
-                        eContext.redirect(eContext.getRequestContextPath() + "/views/academico/solicitar_espacio.xhtml");
+                        eContext.redirect(eContext.getRequestContextPath() + "/solicitar_espacio.xhtml");
                     }
                     FacesContext.getCurrentInstance().addMessage("messages",
                             new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -97,7 +97,7 @@ public class LoginController implements Serializable {
                     FacesContext context = FacesContext.getCurrentInstance();
                     context.getExternalContext().getSessionMap().put("Administrador", admin);
                     ExternalContext eContext = context.getExternalContext();
-                    eContext.redirect(eContext.getRequestContextPath() + "/views/administrador/ver_historial_espacios.xhtml");
+                    eContext.redirect(eContext.getRequestContextPath() + "/historial.xhtml");
                 }
             }
         } catch (IOException ex) {

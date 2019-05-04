@@ -4,50 +4,22 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : 5/03/2019, 11:46:03 PM
-    Author     : damianri
+    Created on : 3/05/2019, 07:46:41 PM
+    Author     : damri
 */
-
-header{
-    background-image: linear-gradient(rgba(14,37,61,1) 75%, rgba(14,37,61,0.5));
-    color: white;
-    font-family: 'Julius Sans One', sans-serif;
-    font-size: 35px;
-    font-weight: bold;
-    padding: 20px;
-    align-content: center;
-    min-width: 500px;
-}
-
-.unam{
-    height: 100px;
-}
-.facCiencias{
-    height: 100px;
-}
-
-footer{
-    text-align: center;
-    background-color: #576066;
-    color: whitesmoke;
-    font-family: fantasy;
-    font-size: small;
-    padding: 20px;
-}
-
-footer ul{
-    list-style-type: none;
-}
 
 body{
     font-family: 'Nobile', sans-serif;
 }
 
+#contenido{
+
+}
+
 #container{
     margin: auto;
-    width: 50%;
-    min-width: 400px;
-    max-width: 500px;
+    min-width: 800px;
+    max-width: 900px;
     background-color: #e5edeb;
     padding: 2em;
     border-radius: 10px;
@@ -73,6 +45,22 @@ h3{
     padding: 0px 20px;
 }
 
+.ui-selectonemenu{
+    background-color: transparent;
+    background-image: none;
+    box-shadow: none;
+}
+
+.ui-selectonemenu-panel .ui-selectonemenu-list-item .ui-corner-all .ui-state-highlight{
+    background-color: #0e253d;
+}
+
+.ui-selectonemenu .ui-selectonemenu-trigger{
+    background-image: none;
+    box-shadow: none;
+    background-color: #c0c0c0;
+}
+
 .ui-button{
     border-radius: 999px;
     font-family: 'Nobile', sans-serif;
@@ -80,7 +68,7 @@ h3{
 
 }
 
-#a-registro{
+#a-ingresar{
     background-color: #eb5e55;
     opacity: 0.7;
     color: white;
@@ -88,6 +76,6 @@ h3{
     border-radius: 5px;
 }
 
-#a-registro:hover{
+#a-ingresar:hover{
     opacity: 1;
 }

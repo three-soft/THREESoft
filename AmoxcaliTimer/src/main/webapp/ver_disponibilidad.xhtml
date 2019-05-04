@@ -5,52 +5,33 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui">
-    <ui:composition template="../plantilla.xhtml">
+    <ui:composition template="plantilla.xhtml">
         <ui:define name="head">
             <title>Calendario de Espacios</title>
-            <style>
-                .fc-toolbar{
-                    padding: 10px 20px;
-                    border-radius: 999px;
-                    color: #FFF;
-                    background-color: #576066;
-                }
-                .Calendario{
-                    width: 80%;
-                    margin: auto;
-                }
-                .fc .fc-button-group > *{
-                    background-image: none;
-                    background-color: #0e253d;
-                    border: 0.5px solid #FFF;
-                    border-radius: 999px;
-                    color: #FFF;
-                }
-                .fc-today-button .ui-button .ui-state-default{
-                    background-image: none;
-                    background-color: #FFF;
-                }
-                .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{
-                    background-image: none;
-                    background-color: #bdd5ea;
-                    color: #000000;
-                }
-                .fc-day-grid-event .fc-content{
-                    text-align: center;
-                    padding: 2px 5px;
-                    background-color: #0d324d;
-                    border-radius: 5px;
-                    color: #FFF;
-                }
-                .fc-event[href], .fc-event.fc-draggable{
-                    background-color: transparent;
-                    border: 0px;
-                }
-                .fc-head{
-                    background-image: none;
-                    background-color: #eb5160;
-                }
-            </style>
+            <script type="text/javascript">
+                PrimeFaces.locales['tr'] = {
+                    closeText: 'Cerrar',
+                    prevText: 'Anterior',
+                    nextText: 'Siguiente',
+                    currentText: 'Actual',
+                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+                        'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+                    dayNamesMin: ['D', 'L', 'M', 'Mi', 'J', 'V', 'S'],
+                    weekHeader: 'Semana',
+                    firstDay: 1,
+                    isRTL: false,
+                    showMonthAfterYear: false,
+                    yearSuffix: '',
+                    month: 'Mes',
+                    week: 'Semana',
+                    day: 'Día',
+                    allDayText: 'Todo el Día'
+                };
+            </script>
         </ui:define>
 
         <ui:define name="body">
@@ -59,8 +40,8 @@
                     <p:growl id="messages" showDetail="true" />
 
                     <h:panelGrid columnClasses="value">
-                        <h3 style="margin-top: 0">Disponibilidad Espacios</h3>
-                        <p:schedule id="schedule" value="#{calendarioEspacios.lazyEventModel}" widgetVar="myschedule" timeZone="GMT+2" draggable="false">
+                        <h3 style="margin-top: 0">Calendario de Espacios</h3>
+                        <p:schedule id="schedule" value="#{calendarioEspacios.lazyEventModel}" widgetVar="myschedule" timeZone="GMT-6" draggable="false"  locale="tr">
 
                             <p:ajax event="eventSelect" listener="#{calendarioEspacios.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                             <p:ajax event="eventResize" listener="#{calendarioEspacios.onEventResize}" update="messages" />

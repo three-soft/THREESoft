@@ -6,151 +6,12 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <ui:composition template="../plantilla.xhtml">
+    <ui:composition template="plantilla.xhtml">
         <ui:define name="head">
             <title>Eventos Aprobados</title>
             <meta charset="utf-8"/>
-            <link rel="stylesheet" type="text/css" href="/css/plantilla.css"></link>
-            <link rel="icon" href="/imagenes/clock-regular.svg"/>
-            <link rel="stylesheet" type="text/css" href="../css/validar_registro.css"></link>
-            <link rel="stylesheet" type="text/css" href="css/inicioSesion.css"></link>
+            <link rel="icon" href="imagenes/clock-regular.svg"/>
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
-            <style>
-
-                #container{
-                    width: 60%;
-                    margin: auto;
-                    padding: 5px;
-                    padding-top: 10px;
-                    min-width: 840px;
-                }
-                h3{
-                    background-color: #0e253d;
-                    color: white;
-                    padding: 15px;
-                    border-radius: 5px;
-                    min-width: 840px;
-                }
-                .panelGrid{
-                    background-color: #e5e7e6;
-                    width: 100%;
-                    margin: auto;
-                    min-width: 840px;
-                    border-radius: 10px;
-                    font-weight: lighter;
-                }
-
-                .info-tag{
-                    color: #3e5c76;
-                    padding: 2px 10px;
-                    border-radius: 3px;
-                    font-weight: bolder;
-                }
-                .info{
-                    color: black;
-                    font-weight: lighter;
-                    padding: 5px;
-                }
-                td td + td{
-                    border-bottom: 1px solid #612940;
-                }
-                .ui-datalist-item{
-                    width: 100%;
-                    margin: auto;
-                    padding: 10px 0px 10px;
-                }
-                tbody tr{
-                    padding: 20px;
-                }
-                form{
-                    border: 0px;
-                }
-                .ui-growl-item{
-                    height: 200px;
-                    background-color: #17255a;
-                    border-radius: 15px;
-                    color: #fff;
-                    font-weight: lighter;
-                }
-                .ui-growl-item-container{
-                    background-color: #17255a;
-                    border-radius: 15px;
-                    font-weight: lighter;
-                }
-                .ui-outputpanel{
-                    padding: 10px;
-                }
-                .panelGrid td td{
-                    padding: 3px
-                }
-
-                .ui-datalist-content{
-                    border: 0px;
-                }
-                .btn-validador{
-                    margin: 2px 5px;
-                }
-                .btones{
-                    background-color: #edddd4;
-                    border-radius: 10px;
-                    text-align: center;
-                }
-                .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
-                    border-radius: 5px;
-                    box-shadow: none;
-
-                    background-image: none;
-                    background-color: inherit;
-                }
-                .btn-outline-primary:hover{
-                    color: white;
-                    background-color: #65743a;
-                    background-image: none;
-                    border-color: #65743a;
-                }
-
-                .btn-danger:hover{
-                    color: white;
-                    background-color: #93032e;
-                    background-image: none;
-                    border-color: #93032e;
-                }
-
-                .btn-secondary:hover{
-                    color: white;
-                    background-color: #576066;
-                    background-image: none;
-                    border-color: #576066;
-                }
-
-                #msj-confirmacion{
-                    font-weight: bold;
-                    padding: 5px 5px 15px;
-                }
-
-                #btones-confirmacion .btn-validador{
-                    margin: 40px 20px 10px;
-                    width: 20%;
-                    border: 2px;
-                }
-
-                .resgistro{
-                    width: 100%;
-                }
-                .ui-dialog{
-                    background-color: #e5e7e6;
-                    border: 2px;
-                    border-radius: 15px;
-                    text-align: center;
-                }
-                .ui-draggable .ui-dialog-titlebar{
-                    background-image: none;
-                    background-color: #f6ae2d;
-                    color: #000;
-                }
-
-
-            </style>
         </ui:define>
         <ui:define name="body">
             <h:body>
@@ -195,7 +56,7 @@
                                         <p:outputPanel class="btones">
                                             <p:commandButton value="Cancelar" class="btn btn-sm btn-danger btn-validador" 
                                                              onclick="PF('dlg2').show();" 
-                                                             icon="fa fa-times">
+                                                             >
                                                 <f:setPropertyActionListener value="#{solicitud}" target="#{aceptarSolicitudController}"/>
                                             </p:commandButton>
 
@@ -209,7 +70,7 @@
                         <p:dialog header="Cancelar" widgetVar="dlg2" modal="true" width="500" closable="true" resizable="false">
                             <p:ajax event="close" update="growl" listener="#{validarRegistroController.mensajeAviso}" />
                             <div id="msj-confirmacion">
-                                Al <b>Cancelar</b> se eliminará la solicitud del académico y este ya no será visible ¿Estás seguro de Cancelar?                                            
+                                Al <b>Cancelar</b> el Evento no seŕa visible en el calendario. ¿Seguro que quieres Cancelar?                                            
                             </div>
                             <div id="btones-confirmacion">
                                 <p:commandButton  class="btn btn-sm btn-danger btn-validador" value="Sí"

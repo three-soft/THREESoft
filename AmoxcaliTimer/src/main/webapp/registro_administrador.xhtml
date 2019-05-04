@@ -6,96 +6,12 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <ui:composition template="/views/plantilla.xhtml">
+    <ui:composition template="plantilla.xhtml">
         <ui:define name="head">
-            <title>Registro</title>
+            <title>Registrar Administrador</title>
             <meta charset="utf-8"/>
-            <link rel="stylesheet" type="text/css" href="css/plantilla.css"></link>
             <link rel="icon" href="imagenes/clock-regular.svg"/>
-            <link rel="stylesheet" type="text/css" href="css/inicioSesion.css"></link>
-            
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
-            <style>
-                #container{
-                    width: 50%;
-                    margin: auto;
-                    min-width: 500px;
-                    padding: 20px;
-                    background-color: #e9edde;
-                    border-radius: 10px;
-                    margin-top: 20px;
-                }
-
-                h3{
-                    background-color: #0e253d;
-                    padding: 10px;
-                    border-radius: 5px;
-                    color: white;
-                }
-
-                .ui-button{
-                    padding: 10px;
-                    background-color: #aaaaaa;
-                    border: #aaaaaa;
-                    color: #0e253d;
-                }
-
-                #enlace-inicio{
-                    padding: 10px;
-                }
-
-                .form-group{
-                    padding: 10px 10px;
-                }
-                
-                .form-group .form-group{
-                    padding: 10px 0px;
-                }
-                
-                label{
-                    padding-top: 5px;
-                }
-
-                .ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield{
-                    box-shadow: none;
-                }
-
-                #a-ingresar{
-                    background-color: #eb5160;
-                    border-radius: 3px;
-                    padding: 0px 10px;
-                    color: white;
-                    opacity: 0.7;
-                    transition: 0.2s;
-                }
-
-                #a-ingresar:hover{
-                    opacity: 1;
-                    text-decoration: none;
-                }
-                
-                                
-                .ui-password-panel{
-                    background-color: transparent;
-                    background-image: none;
-                    font-size: inherit;
-                    border: 2px solid #eb5160;
-                    border-radius: 5px;
-                    box-shadow: none;
-                    color: #000;
-                    text-shadow: none;
-                    height: 100px;
-                    text-align: center;
-                    padding-top: 15px;
-                }
-                .ui-password-panel .ui-password-meter{
-                    background-color: #fff;
-                    border: 2px solid #000;
-                    border-radius: 5px;
-                }
-                
-
-            </style>
         </ui:define>
         <ui:define name="body">
             <h:body>
@@ -135,14 +51,13 @@
                                 <f:validateRegex pattern="[a-z0-9._%+-]+@ciencias.unam.mx"/>
                                 <p:ajax event="blur" update="correo"/>
                             </p:inputText>
+                            <small id="nota" class="form-text text-muted">Debe ser extensión @ciencias.unam.mx</small>
                             <p:message for="correoAca" id="correo"/>
 
 
                             <div class="form-group">
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon2"><i class="fa fa-key" aria-hidden="true"></i></span>
-                                    </div>
+                                    <label>Contraseña:</label>
                                     <p:password class="form-control"  placeholder="Contraseña" required="true" 
                                                 value="${registroController.password}"
                                                 requiredMessage="La contraseña no puede ser vacía" id="password"  size="30"  feedback="true" 
@@ -154,9 +69,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon2"><i class="fa fa-key" aria-hidden="true"></i></span>
-                                    </div>
+                                    <label>Confirmación:</label>
                                     <p:password class="form-control"  placeholder="Confirmación de la contraseña" required="true" 
                                                 requiredMessage="Debe ingresar la confirmación de su contraseña" id="password2">
                                         <p:ajax event="blur" update="mPassword,mPassword2" process="password, password2" />
