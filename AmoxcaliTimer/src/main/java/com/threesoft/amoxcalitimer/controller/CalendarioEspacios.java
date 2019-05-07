@@ -48,18 +48,23 @@ public class CalendarioEspacios extends AceptarSolicitudController implements Se
                 Date random = getRandomDate(start);
                 
                 for(Solicitud s : solicitudesAprobadas){
-                    Calendar date = Calendar.getInstance();
-                    date.setTime(s.getFechaSolicitud());
-                    date.add(Calendar.DATE, s.getHoraInicio().getHours());
-                    System.out.println("Agregando Evento");
-                    addEvent(new DefaultScheduleEvent(s.getNombreEvento()+": "+s.getDescripcionEvento()+",en "+s.getEspacio().getNombreEspacio(), 
-                            s.getHoraInicio() , s.getHoraFin()));
+                    Calendar date1 = Calendar.getInstance();
+                    Calendar date2 = Calendar.getInstance();
+                    Calendar hinicio = Calendar.getInstance();
+                    Calendar hfinal = Calendar.getInstance();
+                    hinicio.setTime(s.getHoraInicio());
+                    hfinal.setTime(s.getHoraFin());
+                    
+                    date1.setTime(s.getFechaSolicitud());
+                    date2.setTime(s.getFechaSolicitud());
+                    date1.add(Calendar.HOUR_OF_DAY, hinicio.get(Calendar.HOUR_OF_DAY));
+                    date2.add(Calendar.HOUR_OF_DAY, hfinal.get(Calendar.HOUR_OF_DAY));
+                    
+                    System.out.println("Cargando Evento");
+                    
+                    addEvent(new DefaultScheduleEvent(s.getNombreEvento()+": "+s.getDescripcionEvento()+", en "+s.getEspacio().getNombreEspacio(), 
+                            date1.getTime() , date2.getTime()));
                 }
-                
-                addEvent(new DefaultScheduleEvent("Lazy Event 1", random, random));
-
-                random = getRandomDate(start);
-                addEvent(new DefaultScheduleEvent("Lazy Event 2", random, random));
             }
         };
     }

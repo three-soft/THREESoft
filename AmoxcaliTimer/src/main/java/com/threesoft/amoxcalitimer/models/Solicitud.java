@@ -49,12 +49,12 @@ public class Solicitud implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "hora_inicio", nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIME)
     private Date horaInicio;
     @Basic(optional = false)
     @NotNull
     @Column(name = "hora_fin", nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIME)
     private Date horaFin;
     @Basic(optional = false)
     @NotNull

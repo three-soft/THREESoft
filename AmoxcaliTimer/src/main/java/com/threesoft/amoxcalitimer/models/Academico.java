@@ -5,6 +5,7 @@
  */
 package com.threesoft.amoxcalitimer.models;
 
+import com.threesoft.amoxcalitimer.models.Solicitud;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -197,6 +198,5 @@ public class Academico implements Serializable {
     @Override
     public String toString() {
         return "com.threesoft.amoxcalitimer.models.Academico[ idAcademico=" + idAcademico + " ]";
-    }
-    
+    }  
 }

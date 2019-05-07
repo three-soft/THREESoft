@@ -190,7 +190,7 @@ public class SolicitarController implements Serializable {
             nuevaSolicitud.setHoraFin(horaFin);
             nuevaSolicitud.setNombreEvento(nombreEvento);
             nuevaSolicitud.setDescripcionEvento(descripcionEvento);
-            nuevaSolicitud.setFechaSolicitud(horaInicio);
+            nuevaSolicitud.setFechaSolicitud(fechaSolicitud);
             nuevaSolicitud.setFechaResolucion(fechaResolucion);
             nuevaSolicitud.setEstatus(estatus);
             

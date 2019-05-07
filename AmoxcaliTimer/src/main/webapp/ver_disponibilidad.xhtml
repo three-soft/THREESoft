@@ -41,7 +41,7 @@
 
                     <h:panelGrid columnClasses="value">
                         <h3 style="margin-top: 0">Calendario de Espacios</h3>
-                        <p:schedule id="schedule" value="#{calendarioEspacios.lazyEventModel}" widgetVar="myschedule" timeZone="GMT-6" draggable="false"  locale="tr">
+                        <p:schedule id="schedule" value="#{calendarioEspacios.lazyEventModel}" widgetVar="myschedule" draggable="false"  locale="tr">
 
                             <p:ajax event="eventSelect" listener="#{calendarioEspacios.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                             <p:ajax event="eventResize" listener="#{calendarioEspacios.onEventResize}" update="messages" />
@@ -50,14 +50,14 @@
                     </h:panelGrid>
                     <p:dialog widgetVar="eventDialog" header="Detalles del Evento" showEffect="clip" hideEffect="clip">
                         <h:panelGrid id="eventDetails" columns="2">
-                            <p:outputLabel for="title" value="Evento" />
+                            <p:outputLabel for="title" value="Detalles:" />
                             <p:outputLabel id="title" value="#{calendarioEspacios.event.title}"/>
 
                             <p:outputLabel for="from" value="Hora Inicial:" />
-                            <p:calendar id="from" value="#{calendarioEspacios.event.startDate}" timeZone="GMT+2" pattern="HH:mm" disabled="true"/>
+                            <p:calendar id="from" value="#{calendarioEspacios.event.startDate}" pattern="hh:mm a" disabled="true"/>
 
                             <p:outputLabel for="to" value="Hora Final:" />
-                            <p:calendar id="to" value="#{calendarioEspacios.event.endDate}" timeZone="GMT+2" pattern="HH:mm" disabled="true"/>
+                            <p:calendar id="to" value="#{calendarioEspacios.event.endDate}" pattern="hh:mm a" disabled="true"/>
                         </h:panelGrid>
                     </p:dialog>
                 </h:form>

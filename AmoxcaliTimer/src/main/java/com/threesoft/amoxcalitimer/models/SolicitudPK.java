@@ -99,5 +99,5 @@ public class SolicitudPK implements Serializable {
     public String toString() {
         return "com.threesoft.amoxcalitimer.models.SolicitudPK[ idSolicitud=" + idSolicitud + ", idAcademico=" + idAcademico + ", idEspacio=" + idEspacio + " ]";
     }
-
+    
 }

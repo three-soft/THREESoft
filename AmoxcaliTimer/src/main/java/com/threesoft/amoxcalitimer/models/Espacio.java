@@ -5,6 +5,7 @@
  */
 package com.threesoft.amoxcalitimer.models;
 
+import com.threesoft.amoxcalitimer.models.Solicitud;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -159,5 +160,4 @@ public class Espacio implements Serializable {
     public String toString() {
         return "["+ idEspacio + "]: "+ nombreEspacio;
     }
-    
 }

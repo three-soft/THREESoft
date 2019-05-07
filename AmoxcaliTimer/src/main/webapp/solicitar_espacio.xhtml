@@ -10,116 +10,9 @@
         <ui:define name="head">
             <title>Solicitud</title>
             <meta charset="utf-8"/>
-            <link rel="stylesheet" type="text/css" href="css/plantilla.css"></link>
             <link rel="icon" href="imagenes/clock-regular.svg"/>
             <link rel="stylesheet" type="text/css" href="css/inicioSesion.css"></link>
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
-            <style>
-                #container{
-                    width: 50%;
-                    margin: auto;
-                    min-width: 600px;
-                    padding: 20px;
-                    background-color: #e9edde;
-                    border-radius: 10px;
-                    margin-top: 20px;
-                }
-
-                h3{
-                    background-color: #0e253d;
-                    padding: 10px;
-                    border-radius: 5px;
-                    color: white;
-                }
-
-                .ui-button{
-                    padding: 10px;
-                    background-color: #aaaaaa;
-                    border: #aaaaaa;
-                    color: #0e253d;
-                }
-
-                #enlace-inicio{
-                    padding: 10px;
-                }
-
-                .recursos{
-                    height: 100px;
-                }
-
-                .form-group{
-                    padding: 10px 10px;
-                }
-                label{
-                    padding-top: 5px;
-                }
-
-                .ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield{
-                    box-shadow: none;
-                }
-
-                #a-ingresar{
-                    background-color: #eb5160;
-                    border-radius: 3px;
-                    padding: 0px 10px;
-                    color: white;
-                    opacity: 0.7;
-                    transition: 0.2s;
-                }
-
-                #a-ingresar:hover{
-                    opacity: 1;
-                    text-decoration: none;
-                }       
-                .ui-selectonemenu-panel{
-                    background-color: #c7d5df;
-                    box-shadow: none;
-                    border: 1px solid;
-                    border-radius: 5px;
-                }
-
-                .ui-widget .ui-widget{
-
-                }
-
-                .ui-widget-content .ui-inputfield.ui-state-focus{
-                    box-shadow: none;
-                    background-image: none;                    
-                    border-radius: 10px;
-                }
-                .ui-selectonemenu{
-                    border: 1px solid #e9edde;
-                    width: 100%;
-                    background-image: none;
-                }
-                .ui-state-hover{
-                    box-shadow: none;
-                    background-image: none;
-                    border: 0px;
-                }
-
-                .ui-selectonemenu-list-item.ui-state-highlight{
-                    background-color: #8d9ba3;
-                    background-image: none;
-                    color: #000;
-                    text-shadow:none;
-                }
-                .ui-selectonemenu-list-item.ui-state-hover{
-                    background-color: #2f4858;
-                    background-image: none;
-                    color: #fff;
-                    text-shadow:none;
-                }
-                .ui-inputfield{
-                    background-color: #fff;
-                    box-shadow: none;
-                    border: 0px;
-                }
-                .ui-widget-content{
-                    background-color: #fff;
-                }
-
-            </style>
         </ui:define>
         <ui:define name="body">
             <h:body>
@@ -141,13 +34,17 @@
                                 <p:ajax event="blur" update="idRequerido"/>
                             </p:inputText>
                             <p:message for="idEspacio" id="idRequerido"/>
+                            <label>Fecha de Solicitud: </label>
+                            <div >
+                                <p:calendar id="fechaSolicitud" value="${solicitarController.fechaSolicitud}" pattern="dd/MM/yyyy" />
+                            </div>
                             <label>Fecha de Inicio:</label>
                             <div >
-                                <p:calendar id="horainicio" value="${solicitarController.horaInicio}" pattern="dd/MM/yyyy HH:mm" />
+                                <p:calendar id="horainicio" value="${solicitarController.horaInicio}" pattern="hh:mm a" timeOnly="true"/>
                             </div>
                             <label>Fecha de Fin:</label>
                             <div>
-                                <p:calendar id="horafin" value="${solicitarController.horaFin}" pattern="dd/MM/yyyy HH:mm" />
+                                <p:calendar id="horafin" value="${solicitarController.horaFin}" pattern="hh:mm a" timeOnly="true"/>
                             </div>
 
                             <label>Nombre del evento</label>

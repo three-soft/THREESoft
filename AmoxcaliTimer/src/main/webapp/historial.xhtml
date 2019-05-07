@@ -41,11 +41,11 @@
                                         </h:outputText>
                                         <h:outputText value="Hora Inicial:" class="info-tag"/>
                                         <h:outputText value="#{solicitud.horaInicio}" class="info">
-                                            <f:convertDateTime pattern="hh:mm" />
+                                            <f:convertDateTime pattern=" hh:mm a" timeZone="GMT-6"/>
                                         </h:outputText>
                                         <h:outputText value="Hora Final:" class="info-tag"/>
                                         <h:outputText  value="#{solicitud.horaFin}" class="info">
-                                            <f:convertDateTime pattern="HH:mm" />
+                                            <f:convertDateTime pattern=" hh:mm a" timeZone="GMT-6" locale="es_MX"/>
                                         </h:outputText>
                                         <h:outputText value="Fecha de Resolución:" class="info-tag"/>
                                         <h:outputText value="#{solicitud.fechaResolucion}" class="info">
