@@ -52,7 +52,7 @@ and open the template in the editor.
 }
 
 .ui-widget-content{
-    background-color: transparent;
+    background-color: #fff;
     border: 0px;
     font-family: 'Nobile', sans-serif;
 }

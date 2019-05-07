@@ -53,7 +53,7 @@ public class CalendarioEspacios extends AceptarSolicitudController implements Se
                     date.add(Calendar.DATE, s.getHoraInicio().getHours());
                     System.out.println("Agregando Evento");
                     addEvent(new DefaultScheduleEvent(s.getNombreEvento()+": "+s.getDescripcionEvento()+",en "+s.getEspacio().getNombreEspacio(), 
-                            date.getTime() , s.getHoraFin() ));
+                            s.getHoraInicio() , s.getHoraFin()));
                 }
                 
                 addEvent(new DefaultScheduleEvent("Lazy Event 1", random, random));

@@ -9,21 +9,28 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author river
+ * @author damri
  */
 @Embeddable
 public class SolicitudPK implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_solicitud", nullable = false)
     private long idSolicitud;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id_academico", nullable = false)
     private long idAcademico;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id_espacio", nullable = false)
     private long idEspacio;
 
@@ -92,5 +99,5 @@ public class SolicitudPK implements Serializable {
     public String toString() {
         return "com.threesoft.amoxcalitimer.models.SolicitudPK[ idSolicitud=" + idSolicitud + ", idAcademico=" + idAcademico + ", idEspacio=" + idEspacio + " ]";
     }
-    
+
 }

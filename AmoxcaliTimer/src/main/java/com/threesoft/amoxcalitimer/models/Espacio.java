@@ -157,7 +157,7 @@ public class Espacio implements Serializable {
 
     @Override
     public String toString() {
-        return "com.threesoft.amoxcalitimer.models.Espacio[ idEspacio=" + idEspacio + " ]";
+        return "["+ idEspacio + "]: "+ nombreEspacio;
     }
     
 }

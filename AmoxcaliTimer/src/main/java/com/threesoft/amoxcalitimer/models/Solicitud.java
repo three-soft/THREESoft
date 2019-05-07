@@ -18,11 +18,13 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author river
+ * @author damri
  */
 @Entity
 @Table(name = "solicitud", catalog = "postgres", schema = "public")
@@ -45,14 +47,17 @@ public class Solicitud implements Serializable {
     @EmbeddedId
     protected SolicitudPK solicitudPK;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "hora_inicio", nullable = false)
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.DATE)
     private Date horaInicio;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "hora_fin", nullable = false)
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.DATE)
     private Date horaFin;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "fecha_solicitud", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fechaSolicitud;
@@ -60,9 +65,13 @@ public class Solicitud implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaResolucion;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 250)
     @Column(name = "nombre_evento", nullable = false, length = 250)
     private String nombreEvento;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 500)
     @Column(name = "descripcion_evento", nullable = false, length = 500)
     private String descripcionEvento;
     @Column(name = "estatus")
