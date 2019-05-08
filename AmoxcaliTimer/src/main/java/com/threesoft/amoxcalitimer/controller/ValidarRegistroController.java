@@ -95,6 +95,7 @@ public class ValidarRegistroController implements Serializable {
         System.out.println("Revisando registro");
         Academico academico = (Academico) event.getComponent().getAttributes().get("academico");
         academico.setFechaActivacion(new Date());
+        academico.setActivo(Boolean.TRUE);
         AcademicoDao academicoDao = new AcademicoDao();
         academicoDao.getEntityManager().getTransaction().begin();
         academicoDao.update(academico);
@@ -105,6 +106,32 @@ public class ValidarRegistroController implements Serializable {
                 new FacesMessage(FacesMessage.SEVERITY_INFO,
                         "Registro aceptado",
                         "Se le hará envío de un correo de confirmación al académico " + academico.getNombreCompleto()));
+    }
+
+    public void desactivarCambiarEstado(ActionEvent event) throws Exception {
+        System.out.println("Cambiando de estado registro");
+        Academico academico = (Academico) event.getComponent().getAttributes().get("academico");
+        boolean cambio = academico.getActivo();
+        String estado = "";
+        academico.setFechaActivacion(new Date());
+        academico.setActivo(!cambio);//Cambiamos al valor contrario del cual se encontraba
+        AcademicoDao academicoDao = new AcademicoDao();
+        academicoDao.getEntityManager().getTransaction().begin();
+        academicoDao.update(academico);
+        academicoDao.getEntityManager().getTransaction().commit();
+        if (cambio) {//Si ya estaba activo, lo avisamos que se desactivo
+            estado = "Desactivado";
+            Correo.correoCambioEstado(academico.getCorreoAca(), academico.getNombreCompleto());
+            System.out.println("Desactivando academico");
+        } else if (!cambio) {//Si estaba desactivado lo activamos de nuevo
+            estado = "Activado";
+            System.out.println("Activando academico");
+            Correo.correoDeActivacion(academico.getCorreoAca(), academico.getNombreCompleto());
+        }
+        FacesContext.getCurrentInstance().addMessage("mensaje-aviso",
+                new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Se ha cambiando el estado del Académico -",
+                        academico.getNombreCompleto()+"- ahora está: "+estado));
     }
 
     public void denegarRegistro() throws Exception {

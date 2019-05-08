@@ -128,3 +128,15 @@ and open the template in the editor.
 .ui-growl-item{
     text-shadow: none;
 }
+.btn-danger:disabled{
+    background-color: #fff;
+    border-radius: 999px;
+    color: #386fa4;
+}
+
+.fc-event, .fc-event:hover, .ui-widget .fc-event{
+    background-color: #386fa4;
+    padding: 10px;
+    border-radius: 999px;
+    font-weight: bold;
+}

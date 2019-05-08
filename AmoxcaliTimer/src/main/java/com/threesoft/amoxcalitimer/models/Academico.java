@@ -5,12 +5,9 @@
  */
 package com.threesoft.amoxcalitimer.models;
 
-import com.threesoft.amoxcalitimer.models.Solicitud;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,16 +15,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author river
+ * @author damri
  */
 @Entity
 @Table(name = "academico", catalog = "postgres", schema = "public")
@@ -42,7 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Academico.findByTipo", query = "SELECT a FROM Academico a WHERE a.tipo = :tipo")
     , @NamedQuery(name = "Academico.findByFechaActivacion", query = "SELECT a FROM Academico a WHERE a.fechaActivacion = :fechaActivacion")
     , @NamedQuery(name = "Academico.findByUserName", query = "SELECT a FROM Academico a WHERE a.userName = :userName")
-    , @NamedQuery(name = "Academico.findByNoTrabajador", query = "SELECT a FROM Academico a WHERE a.noTrabajador = :noTrabajador")})
+    , @NamedQuery(name = "Academico.findByNoTrabajador", query = "SELECT a FROM Academico a WHERE a.noTrabajador = :noTrabajador")
+    , @NamedQuery(name = "Academico.findByActivo", query = "SELECT a FROM Academico a WHERE a.activo = :activo")})
 public class Academico implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,30 +50,43 @@ public class Academico implements Serializable {
     @Column(name = "id_academico", nullable = false)
     private Long idAcademico;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 210)
     @Column(name = "nombre_completo", nullable = false, length = 210)
     private String nombreCompleto;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 210)
     @Column(name = "correo_aca", nullable = false, length = 210)
     private String correoAca;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 210)
     @Column(name = "password", nullable = false, length = 210)
     private String password;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "departamento", nullable = false, length = 100)
     private String departamento;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "tipo", nullable = false, length = 100)
     private String tipo;
     @Column(name = "fecha_activacion")
     @Temporal(TemporalType.DATE)
     private Date fechaActivacion;
+    @Size(max = 100)
     @Column(name = "user_name", length = 100)
     private String userName;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "no_trabajador", nullable = false, length = 20)
     private String noTrabajador;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "academico")
-    private Collection<Solicitud> solicitudCollection;
+    @Column(name = "activo")
+    private Boolean activo;
 
     public Academico() {
     }
@@ -166,13 +177,12 @@ public class Academico implements Serializable {
         this.noTrabajador = noTrabajador;
     }
 
-    @XmlTransient
-    public Collection<Solicitud> getSolicitudCollection() {
-        return solicitudCollection;
+    public Boolean getActivo() {
+        return activo;
     }
 
-    public void setSolicitudCollection(Collection<Solicitud> solicitudCollection) {
-        this.solicitudCollection = solicitudCollection;
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 
     @Override
@@ -198,5 +208,6 @@ public class Academico implements Serializable {
     @Override
     public String toString() {
         return "com.threesoft.amoxcalitimer.models.Academico[ idAcademico=" + idAcademico + " ]";
-    }  
+    }
+    
 }

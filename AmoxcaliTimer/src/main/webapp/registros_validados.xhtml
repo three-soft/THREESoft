@@ -35,8 +35,24 @@
                                             <h:outputText  value="#{academico.departamento}" class="info"/>
                                             <h:outputText value="Tipo Académico:" class="info-tag"/>
                                             <h:outputText  value="#{academico.tipo}" class="info"/>
+                                            <h:outputText value="¿Está Activo?:" class="info-tag"/>
+                                            <h:outputText  value="#{academico.activo}" class="info"/>                                            
                                         </h:panelGrid>
                                     </p:outputPanel>
+                                    <p:commandButton value="Desactivar" class="btn btn-sm btn-danger btn-validador"
+                                                     actionListener="${validarRegistroController.desactivarCambiarEstado}"
+                                                     disabled="#{!academico.activo}"
+                                                     update="@form"
+                                                     >
+                                        <f:attribute name="academico" value="#{academico}"></f:attribute>
+                                    </p:commandButton>
+                                    <p:commandButton value="Activar" class="btn btn-sm btn-danger btn-validador"
+                                                     actionListener="${validarRegistroController.desactivarCambiarEstado}"
+                                                     disabled="#{academico.activo}"
+                                                     update="@form"
+                                                     >
+                                        <f:attribute name="academico" value="#{academico}"></f:attribute>
+                                    </p:commandButton>
                                 </p:tab>
                             </p:accordionPanel>
 
