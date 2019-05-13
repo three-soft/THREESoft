@@ -82,7 +82,7 @@ public class Solicitud implements Serializable {
     @JoinColumn(name = "id_espacio", referencedColumnName = "id_espacio", nullable = false, insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Espacio espacio;
-
+    
     public Solicitud() {
     }
 
@@ -183,6 +183,16 @@ public class Solicitud implements Serializable {
         this.espacio = espacio;
     }
 
+    public String dameEstado() {
+        String estado = "Pendiente";
+        if(this.estatus && this.fechaResolucion != null){
+            estado = "Sí";
+        }else if(this.estatus == false && this.fechaResolucion != null){
+            estado = "No";
+        }
+        return estado;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

@@ -21,6 +21,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import static org.primefaces.component.contextmenu.ContextMenu.PropertyKeys.event;
 
 /**
  *
@@ -33,9 +34,28 @@ public class AceptarSolicitudController implements Serializable {
     private List<Solicitud> solicitudes;
     private List<Solicitud> solicitudesAprobadas;
     private List<Solicitud> historial;
-
+    private List<Solicitud> aprobadasAcademico;
+    
     public AceptarSolicitudController() {
         this.solicitudes = new ArrayList<>();
+    }
+
+    public List<Solicitud> getAprobadasAcademico(Academico academico){
+
+        SolicitudDao solicitudDao = new SolicitudDao();
+        List<Solicitud> todos = solicitudDao.getSolicitudes();
+        List<Solicitud> solictudesAprobadas = new ArrayList<>();
+        for (Solicitud solicitud : todos) {
+            if (solicitud.getAcademico().equals(academico)) {
+                solictudesAprobadas.add(solicitud);
+            }
+        }
+        return solictudesAprobadas;
+
+    }
+
+    public void setAprobadasAcademico(List<Solicitud> aprobadasAcademico) {
+        this.aprobadasAcademico = aprobadasAcademico;
     }
 
     public List<Solicitud> getSolicitudes() {
@@ -75,7 +95,7 @@ public class AceptarSolicitudController implements Serializable {
     public void setHistorial(List<Solicitud> historial) {
         this.historial = historial;
     }
-    
+
     public void setSolicitudesAprobadas(List<Solicitud> solicitudesAprobadas) {
         this.solicitudesAprobadas = solicitudesAprobadas;
     }
@@ -104,6 +124,54 @@ public class AceptarSolicitudController implements Serializable {
                         "Solicitud Aceptada",
                         "Se le hará envío de un correo de confirmación de su evento al académico " + solicitud.getAcademico().getNombreCompleto()));
     }
+
+    public void cancelarSolicitud(ActionEvent event) throws Exception {
+        System.out.println("Solicitud");
+        //Actualizamos la fecha y el estatus de la solicitud
+        Solicitud solicitud = (Solicitud) event.getComponent().getAttributes().get("solicitud");
+        solicitud.setFechaResolucion(new Date());
+        solicitud.setEstatus(Boolean.FALSE);
+        //Obtenemos el academico a quien enviaremos el correo de aceptación.
+        AcademicoDao academicoDao = new AcademicoDao();
+        academicoDao.getEntityManager().getTransaction().begin();
+        Academico academico = academicoDao.getByKey(solicitud.getSolicitudPK().getIdAcademico());
+        academicoDao.getEntityManager().getTransaction().commit();
+        //Actualizamos el valor del registro en la base de datos.
+        SolicitudDao solicitudDao = new SolicitudDao();
+        solicitudDao.getEntityManager().getTransaction().begin();
+        solicitudDao.update(solicitud);
+        solicitudDao.getEntityManager().getTransaction().commit();
+        //enviamos el correo para notificar al usuario.
+        Correo.correoEventoDenegado(academico);
+        System.out.println("Solicitud:" + solicitud.getNombreEvento() + " FechaCancelación: " + solicitud.getFechaResolucion());
+        FacesContext.getCurrentInstance().addMessage("mensaje-aviso",
+                new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Solicitud Aceptada",
+                        "Se le hará envío de un correo de Cancelación de su evento al académico " + solicitud.getAcademico().getNombreCompleto()));
+    }
+    
+        public void cancelarSolicitudPropia(ActionEvent event) throws Exception {
+        System.out.println("Solicitud");
+        //Actualizamos la fecha y el estatus de la solicitud
+        Solicitud solicitud = (Solicitud) event.getComponent().getAttributes().get("solicitud");
+        SolicitudDao solicitudDao = new SolicitudDao();
+        solicitudDao.getEntityManager().getTransaction().begin();
+        if(solicitud.getFechaResolucion() != null && solicitud.getEstatus()){            
+            solicitud.setEstatus(Boolean.FALSE);
+            solicitudDao.update(solicitud);
+        }else{
+            solicitudDao.delete(solicitud);
+        }
+        solicitudDao.getEntityManager().getTransaction().commit();
+        //Actualizamos el valor del registro en la base de datos.
+        //enviamos el correo para notificar al usuario.
+        System.out.println("Solicitud:" + solicitud.getNombreEvento() + " FechaCancelación: " + solicitud.getFechaResolucion());
+        FacesContext.getCurrentInstance().addMessage("mensaje-aviso",
+                new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Haz Cancelado tu Solicitud",
+                        "Haz Cancelado tu Solicitud, por lo que ya no podrá ser aprobada"));
+    }
+
     /*
      */
 

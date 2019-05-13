@@ -19,7 +19,7 @@
                     <h3>Solicitudes de Eventos</h3>
                     <h:form class="formulario" id="form">
                         <p:growl for="mensaje-aviso" sticky="true" showDetail="true"/>
-                        <p:dataList id="listaSolicitudes" class="solicitudes" value="#{aceptarSolicitudController.solicitudes}" var="solicitud" type="definition"
+                        <p:dataList id="listaSolicitudes" class="solicitudes" value="#{aceptarSolicitudController.getAprobadasAcademico(Academico)}" var="solicitud" type="definition"
                                     emptyMessage="No se encontraron solicitudes con espera de aceptación.">
                             <p:accordionPanel multiple="true" >
                                 <p:tab title="#{solicitud.nombreEvento}">
@@ -27,8 +27,6 @@
                                     <h:panelGrid class="panelGrid" columns="2">
                                         <p:outputPanel>
                                             <h:panelGrid columns="2" class="resgistro">
-                                                <h:outputText value="Académico:" class="info-tag"/>
-                                                <h:outputText  value="#{solicitud.academico.nombreCompleto}" class="info"/>
                                                 <h:outputText value="Espacio" class="info-tag"/>
                                                 <h:outputText  value="#{solicitud.espacio.nombreEspacio}" class="info"/>                                        
                                                 <h:outputText value="Nombre Evento:" class="info-tag"/>
@@ -47,18 +45,15 @@
                                                 <h:outputText  value="#{solicitud.horaFin}" class="info">
                                                     <f:convertDateTime pattern="hh:mm a" timeZone="GMT-6"/>
                                                 </h:outputText>
+                                                <h:outputText value="¿ Aprobado ?" class="info-tag"/>
+                                                <h:outputText  value="#{solicitud.dameEstado()}" class="info"></h:outputText>
                                             </h:panelGrid>
                                         </p:outputPanel>
                                         <p:outputPanel class="btones">
-                                            <p:commandButton  class="btn btn-sm btn-outline-primary btn-validador" value="Aceptar"
-                                                              actionListener="#{aceptarSolicitudController.validarSolicitud}"
-                                                              update="@form" 
-                                                              >
-                                                <f:attribute name="solicitud" value="#{solicitud}"></f:attribute>
-                                            </p:commandButton>
                                             <p:commandButton  class="btn btn-sm btn-outline-danger btn-validador" value="Cancelar"
-                                                              actionListener="#{aceptarSolicitudController.cancelarSolicitud}"
-                                                              update="@form" 
+                                                              actionListener="#{aceptarSolicitudController.cancelarSolicitudPropia}"
+                                                              update="@form"
+                                                              rendered="#{solicitud.estatus or solicitud.fechaResolucion==null}"
                                                               >
                                                 <f:attribute name="solicitud" value="#{solicitud}"></f:attribute>
                                             </p:commandButton>
