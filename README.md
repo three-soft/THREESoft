@@ -1,2 +1,2 @@
 # THREESoft
-Organización para la implementación del proyecto de Ingeniería de Software II
+Organización THREESoft, dedicados a la planificación y desarrollo de proyectos de Ingeniería de Software.
