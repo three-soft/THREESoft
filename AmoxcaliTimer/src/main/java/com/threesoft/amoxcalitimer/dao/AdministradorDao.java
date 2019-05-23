@@ -35,8 +35,7 @@ public class AdministradorDao extends AbstractDao<Long, Administrador> {
         CriteriaBuilder cb = createCriteriaBuilder();
         CriteriaQuery<Administrador> crit = createCriteriaQuery(cb);
         Root<Administrador> r = createRoot(crit);
-        return searchByExpressionUnique(crit, r, cb.or(cb.equal(r.get("correoAdmin"), userOrEmail),
-                cb.equal(r.get("noTrabajador"), userOrEmail)));
+        return searchByExpressionUnique(crit, r, cb.or(cb.equal(r.get("correoAdmin"), userOrEmail)));
     }
 
     /**

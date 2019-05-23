@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="plantilla.xhtml">
+        <ui:define name="head">
+            <title>Calendario de Espacios</title>
+            <script type="text/javascript">
+                PrimeFaces.locales['tr'] = {
+                    closeText: 'Cerrar',
+                    prevText: 'Anterior',
+                    nextText: 'Siguiente',
+                    currentText: 'Actual',
+                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+                        'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+                    dayNamesMin: ['D', 'L', 'M', 'Mi', 'J', 'V', 'S'],
+                    weekHeader: 'Semana',
+                    firstDay: 1,
+                    isRTL: false,
+                    showMonthAfterYear: false,
+                    yearSuffix: '',
+                    month: 'Mes',
+                    week: 'Semana',
+                    day: 'Día',
+                    allDayText: 'Todo el Día'
+                };
+            </script>
+        </ui:define>
+
+        <ui:define name="body">
+            <div class="Calendario">
+                <h:form>
+                    <p:growl id="messages" showDetail="true" />
+
+                    <h:panelGrid columnClasses="value">
+                        <h3 style="margin-top: 0">Calendario de Espacios</h3>
+                        <p:schedule id="schedule" value="#{calendarioEspacios.lazyEventModel}" widgetVar="myschedule" draggable="false"  locale="tr">
+
+                            <p:ajax event="eventSelect" listener="#{calendarioEspacios.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                            <p:ajax event="eventResize" listener="#{calendarioEspacios.onEventResize}" update="messages" />
+
+                        </p:schedule>
+                    </h:panelGrid>
+                    <p:dialog widgetVar="eventDialog" header="Detalles del Evento" showEffect="clip" hideEffect="clip">
+                        <h:panelGrid id="eventDetails" columns="2">
+                            <p:outputLabel for="title" value="Detalles:" />
+                            <p:outputLabel id="title" value="#{calendarioEspacios.event.title}"/>
+
+                            <p:outputLabel for="from" value="Hora Inicial:" />
+                            <p:calendar id="from" value="#{calendarioEspacios.event.startDate}" pattern="hh:mm a" disabled="true"/>
+
+                            <p:outputLabel for="to" value="Hora Final:" />
+                            <p:calendar id="to" value="#{calendarioEspacios.event.endDate}" pattern="hh:mm a" disabled="true"/>
+                        </h:panelGrid>
+                    </p:dialog>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

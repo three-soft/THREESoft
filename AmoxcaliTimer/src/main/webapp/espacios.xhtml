@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="plantilla.xhtml">
+        <ui:define name="head">
+            <title>Espacios </title>
+            <meta charset="utf-8"/>
+            <link rel="icon" href="imagenes/clock-regular.svg"/>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
+        </ui:define>
+        <ui:define name="body">
+            <h:body>
+                <div id="container">                    
+                    <h3>Espacios</h3>
+                    <h:form class="formulario" id="form">
+                        <p:dataList id="listaespacios" class="espacios" value="#{espaciosController.espacios}" var="espacio" type="definition"
+                                    emptyMessage="No se encontraron espacios para uso.">
+                            <p:accordionPanel multiple="true" activeIndex="0">
+                                <p:tab title="#{espacio.idEspacio} - #{espacio.nombreEspacio}">
+                                    <p:outputPanel>
+                                        <h:panelGrid columns="2" class="resgistro">
+                                            <h:outputText value="Nombre Espacio:" class="info-tag"/>
+                                            <h:outputText value="#{espacio.nombreEspacio}" class="info"/>
+                                            <h:outputText value="Edificio Espacio:" class="info-tag"/>
+                                            <h:outputText value="#{espacio.edificio}" class="info"/>
+                                            <h:outputText value="Piso del Edificio:" class="info-tag"/>
+                                            <h:outputText value="#{espacio.piso}" class="info"/>
+                                            <h:outputText value="Capacidad:" class="info-tag"/>
+                                            <h:outputText  value="#{espacio.capacidad}" class="info"/>
+                                            <h:outputText value="Recursos:" class="info-tag"/>
+                                            <h:outputText  value="#{espacio.recursos}" class="info"/>
+                                        </h:panelGrid>
+                                    </p:outputPanel>
+                                </p:tab>
+                            </p:accordionPanel>
+
+                        </p:dataList>
+                    </h:form>
+                    <p:growl id="growl" sticky="true" showDetail="true" />
+
+                </div>
+
+            </h:body>
+        </ui:define>
+    </ui:composition> 
+</html>

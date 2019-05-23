@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="plantilla.xhtml">
+        <ui:define name="head">
+            <title>Validar Solicitudes</title>
+            <meta charset="utf-8"/>
+            <link rel="icon" href="imagenes/clock-regular.svg"/>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
+            <link rel="stylesheet" type="text/css" href="css/general.css"></link>
+            <link href="https://fonts.googleapis.com/css?family=Nobile" rel="stylesheet"/>
+
+        </ui:define>
+        <ui:define name="body">
+            <h:body>
+                <div id="container">                    
+                    <h3>Historial de Eventos</h3>
+                    <h:form class="formulario" id="form">
+                        <p:growl for="mensaje-aviso" sticky="true" showDetail="true"/>
+                        <p:dataList id="listaSolicitudes" class="solicitudes" value="#{aceptarSolicitudController.historial}" var="solicitud" type="definition"
+                                    emptyMessage="No hay registros de historial de eventos.">
+                            <p:accordionPanel multiple="true" activeIndex="0">
+                                <p:tab title="#{solicitud.nombreEvento}">
+                                    <h:panelGrid columns="2" class="resgistro">
+                                        <h:outputText value="Académico:" class="info-tag"/>
+                                        <h:outputText  value="#{solicitud.academico.nombreCompleto}" class="info"/>
+                                        <h:outputText value="Espacio:" class="info-tag"/>
+                                        <h:outputText  value="#{solicitud.espacio.nombreEspacio}" class="info"/>                                        
+                                        <h:outputText value="Nombre Evento:" class="info-tag"/>
+                                        <h:outputText value="#{solicitud.nombreEvento}" class="info"/>
+                                        <h:outputText value="Descripción:" class="info-tag"/>
+                                        <h:outputText value="#{solicitud.descripcionEvento}" class="info"/>
+                                        <h:outputText value="Fecha de solicitud:" class="info-tag"/>
+                                        <h:outputText value="#{solicitud.fechaSolicitud}" class="info">
+                                            <f:convertDateTime pattern="dd-MMMM-yyyy" />
+                                        </h:outputText>
+                                        <h:outputText value="Hora Inicial:" class="info-tag"/>
+                                        <h:outputText value="#{solicitud.horaInicio}" class="info">
+                                            <f:convertDateTime pattern=" hh:mm a" timeZone="GMT-6"/>
+                                        </h:outputText>
+                                        <h:outputText value="Hora Final:" class="info-tag"/>
+                                        <h:outputText  value="#{solicitud.horaFin}" class="info">
+                                            <f:convertDateTime pattern=" hh:mm a" timeZone="GMT-6" locale="es_MX"/>
+                                        </h:outputText>
+                                        <h:outputText value="Fecha de Resolución:" class="info-tag"/>
+                                        <h:outputText value="#{solicitud.fechaResolucion}" class="info">
+                                            <f:convertDateTime pattern="dd-MMMM-yyyy" />
+                                        </h:outputText>
+                                        <h:outputText value="Aprobado ?:" class="info-tag"/>
+                                        <h:outputText value="#{solicitud.dameEstado()}" class="info"/>                                                
+
+                                    </h:panelGrid>
+                                </p:tab>
+                            </p:accordionPanel>
+                        </p:dataList>
+                    </h:form>
+                    <p:growl id="growl" sticky="true" showDetail="true" />
+
+                </div>
+
+            </h:body>
+        </ui:define>
+    </ui:composition> 
+</html>

@@ -5,8 +5,11 @@
  */
 package com.threesoft.amoxcalitimer.models;
 
+import com.threesoft.amoxcalitimer.models.Solicitud;
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,14 +17,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author damianri
+ * @author river
  */
 @Entity
 @Table(name = "espacio", catalog = "postgres", schema = "public")
@@ -43,28 +46,22 @@ public class Espacio implements Serializable {
     @Column(name = "id_espacio", nullable = false)
     private Long idEspacio;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 210)
     @Column(name = "nombre_espacio", nullable = false, length = 210)
     private String nombreEspacio;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 210)
     @Column(name = "edificio", nullable = false, length = 210)
     private String edificio;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "capacidad", nullable = false)
     private int capacidad;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
     @Column(name = "recursos", nullable = false, length = 255)
     private String recursos;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "piso", nullable = false)
     private int piso;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "espacio")
+    private Collection<Solicitud> solicitudCollection;
 
     public Espacio() {
     }
@@ -130,6 +127,15 @@ public class Espacio implements Serializable {
         this.piso = piso;
     }
 
+    @XmlTransient
+    public Collection<Solicitud> getSolicitudCollection() {
+        return solicitudCollection;
+    }
+
+    public void setSolicitudCollection(Collection<Solicitud> solicitudCollection) {
+        this.solicitudCollection = solicitudCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -152,7 +158,6 @@ public class Espacio implements Serializable {
 
     @Override
     public String toString() {
-        return "com.threesoft.amoxcalitimer.models.Espacio[ idEspacio=" + idEspacio + " ]";
+        return "["+ idEspacio + "]: "+ nombreEspacio;
     }
-    
 }

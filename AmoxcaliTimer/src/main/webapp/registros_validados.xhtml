@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="plantilla.xhtml">
+        <ui:define name="head">
+            <title>Validar Registros</title>
+            <meta charset="utf-8"/>
+            <link rel="icon" href="imagenes/clock-regular.svg"/>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
+        </ui:define>
+        <ui:define name="body">
+            <h:body>
+                <div id="container">                    
+                    <h3>Académicos Registrados</h3>
+                    <h:form class="formulario" id="form">
+                        <p:growl for="mensaje-aviso" sticky="true" showDetail="true"/>
+                        <p:dataList id="listaAcademicos" class="academicos" value="#{validarRegistroController.validados}" var="academico" type="definition"
+                                    emptyMessage="No se encontraron académicos con espera de aceptación.">
+                            <p:accordionPanel multiple="true" activeIndex="0">
+                                <p:tab title="#{academico.noTrabajador} - #{academico.nombreCompleto}">
+                                    <p:outputPanel>
+                                        <h:panelGrid columns="2" class="resgistro">
+                                            <h:outputText value="Nombre Completo:" class="info-tag"/>
+                                            <h:outputText value="#{academico.nombreCompleto}" class="info"/>
+                                            <h:outputText value="Correo ciencias:" class="info-tag"/>
+                                            <h:outputText value="#{academico.correoAca}" class="info"/>
+                                            <h:outputText value="Número de Trabajador:" class="info-tag"/>
+                                            <h:outputText value="#{academico.noTrabajador}" class="info"/>
+                                            <h:outputText value="Departamento:" class="info-tag"/>
+                                            <h:outputText  value="#{academico.departamento}" class="info"/>
+                                            <h:outputText value="Tipo Académico:" class="info-tag"/>
+                                            <h:outputText  value="#{academico.tipo}" class="info"/>
+                                            <h:outputText value="¿Está Activo?:" class="info-tag"/>
+                                            <h:outputText  value="#{academico.activo}" class="info"/>                                            
+                                        </h:panelGrid>
+                                    </p:outputPanel>
+                                    <p:commandButton value="Desactivar" class="btn btn-sm btn-danger btn-validador"
+                                                     actionListener="${validarRegistroController.desactivarCambiarEstado}"
+                                                     disabled="#{!academico.activo}"
+                                                     update="@form"
+                                                     >
+                                        <f:attribute name="academico" value="#{academico}"></f:attribute>
+                                    </p:commandButton>
+                                    <p:commandButton value="Activar" class="btn btn-sm btn-danger btn-validador"
+                                                     actionListener="${validarRegistroController.desactivarCambiarEstado}"
+                                                     disabled="#{academico.activo}"
+                                                     update="@form"
+                                                     >
+                                        <f:attribute name="academico" value="#{academico}"></f:attribute>
+                                    </p:commandButton>
+                                </p:tab>
+                            </p:accordionPanel>
+
+                        </p:dataList>
+
+                        <p:dialog header="Denegar" widgetVar="dlg2" modal="true" width="500" closable="true">
+                            <p:ajax event="close" update="growl" listener="#{validarRegistroController.mensajeAviso}" />
+                            <div id="msj-confirmacion">
+                                Al <b>Denegar</b> se eliminará la solicitud del académico y este ya no será visible ¿Estás seguro de denegar?                                            
+                            </div>
+                            <div id="btones-confirmacion">
+                                <p:commandButton  class="btn btn-sm btn-danger btn-validador" value="Sí"
+                                                  action="#{validarRegistroController.setAceptar(true)}"
+                                                  onclick="PF('dlg2').hide();" process="@this">
+                                    <p:ajax event="click" listener="#{validarRegistroController.denegarRegistro}" update="growl"/>
+                                </p:commandButton>
+                                <p:commandButton value="No" class="btn btn-sm btn-secondary btn-validador" 
+                                                 onclick="PF('dlg2').hide();">
+                                    <p:ajax event="click" listener="#{validarRegistroController.setAceptar(false)}"/>
+                                </p:commandButton>
+
+
+                            </div>
+                        </p:dialog> 
+                    </h:form>
+                    <p:growl id="growl" sticky="true" showDetail="true" />
+
+                </div>
+
+            </h:body>
+        </ui:define>
+    </ui:composition> 
+</html>

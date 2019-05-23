@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="plantilla.xhtml">
+        <ui:define name="head">
+            <title>Solicitud</title>
+            <meta charset="utf-8"/>
+            <link rel="icon" href="imagenes/clock-regular.svg"/>
+            <link rel="stylesheet" type="text/css" href="css/inicioSesion.css"></link>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
+        </ui:define>
+        <ui:define name="body">
+            <h:body>
+                <div id="container">
+                    <h3>Solicitud de Espacio</h3>
+                    <h:form>
+                        <f:metadata>
+                            <f:viewAction action="#{solicitarController.clear}" />
+                        </f:metadata>
+                        <div>
+                            <p:messages for="messages"  />
+                        </div>
+                        <div class="form-group">
+
+                            <label>ID DEL ESPACIO</label>
+                            <p:inputText type="number" class="form-control" id="idEspacio" value="${solicitarController.idEspacio}"  
+
+                                         placeholder="ID DEL ESPACIO" required="true" requiredMessage="El ID es necesario">
+                                <p:ajax event="blur" update="idRequerido"/>
+                            </p:inputText>
+                            <p:message for="idEspacio" id="idRequerido"/>
+                            <label>Fecha de Solicitud: </label>
+                            <div >
+                                <p:calendar id="fechaSolicitud" value="${solicitarController.fechaSolicitud}" pattern="dd/MM/yyyy" />
+                            </div>
+                            <label>Fecha de Inicio:</label>
+                            <div >
+                                <p:calendar id="horainicio" value="${solicitarController.horaInicio}" pattern="hh:mm a" timeOnly="true"/>
+                            </div>
+                            <label>Fecha de Fin:</label>
+                            <div>
+                                <p:calendar id="horafin" value="${solicitarController.horaFin}" pattern="hh:mm a" timeOnly="true"/>
+                            </div>
+
+                            <label>Nombre del evento</label>
+                            <p:inputText class="form-control" id="nombreEvento" value="${solicitarController.nombreEvento}" 
+                                         placeholder="Nombre del evento" required="true" requiredMessage="El nombre es necesario">
+                                <p:ajax event="blur" update="nombreRequerido"/>
+                            </p:inputText>
+                            <p:message for="nombreEvento" id="nombreRequerido"/>
+
+                            <label>Descripción del evento</label>
+                            <p:inputText class="form-control" id="descripcionEvento" value="${solicitarController.descripcionEvento}"  
+                                         placeholder="Descripción del evento" required="true" requiredMessage="La descripción es necesaria">
+                                <p:ajax event="blur" update="descripcionRequerida" />
+                            </p:inputText>
+                            <p:message for="descripcionEvento" id="descripcionRequerida"/>
+
+                        </div>    
+                        <p:commandButton action="#{solicitarController.registrarSolicitud()}" ajax="false"
+                                         class="btn btn-outline-warning btn-block" value="Solicitar" update="form"/>
+
+
+                    </h:form>                    
+                </div>
+            </h:body>
+        </ui:define>
+    </ui:composition> 
+</html>

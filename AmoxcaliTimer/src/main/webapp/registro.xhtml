@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="plantilla.xhtml">
+        <ui:define name="head">
+            <title>Registro</title>
+            <meta charset="utf-8"/>
+            <link rel="icon" href="imagenes/clock-regular.svg"/>
+            <h:outputStylesheet library="webjars" name="bootstrap/4.1.3/css/bootstrap.min-jsf.css"/>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
+            <link href="https://fonts.googleapis.com/css?family=Nobile" rel="stylesheet"/>
+            <link rel="stylesheet" type="text/css" href="css/registro.css"></link>
+        </ui:define>
+        <ui:define name="body">
+            <h:body>
+                <div id="container">
+                    <h3>Registro</h3>
+                    <h:form>
+                        <f:metadata>
+                            <f:viewAction action="#{registroController.clear}" />
+                        </f:metadata>
+                        <div>
+                            <p:messages for="messages"  />
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre Completo:</label>
+                            <p:inputText class="form-control" id="nombreCompletoAca" value="${registroController.nombreCompleto}" 
+                                         validator="${registroController.validateUniqueName}"
+                                         placeholder="Nombre Completo" required="true"
+                                         requiredMessage="El nombre es necesario" validatorMessage="Ingresa un nombre diferente o únicamente con letras">
+                                <f:validateRegex pattern="([A-Z][a-záéíóú ]+)+"/>
+                                <p:ajax event="blur" update="nombreRequerido"/>
+                            </p:inputText>
+                            <p:message for="nombreCompletoAca" id="nombreRequerido"/>
+                            <div class="form-row">
+                                <div class="col">
+                                    <label>Número de trabajador:</label>
+                                    <p:inputText class="form-control" id="numTraAca" value="${registroController.noTrabajador}" 
+                                                 validator="${registroController.validarNumTrabajador}"
+                                                 placeholder="No. de trabajador" 
+                                                 required="true" requiredMessage="El No. de Trabajador es necesario"
+                                                 validatorMessage="No. en Uso o Longitud inválida">
+                                        <p:ajax event="blur" update="numero"/>
+                                        <f:validateRegex pattern="[a-z0-9._%+-]{10,}"/>
+                                    </p:inputText>
+                                    <p:message for="numTraAca" id="numero"/>
+                                </div>
+                                <div class="col-5">
+                                    <label>Departamento:</label>
+                                    <p:selectOneMenu id="departamento" value="#{registroController.departamento}" filter="true">
+                                        <f:selectItem itemLabel="Ciencias de la Computacion" itemValue="Ciencias de la Computación" />
+                                        <f:selectItem itemLabel="Matematicas" itemValue="Matemáticas" />
+                                        <f:selectItem itemLabel="Fisica" itemValue="Física" />
+                                        <f:selectItem itemLabel="Biologia" itemValue="Biología"/>
+                                        <f:selectItem itemLabel="Actuaria" itemValue="Actuaría"/>
+                                        <f:selectItem itemLabel="Ciencias de la tierra" itemValue="Ciencias de la tierra"/>    
+                                    </p:selectOneMenu>
+
+                                </div>                              
+                                <div class="col">
+                                    <label>Tipo de Académico:</label><br/>
+                                    <p:selectOneMenu id="tipoProfesor" value="#{registroController.tipoProfesor}" filter="true">
+                                        <f:selectItem itemLabel="A" itemValue="A" />
+                                        <f:selectItem itemLabel="B" itemValue="B" />
+                                        <f:selectItem itemLabel="C" itemValue="C" />
+                                        <f:selectItem itemLabel="D" itemValue="D"/>
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>                                                        
+                            <label>Username:</label>
+                            <p:inputText type="text" class="form-control" id="userName" value="${registroController.userName}"
+                                         validator="${registroController.validateUniqueUserName}"
+                                         placeholder="Un alias">
+                                <p:ajax event="blur" update="username"/>
+                            </p:inputText>
+                            <p:message for="userName" id="username"/>
+
+                            <label>Correo:</label>
+                            <p:inputText type="email" class="form-control" id="correoAca" value="${registroController.correo}" 
+                                         validator="${registroController.validateUniqueEmail}" requiredMessage="Igresa un correo con extensión @ciencias.unam.mx"
+                                         placeholder="correo@ciencias.unam.mx" required="true" validatorMessage="Ingresa otro correo o uno con extensión @ciencias.unam.mx">
+                                <f:validateRegex pattern="[a-z0-9._%+-]+@ciencias.unam.mx"/>
+                                <p:ajax event="blur" update="correo"/>
+                            </p:inputText>
+                            <small id="nota" class="form-text text-muted">Debe ser extensión @ciencias.unam.mx</small>
+                            <p:message for="correoAca" id="correo"/>
+
+
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <label>Contraseña:</label>
+                                    <p:password class="form-control"  placeholder="Contraseña" required="true" 
+                                                value="${registroController.password}"
+                                                requiredMessage="La contraseña no puede ser vacía" id="password" feedback="true" 
+                                                promptLabel="Favor de ingresar una contraseña"  validatorMessage="Las Contraseñas NO Coinciden"
+                                                weakLabel="Debíl" goodLabel="Buena" strongLabel="¡ Muy Buena !" match="password2">
+                                    </p:password>
+                                </div>
+                                <p:message for="password" id="mPassword"/>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <label>Confirmación:</label>
+                                    <p:password class="form-control"  placeholder="Confirmación de la contraseña" required="true" 
+                                                requiredMessage="Debe ingresar la confirmación de su contraseña" id="password2">
+                                        <p:ajax event="blur" update="mPassword,mPassword2" process="password, password2" />
+                                    </p:password>
+                                </div>
+                                <p:message for="password2" id="mPassword2"/>
+                            </div>
+
+                        </div>
+                        <p:commandButton action="#{registroController.registrarAcademico()}" ajax="false"
+                                         class="btn btn-outline-danger btn-block" value="Registrarse" update="form"/>
+                        <div id="enlace-inicio">
+                            Iniciar Sesión  <a id="a-ingresar" href="/AmoxcaliTimer/index.xhtml"> Ingresar </a>
+                        </div>
+                    </h:form>                    
+                </div>
+            </h:body>
+        </ui:define>
+    </ui:composition> 
+</html>

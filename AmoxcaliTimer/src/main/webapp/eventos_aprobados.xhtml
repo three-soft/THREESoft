@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="plantilla.xhtml">
+        <ui:define name="head">
+            <title>Eventos Aprobados</title>
+            <meta charset="utf-8"/>
+            <link rel="icon" href="imagenes/clock-regular.svg"/>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
+        </ui:define>
+        <ui:define name="body">
+            <h:body>
+                <div id="container">                    
+                    <h3>Eventos Aprobados</h3>
+                    <h:form class="formulario" id="form">
+                        <p:growl for="mensaje-aviso" sticky="true" showDetail="true"/>
+                        <p:dataList id="listaSolicitudes" class="solicitudes" value="#{aceptarSolicitudController.solicitudesAprobadas}" var="solicitud" type="definition"
+                                    emptyMessage="No se encontraron eventos aprobados.">
+                            <p:accordionPanel multiple="true" activeIndex="0">
+                                <p:tab title="#{solicitud.nombreEvento} - #{solicitud.academico.nombreCompleto}">
+
+                                    <h:panelGrid class="panelGrid" columns="2">
+                                        <p:outputPanel>
+                                            <h:panelGrid columns="2" class="resgistro">
+                                                <h:outputText value="Académico:" class="info-tag"/>
+                                                <h:outputText  value="#{solicitud.academico.nombreCompleto}" class="info"/>
+                                                <h:outputText value="Espacio" class="info-tag"/>
+                                                <h:outputText  value="#{solicitud.espacio.nombreEspacio}" class="info"/>                                        
+                                                <h:outputText value="Nombre Evento:" class="info-tag"/>
+                                                <h:outputText value="#{solicitud.nombreEvento}" class="info"/>
+                                                <h:outputText value="Descripción:" class="info-tag"/>
+                                                <h:outputText value="#{solicitud.descripcionEvento}" class="info"/>
+                                                <h:outputText value="Fecha de solicitud:" class="info-tag"/>
+                                                <h:outputText value="#{solicitud.fechaSolicitud}" class="info">
+                                                    <f:convertDateTime pattern="dd-MMMM-yyyy" />
+                                                </h:outputText>
+                                                <h:outputText value="Hora Inicial:" class="info-tag"/>
+                                                <h:outputText value="#{solicitud.horaInicio}" class="info">
+                                                    <f:convertDateTime pattern="hh:mm a" timeZone="GMT-6"/>
+                                                </h:outputText>
+                                                <h:outputText value="Hora Final:" class="info-tag"/>
+                                                <h:outputText  value="#{solicitud.horaFin}" class="info">
+                                                    <f:convertDateTime pattern="hh:mm a" timeZone="GMT-6"/>
+                                                </h:outputText>
+                                                <h:outputText value="Fecha de Resolucion:" class="info-tag"/>
+                                                <h:outputText  value="#{solicitud.fechaResolucion}" class="info">
+                                                    <f:convertDateTime pattern="dd-MMMM-yyyy" />
+                                                </h:outputText>
+                                            </h:panelGrid>
+                                        </p:outputPanel>
+                                        <p:outputPanel class="btones">
+                                            <p:commandButton value="Cancelar" class="btn btn-sm btn-danger btn-validador" 
+                                                             onclick="PF('dlg2').show();" 
+                                                             >
+                                                <f:setPropertyActionListener value="#{solicitud}" target="#{aceptarSolicitudController}"/>
+                                            </p:commandButton>
+
+                                        </p:outputPanel>
+                                    </h:panelGrid>
+                                </p:tab>
+                            </p:accordionPanel>
+
+                        </p:dataList>
+
+                        <p:dialog header="Cancelar" widgetVar="dlg2" modal="true" width="500" closable="true" resizable="false">
+                            <p:ajax event="close" update="growl" listener="#{validarRegistroController.mensajeAviso}" />
+                            <div id="msj-confirmacion">
+                                Al <b>Cancelar</b> el Evento no seŕa visible en el calendario. ¿Seguro que quieres Cancelar?                                            
+                            </div>
+                            <div id="btones-confirmacion">
+                                <p:commandButton  class="btn btn-sm btn-danger btn-validador" value="Sí"
+                                                  onclick="PF('dlg2').hide();" process="@this" update="@form">
+                                </p:commandButton>
+                                <p:commandButton value="No" class="btn btn-sm btn-secondary btn-validador" 
+                                                 onclick="PF('dlg2').hide();">
+                                    <p:ajax event="click" listener="#{validarRegistroController.setAceptar(false)}"/>
+                                </p:commandButton>
+
+
+                            </div>
+                        </p:dialog> 
+                    </h:form>
+                    <p:growl id="growl" sticky="true" showDetail="true" />
+
+                </div>
+
+            </h:body>
+        </ui:define>
+    </ui:composition> 
+</html>

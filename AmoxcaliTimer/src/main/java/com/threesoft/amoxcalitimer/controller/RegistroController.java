@@ -9,6 +9,7 @@ package com.threesoft.amoxcalitimer.controller;
  *
  * @author damianri
  */
+import com.threesoft.amoxcalitimer.Correo;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -41,8 +42,9 @@ public class RegistroController implements Serializable {
     private String nombreCompleto;
     private String userName;
     private String password;
+    private String confirmPassword;
     private String correo;
-    private Integer noTrabajador;
+    private String noTrabajador;
     private String departamento;
     private String tipoProfesor;
     private String edificio;
@@ -50,11 +52,19 @@ public class RegistroController implements Serializable {
     private String recursos;
     private int piso;
 
-    public Integer getNoTrabajador() {
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+    
+    public String getNoTrabajador() {
         return noTrabajador;
     }
 
-    public void setNoTrabajador(Integer noTrabajador) {
+    public void setNoTrabajador(String noTrabajador) {
         this.noTrabajador = noTrabajador;
     }
 
@@ -106,7 +116,7 @@ public class RegistroController implements Serializable {
         this.password = password;
     }
 
-    public String getEdificio(){
+    public String getEdificio() {
         return this.edificio;
     }
 
@@ -137,9 +147,7 @@ public class RegistroController implements Serializable {
     public void setPiso(int piso) {
         this.piso = piso;
     }
-    
-    
-    
+
     public RegistroController() {
         this.nombreCompleto = null;
         this.correo = null;
@@ -167,15 +175,19 @@ public class RegistroController implements Serializable {
             nuevoAcademico.setUserName(userName);
             nuevoAcademico.setPassword(password);
             nuevoAcademico.setNoTrabajador(noTrabajador);
-            nuevoAcademico.setDepartamento(departamento);
-            nuevoAcademico.setTipo(tipoProfesor);
+            if (departamento != null || departamento != "") {
+                nuevoAcademico.setDepartamento(departamento);
+            }
+            if (tipoProfesor != null || tipoProfesor != "") {
+                nuevoAcademico.setTipo(tipoProfesor);
+            }
             nuevoAcademico.setIdAcademico(Long.MIN_VALUE);
 
             AcademicoDao academicoDao = new AcademicoDao();
             academicoDao.getEntityManager().getTransaction().begin();
             academicoDao.save(nuevoAcademico);
             academicoDao.getEntityManager().getTransaction().commit();
-            //Mail.mandarLinkDeRegistro(nuevoAcademico.getCorreoCiencias(), nuevoAcademico.getNombreCompleto(), confirm.getToken());
+            Correo.correoDeRegistro(nuevoAcademico.getCorreoAca(), nuevoAcademico.getNombreCompleto());
             FacesContext.getCurrentInstance().addMessage("messages",
                     new FacesMessage(FacesMessage.SEVERITY_INFO,
                             "Tu registro se generó correctamente, espera correo de confirmación de alta.",
@@ -209,11 +221,11 @@ public class RegistroController implements Serializable {
             administradorDao.getEntityManager().getTransaction().begin();
             administradorDao.save(nuevoAdministrador);
             administradorDao.getEntityManager().getTransaction().commit();
-            //Mail.mandarLinkDeRegistro(nuevoAcademico.getCorreoCiencias(), nuevoAcademico.getNombreCompleto(), confirm.getToken());
+            Correo.correoDeActivacionAdmin(nuevoAdministrador.getCorreoAdmin(), nuevoAdministrador.getNombreCompleto(), nuevoAdministrador.getPassword());
             FacesContext.getCurrentInstance().addMessage("messages",
                     new FacesMessage(FacesMessage.SEVERITY_INFO,
-                            "Tu registro se generó correctamente, nuevo administrador.",
-                            "Tu registro se generó correctamente, nuevo administrador."));
+                            "El registro se lleneró correctamente, le llegará un correo al nuevo administrador.",
+                            "El registro se lleneró correctamente, le llegará un correo al nuevo administrador."));
             FacesContext context = FacesContext.getCurrentInstance();
             context.getExternalContext().getFlash().setKeepMessages(true);
             ExternalContext eContext = context.getExternalContext();
@@ -226,7 +238,7 @@ public class RegistroController implements Serializable {
         }
     }
 
-       /**
+    /**
      * Método que registra al espacio con el formulario ya validado.
      *
      */
@@ -244,7 +256,6 @@ public class RegistroController implements Serializable {
             espacioDao.getEntityManager().getTransaction().begin();
             espacioDao.save(nuevoEspacio);
             espacioDao.getEntityManager().getTransaction().commit();
-            //Mail.mandarLinkDeRegistro(nuevoAcademico.getCorreoCiencias(), nuevoAcademico.getNombreCompleto(), confirm.getToken());
             FacesContext.getCurrentInstance().addMessage("messages",
                     new FacesMessage(FacesMessage.SEVERITY_INFO,
                             "Tu registro se generó correctamente, nuevo administrador.",
@@ -260,7 +271,7 @@ public class RegistroController implements Serializable {
                             "Por el momento no podemos agregar su registro al sistema, inténtelo más tarde."));
         }
     }
-    
+
     //Ejemplo para algunos casos que se necesitaran para validar.
     public void validatePassword(FacesContext context, UIComponent component, Object value) {
         // Retrieve the value passed to this method
@@ -303,7 +314,7 @@ public class RegistroController implements Serializable {
         }
     }
 
-        public void validateUniqueNameEspacio(FacesContext context, UIComponent component, Object value) {
+    public void validateUniqueNameEspacio(FacesContext context, UIComponent component, Object value) {
         EspacioDao espacioDao = new EspacioDao();
         if (espacioDao.userExist(value.toString())) {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -313,7 +324,6 @@ public class RegistroController implements Serializable {
         }
     }
 
-    
     public void validateUniqueName(FacesContext context, UIComponent component, Object value) {
         AcademicoDao academicoDao = new AcademicoDao();
         if (academicoDao.userExist(value.toString())) {
@@ -328,12 +338,27 @@ public class RegistroController implements Serializable {
         AdministradorDao administradorDao = new AdministradorDao();
         if (administradorDao.userNoTrabajador(value.toString())) {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Ya existe un Administrador con ese número, ingresar otro.",
+                    "Ya existe un Administrador con ese número, ingresar otro.");
+            throw new ValidatorException(msg);
+        }
+    }
+
+    public void validateUniqueNumAca(FacesContext context, UIComponent component, Object value) {
+        AcademicoDao academicoDao = new AcademicoDao();
+        if (academicoDao.userNoTrabajador(value.toString())) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "Ya existe un Acádemico con ese número, ingresar otro.",
                     "Ya existe un Acádemico con ese número, ingresar otro.");
             throw new ValidatorException(msg);
         }
     }
 
+    public void validarNumTrabajador(FacesContext context, UIComponent component, Object value){
+        this.validateUniqueNumAca(context, component, value);
+        this.validateUniqueNumAdmin(context, component, value);
+    }
+    
     /**
      * Método que verifica si un email es único.
      *
@@ -344,6 +369,7 @@ public class RegistroController implements Serializable {
     public void validateUniqueEmail(FacesContext context, UIComponent component, Object value) {
         AcademicoDao academicoDao = new AcademicoDao();
         if (academicoDao.mailExist((String) value)) {
+            validateUniqueEmailAdmin(context, component, value);
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "El correo que intenta dar ya está registrado, escriba otro.",
                     "El correo que intenta dar ya está registrado, escriba otro.");

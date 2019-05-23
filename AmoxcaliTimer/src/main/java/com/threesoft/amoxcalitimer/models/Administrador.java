@@ -15,13 +15,11 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author damianri
+ * @author river
  */
 @Entity
 @Table(name = "administrador", catalog = "postgres", schema = "public")
@@ -42,24 +40,17 @@ public class Administrador implements Serializable {
     @Column(name = "id_administrador", nullable = false)
     private Long idAdministrador;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 210)
     @Column(name = "nombre_completo", nullable = false, length = 210)
     private String nombreCompleto;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 210)
     @Column(name = "correo_admin", nullable = false, length = 210)
     private String correoAdmin;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 210)
     @Column(name = "password", nullable = false, length = 210)
     private String password;
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "no_trabajador", nullable = false)
-    private long noTrabajador;
+    @Column(name = "no_trabajador", nullable = false, length = 20)
+    private String noTrabajador;
 
     public Administrador() {
     }
@@ -68,7 +59,7 @@ public class Administrador implements Serializable {
         this.idAdministrador = idAdministrador;
     }
 
-    public Administrador(Long idAdministrador, String nombreCompleto, String correoAdmin, String password, long noTrabajador) {
+    public Administrador(Long idAdministrador, String nombreCompleto, String correoAdmin, String password, String noTrabajador) {
         this.idAdministrador = idAdministrador;
         this.nombreCompleto = nombreCompleto;
         this.correoAdmin = correoAdmin;
@@ -108,11 +99,11 @@ public class Administrador implements Serializable {
         this.password = password;
     }
 
-    public long getNoTrabajador() {
+    public String getNoTrabajador() {
         return noTrabajador;
     }
 
-    public void setNoTrabajador(long noTrabajador) {
+    public void setNoTrabajador(String noTrabajador) {
         this.noTrabajador = noTrabajador;
     }
 
