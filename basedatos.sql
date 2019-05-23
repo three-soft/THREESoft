@@ -1,18 +1,3 @@
--- Database: postgres
-
--- DROP DATABASE postgres;
-
-CREATE DATABASE postgres
-    WITH 
-    OWNER = postgres
-    ENCODING = 'UTF8'
-    LC_COLLATE = 'es_MX.UTF-8'
-    LC_CTYPE = 'es_MX.UTF-8'
-    TABLESPACE = pg_default
-    CONNECTION LIMIT = -1;
-
-COMMENT ON DATABASE postgres
-    IS 'default administrative connection database';
 
 -- SEQUENCE: public.seq_academico
 
@@ -175,7 +160,6 @@ TABLESPACE pg_default;
 ALTER TABLE public.solicitud
     OWNER to postgres;
 
-
 INSERT INTO public.administrador(
 	id_administrador, nombre_completo, correo_admin, password, no_trabajador)
-	VALUES (1, administrador, administrador@ciencias.unam.mx, 123456, 1234567890);
+	VALUES (1, 'admin', 'administrador@ciencias.unam.mx', 123456, 1234567890);
