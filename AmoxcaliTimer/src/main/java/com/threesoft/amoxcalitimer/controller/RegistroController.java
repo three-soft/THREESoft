@@ -229,7 +229,7 @@ public class RegistroController implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             context.getExternalContext().getFlash().setKeepMessages(true);
             ExternalContext eContext = context.getExternalContext();
-            eContext.redirect(eContext.getRequestContextPath() + "/views/administrador/registro_administrador.xhtml");
+            eContext.redirect(eContext.getRequestContextPath() + "/registro_administrador.xhtml");
         } catch (IllegalArgumentException ex) {
             FacesContext.getCurrentInstance().addMessage("messages",
                     new FacesMessage(FacesMessage.SEVERITY_FATAL,
