@@ -258,12 +258,12 @@ public class RegistroController implements Serializable {
             espacioDao.getEntityManager().getTransaction().commit();
             FacesContext.getCurrentInstance().addMessage("messages",
                     new FacesMessage(FacesMessage.SEVERITY_INFO,
-                            "Tu registro se generó correctamente, nuevo administrador.",
-                            "Tu registro se generó correctamente, nuevo administrador."));
+                            "Tu registro se generó correctamente, nuevo espacio agregado.",
+                            "Tu registro se generó correctamente, nuevo espacio agregado."));
             FacesContext context = FacesContext.getCurrentInstance();
             context.getExternalContext().getFlash().setKeepMessages(true);
             ExternalContext eContext = context.getExternalContext();
-            eContext.redirect(eContext.getRequestContextPath() + "/views/administrador/registro_administrador.xhtml");
+            eContext.redirect(eContext.getRequestContextPath() + "/registro_espacio.xhtml");
         } catch (IllegalArgumentException ex) {
             FacesContext.getCurrentInstance().addMessage("messages",
                     new FacesMessage(FacesMessage.SEVERITY_FATAL,
